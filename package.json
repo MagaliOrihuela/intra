@@ -1,0 +1,52 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production",
+        "type": "module"
+    },
+    "devDependencies": {
+        "axios": "^0.21",
+        "deepmerge": "^4.2.2",
+        "laravel-mix": "^6.0.6",
+        "lodash": "^4.17.19",
+        "postcss": "^8.1.14",
+        "sass": "^1.32.13",
+        "sass-loader": "^11.1.1",
+        "vue-loader": "^15.9.5",
+        "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "@mdi/font": "^5.9.55",
+        "bootstrap-vue": "^2.21.2",
+        "cors": "^2.8.5",
+        "firebase": "^8.7.1",
+        "https": "^1.0.0",
+        "jspdf": "^2.3.1",
+        "jspdf-html2canvas": "^1.4.9",
+        "material-design-icons-iconfont": "^6.1.0",
+        "mysql": "^2.18.1",
+        "push.js": "^1.0.12",
+        "randomcolor": "^0.6.2",
+        "rellax": "^1.12.1",
+        "socket.io": "^4.1.3",
+        "socket.io-client": "^4.1.3",
+        "sweetalert2": "^11.0.7",
+        "vee-validate": "^3.4.5",
+        "vue": "^2.6.12",
+        "vue-html2pdf": "^1.8.0",
+        "vue-product-zoomer": "^3.0.1",
+        "vue-router": "^3.5.1",
+        "vue-socket.io": "^3.0.10",
+        "vue-trumbowyg": "^4.0.0",
+        "vuelidate": "^0.7.6",
+        "vuetify": "^2.5.0",
+        "vuex": "^3.6.2",
+        "vuex-persist": "^3.1.3"
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "include": ["./resources/js/**/*"],
+    "exclude": ["node_modules"],
+    "compilerOptions": {
+      "baseUrl": "*",
+      "target":"es2015",
+      "paths": {
+        "components/*": ["./resources/js/components/*"]
+      }
+    }
+  }
