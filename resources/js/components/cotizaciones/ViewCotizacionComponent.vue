@@ -667,10 +667,10 @@
                hide-default-footer
                class="elevation-0 overflow-y-auto"
                @page-count="pageCount = $event"
-               scroll.sync="scrollSync"
                :loading="loadingTable"
                loading-text="Cargando Articulos ..."
             >
+            <!-- scroll.sync="scrollSync" -->
             <!-- sort-by="entry_id"  -->
             <v-progress-linear 
                v-show="loadingTable" 
@@ -1409,12 +1409,9 @@
                idDcot: idDCot
             }
             this.loadingTable = true
-            const res = await this.$store.dispatch('dcot/delPartCot',payload);
-            if(res.success){
-               // this.itemparts = res.gridpCot
-               // this.import_cot = res.sumSubt
-               // this.desc_cot = res.sumDesc
-               // this.tot_iva_cot = res.totIva
+            const data = await socketClientEmit.deleteDCotizacionEmit(payload)
+            // const res = await this.$store.dispatch('dcot/delPartCot',payload);
+            if(data.success){
                this.loadingTable = false
                this.clearPanel(0)
                this.selectCategorie(1)

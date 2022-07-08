@@ -98,6 +98,14 @@ class socketEmit {
             return Promise.resolve(data)
         }
     }
+    async deleteDCotizacionEmit(payload){
+        const { data } = await axios.post('/cotizacion/deletePart', payload, { headers: { Authorization: "Bearer" + payload.token } } )
+        if(data.success){
+            console.log('emitLocal' + data)
+            socket.emit('dcotizacion:delete',data)
+            return Promise.resolve(data)
+        }
+    }
  
  }
 

@@ -27,7 +27,7 @@ class DCotizacionesController extends Controller
                                     ->get(['client_id','updated_at']);
       if($sqlC != NULL) {
          $eCot = $sqlC[0];
-         $arrR = $this->gridDCot($cotid,'');
+         $arrR = $this->gridDCot($cotid,'',0);
          
          $dateCot = new DateTime($eCot->updated_at);
          $hoy = new DateTime('now');
@@ -53,7 +53,7 @@ class DCotizacionesController extends Controller
       }    
     }
     //genera el grid del detalle de la cotización y los cálculos de importe, descuento y total con iva
-    public function gridDCot($cotid,$dcotid){
+    public function gridDCot($cotid,$dcotid,$part){
       $dCotPart = DCotizaciones::with('article.category:id,category,icon,color')
                                     ->where('cotizacion_id',$cotid)->get();
       $arrpCot = array();
@@ -88,7 +88,9 @@ class DCotizacionesController extends Controller
          } else if($cont > 1){
             $stgUnit = '('.$cont.' m)';
          }
-         if($dcotid == '' || $dcotid == $dcotP->id)//genera el arreglo de las partidas
+         if(($dcotid == '' && $part == 0) 
+            || $dcotid == $dcotP->id 
+            || ($dcotP->entry_id >= $part && $part > 0))//genera el arreglo de las partidas
          {
             $arrpCot = array(
                'id'=>$dcotP->id,
@@ -125,7 +127,9 @@ class DCotizacionesController extends Controller
             $service = CCategory::where('id',6)
                                        ->first();
             $guide = $sqlGuide[0];
-            if($dcotid == '' || $dcotid == $dcotP->id)//genera el arreglo de cada partida
+            if(($dcotid == '' && $part == 0) 
+               || $dcotid == $dcotP->id 
+               || ($part <= $dcotP->entry_id && $part > 0))//genera el arreglo de cada partida
             {
                $arrpCot = array(
                   'id'=> $dcotP->id.'S',
@@ -256,7 +260,7 @@ class DCotizacionesController extends Controller
                $guide->save();
             }         
          }
-         $arrR = $this->gridDCot($request->cotizacionId,$dCot->id);
+         $arrR = $this->gridDCot($request->cotizacionId,$dCot->id,0);
 
          return response()->json([ 
             'success' => true,
@@ -337,24 +341,31 @@ class DCotizacionesController extends Controller
    public function deletePCot(Request $request, Dcotizaciones $dCotizaciones){
       $id_dCot = $request->idDcot;
       $arrDcot = $dCotizaciones::find($id_dCot);
-      $arrCotps = $dCotizaciones::where('cotizacion_id',$arrDcot->cotizacion_id)
+      $arrCotps = $dCotizaciones::with('article:id,category_id')
+                                    ->where('cotizacion_id',$arrDcot->cotizacion_id)
                                     ->where('entry_id','>',$arrDcot->entry_id)
-                                    ->get(['id','entry_id','cotizacion_id']);
-      $entry = $arrDcot->entry_id;
-      // $arrDcot->delete();
+                                    ->get(['id','entry_id','cotizacion_id','article_id']);
+      $entryO = $entry = $arrDcot->entry_id;
+      $arrDcot->delete();
       foreach($arrCotps as $dCot){
          $dCotizaciones::where('id',$dCot->id)
                            ->update(['entry_id'=>$entry]);
-         $entry += 1;
+         $entryId = $dCot->article->category_id;
+         if($entryId == 3){
+            $entry += 2;
+         } else{
+            $entry += 1;
+         }
       }
-      $arrR = $this->gridDCot($arrDcot->cotizacion_id,'');
+      $arrR = $this->gridDCot($arrDcot->cotizacion_id,'',$entryO);
 
       return response()->json([
-         'success'    => true,
+         'success' => true,
+         'cotizacion_id' => $arrDcot->cotizacion_id,
          'gridpCot' => $arrR['gridDCot'],
          'sumSubt' => $arrR['sumSubt'],
-         'sumDesc' => $arrR['sumDesc'],
-         'totIva' => $arrR['totalIva'],
+         'Iva' => $arrR['Iva'],
+         'sumTotal' => $arrR['sumTotal'],
       ], 200);
    }
    //extrae los datos de la dcotizacion para su modificación

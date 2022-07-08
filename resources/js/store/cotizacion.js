@@ -43,6 +43,24 @@ const dcot = {
                 }
             }
         },
+        DELETE_DATA_PARTIDAS(state,data){
+            const dataGrid = store.getters['dcot/getDataDCot']
+            let long = dataGrid.length;
+            let flag = false
+            for(let i in data){
+                for(let j in dataGrid){
+                    if(dataGrid[j].entry_id >= data[i].entry_id && flag == false){
+                        let del = long - j
+                        state.DataDCot.splice(j,del)
+                        flag = true
+                        break
+                    }
+                }
+                if(flag){
+                    state.DataDCot.push(data[i])
+                }
+            }
+        },
         DATA_DELETEPCOT(state,dataPCot){
             state.deletePcot = dataPCot;
         },
@@ -114,10 +132,16 @@ const dcot = {
             const {data} = await axios.post('/cotizacion/updatedCot', payload, { headers: { Authorization: "Bearer " + payload.token } })
             return Promise.resolve(data)         
         },
-        async delPartCot({commit},payload){
-            const {data} = await axios.post('/cotizacion/deletePart', payload, { headers: { Authorization: "Bearer " + payload.token } })
-            commit("DATA_DELETEPCOT",data)
-            return Promise.resolve(data)
+        async delPartCot({commit},data){
+            const idCotAct = store.getters['dcot/getIdCot']
+            if(idCotAct == data.cotizacion_id){
+                commit('DELETE_DATA_PARTIDAS',data.gridpCot)
+                commit("DATA_TOT",data)
+            }
+            // const {data} = await axios.post('/cotizacion/deletePart', payload, { headers: { Authorization: "Bearer " + payload.token } })
+            // commit("DATA_DELETEPCOT",data)
+            // return Promise.resolve(data)
+
         },
         
     },

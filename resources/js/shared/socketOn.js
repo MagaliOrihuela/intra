@@ -70,6 +70,9 @@ class socketOn{
         socket.on('CREATE_COTIZACION', response => {
             store.dispatch('dcot/createDCotizacion',response);
         })
+        socket.on('DELETE_COTIZACION', response => {
+            store.dispatch('dcot/delPartCot',response);
+        })
     }
 
 }
