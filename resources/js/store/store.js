@@ -6,6 +6,7 @@ import VuexPersist from 'vuex-persist'
 import auth from '../store/auth'
 import ecot from '../store/cotizaciones'
 import dcot from '../store/cotizacion'
+import eord from '../store/orders'
 import timerLogin from '../store/timerLogin'
 import modals from '../store/modals'
 import clientsIO from '../store/ClientsIO'
@@ -30,6 +31,7 @@ const store = new Vuex.Store({
       auth,
       ecot,
       dcot,
+      eord,
       timerLogin,
       modals,
       socketIO,

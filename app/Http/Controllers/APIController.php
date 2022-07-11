@@ -59,4 +59,21 @@ class APIController extends Controller
             ], 200);
         }
     }
+    public function ordersAll(Request $request)
+    {
+        try {
+            $dataOrders = HTTP::asForm()->post(config('app.ApiUrl').'/API/shades/orders/getOrders.php' , [
+                'token' => $request->token,
+                'user_id' => $request->user_id,
+            ]);
+            return response()->json([
+                'success' => true,
+                'dataOrders' => $dataOrders->json(),
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+            ], 200);
+        }
+    }
 }
