@@ -5,11 +5,13 @@ const eord = {
    namespaced:true,
    state: {
     dataOrders:[],
+    dataOrdersS:[],
+    dataOrdersC:[],
 
     optionsDate: { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour24:"false"}
    },
    mutations: {
-    DATA_ORDERS (state,data) {
+      DATA_ORDERS (state,data) {
         //  for( let i in data ) {
         //     const isFind = state.gridCot.find( cotizaciones => cotizaciones.id === data[i].id )
         //     var date = new Date(data[i].created_at);
@@ -18,7 +20,13 @@ const eord = {
         //         state.gridCot.push(data[i]);
         //     }
         // }
-        state.dataOrders = data
+         state.dataOrders = data
+      },
+      DATA_ORDERS_S (state,data) {
+         state.dataOrdersS = data
+      },
+      DATA_ORDERS_C (state,data) {
+         state.dataOrdersC = data
       },
    },
    actions: {
@@ -31,9 +39,29 @@ const eord = {
             console.log(error.response)
         })
       },
+      async getOrdersS({commit},payload) {
+        await axios.post('API/orders/getOrdersS',payload )
+        .then( response => {
+            commit("DATA_ORDERS_S",response.data.dataOrders)
+        })
+        .catch( (error) => {
+            console.log(error.response)
+        })
+      },
+      async getOrdersC({commit},payload) {
+        await axios.post('API/orders/getOrdersC',payload )
+        .then( response => {
+            commit("DATA_ORDERS_C",response.data.dataOrders)
+        })
+        .catch( (error) => {
+            console.log(error.response)
+        })
+      },
    },
    getters: {
       getDataOrders: state => state.dataOrders,
+      getDataOrdersS: state => state.dataOrdersS,
+      getDataOrdersC: state => state.dataOrdersC,
    }
 }
 

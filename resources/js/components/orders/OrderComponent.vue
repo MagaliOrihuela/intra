@@ -63,6 +63,7 @@
             <v-tab-item
                value="tab3"
             >
+               <ordersCanc />
             </v-tab-item>
          </v-tabs-items>
       </v-card>
@@ -72,6 +73,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import orderStock from "../orders/OrderStockComponent.vue"
 import ordersSurt from "../orders/OrdersSurtComponent.vue"
+import ordersCanc from "../orders/OrdersCancelComponent.vue"
 
   export default {
       data () {
@@ -87,7 +89,7 @@ import ordersSurt from "../orders/OrdersSurtComponent.vue"
       components:{
          orderStock,
          ordersSurt,
-
+         ordersCanc,
       },
       methods: {
       },

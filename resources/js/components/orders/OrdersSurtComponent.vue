@@ -217,7 +217,7 @@ import randomColor from 'randomcolor';
       computed: {
          ...mapGetters({ 
                getUserApi: 'auth/getUserApi', 
-               orders: 'eord/getDataOrders',
+               orders: 'eord/getDataOrdersS',
             }),
       },
       methods: {
@@ -226,7 +226,7 @@ import randomColor from 'randomcolor';
             this.scrollSync.top = e.target.scrollTop
             this.scrollSync.left = e.target.scrollLeft
          },
-         async GetOrders() { // obtenemos los pedidos
+         async GetOrdersS() { // obtenemos los pedidos surtidos
             if(Number.parseInt(this.getUserApi.ip) == 1) {
                this.isPartner = true
             }
@@ -234,7 +234,7 @@ import randomColor from 'randomcolor';
                token: this.getUserApi.token,
                user_id: this.getUserApi.uid
             }
-            await this.$store.dispatch('eord/getOrders',payload);
+            await this.$store.dispatch('eord/getOrdersS',payload);
             this.skeletorTable = false
          },
          getUserColor(agent_performed_id) {
@@ -252,7 +252,7 @@ import randomColor from 'randomcolor';
          },
       },
       mounted(){
-         this.GetOrders()
+         this.GetOrdersS()
          this.$store.dispatch('modals/loaderfull',false); // desactivamos el overlay cargando
 
       },
