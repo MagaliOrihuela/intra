@@ -47,7 +47,14 @@
                         <div style="display:flex;"> <v-icon  color="green" size="18px"> mdi-currency-usd </v-icon> <div class="total-cotizacion">{{ item.total_ord }} </div> </div>
                     </template>
                     <template #[`item.status`]="{ item }" >
-                        <div style="display:flex;"><div class="status-cotizacion">{{ item.status }} </div></div>
+                        <!-- <div style="display:flex;"><div class="status-cotizacion">{{ item.status }} </div></div> -->
+                        <v-chip
+                            close-icon="mdi-close-outline"
+                            :color = "item.color"
+                            outlined
+                        >
+                            {{ item.status }}
+                        </v-chip>
                     </template>
                     <template #[`item.options`]="{ item }">
                         <v-tooltip bottom>
@@ -74,7 +81,7 @@
                                 <v-btn 
                                     color="blue-grey darken-3" 
                                     :to=item.edit
-                                    @click="viewCotizacion(item.id)"
+                                    @click="viewOrder(item.order_id)"
                                     fab 
                                     dark
                                     v-bind="attrs"
@@ -108,16 +115,16 @@
                         </v-tooltip>
                     </template>
                 </v-data-table>
-                <!-- <div class="text-center pt-2">
-                    <v-pagination 
-                        v-model="page" 
-                        :length="pageCount" 
-                        total-visible="7"
-                        circle 
-                        color="blue-grey darken-3" 
-                    ></v-pagination>
-                </div> -->
             </v-card-actions>
+            <div class="text-center pt-2">
+                <v-pagination 
+                    v-model="page" 
+                    :length="pageCount" 
+                    total-visible="7"
+                    circle 
+                    color="blue-grey darken-3" 
+                ></v-pagination>
+            </div>
         </v-card>
         <!-- Dialog Canceled  -->
         <v-dialog
@@ -250,6 +257,11 @@ import randomColor from 'randomcolor';
                   return '#F7F7F7';
             }
          },
+         viewOrder(id) {
+            this.loading=true
+            this.$store.dispatch('modals/loaderfull',true); // activamos el overlay cargando
+            this.$router.push(`/pedidos/${id}`)
+        },
       },
       mounted(){
          this.GetOrdersS()

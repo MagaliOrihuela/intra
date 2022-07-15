@@ -57,7 +57,7 @@ const auth = {
             } else if (data.success === false ||  data.message == 'The token has been blacklisted' || data.message == 'Token has expired' || data.message == 'Token not provided' || data.message == 'CSRF token mismatch.' || data.message == 'CSRF token mismatch' ) 
             {
                sessionStorage.clear()
-               next('/');
+               // next('/');
                return Promise.resolve(data)
             }
          // } catch (error) {

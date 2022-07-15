@@ -1,10 +1,7 @@
 <template>
-   
    <!-- MODAL asignar nueva cotizacion -->
-
       <v-row justify="center">
          <v-dialog v-model="editCotModal" fullscreen hide-overlay transition="dialog-bottom-transition" scrollable >
-            
             <v-progress-linear
             :active="loadEditCotModal"
             :indeterminate="loadEditCotModal"

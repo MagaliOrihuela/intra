@@ -114,6 +114,7 @@ Route::group(['prefix' => 'API'], function () {
    Route::post('/orders/getOrders', [APIController::class, 'ordersAll']);
    Route::post('/orders/getOrdersS', [APIController::class, 'ordersAllS']);
    Route::post('/orders/getOrdersC', [APIController::class, 'ordersAllC']);
+   Route::post('/orders/getPartOrder', [APIController::class, 'orderParts']);
 });
 
 Route::group(['prefix' => 'invoice'], function () {

@@ -34,20 +34,28 @@
                     :items="orders"
                     :page.sync="page"
                     :items-per-page="itemsPerPage"
-                    sort-by="id" 
+                    sort-by="order_id" 
                     :sort-desc="true"
                     :search="search"
                     hide-default-footer
                     style="width: 100%;"
                     class="elevation-0 overflow-y-auto"
                     @page-count="pageCount = $event"
+
                 >
                     <!-- scroll.sync="scrollSync" -->
                     <template #[`item.total_ord`]="{ item }" >
                         <div style="display:flex;"> <v-icon  color="green" size="18px"> mdi-currency-usd </v-icon> <div class="total-cotizacion">{{ item.total_ord }} </div> </div>
                     </template>
                     <template #[`item.status`]="{ item }" >
-                        <div style="display:flex;"><div class="status-cotizacion">{{ item.status }} </div></div>
+                        <!-- <div style="display:flex;"><div class="status-cotizacion">{{ item.status }} </div></div> -->
+                        <v-chip
+                            close-icon="mdi-close-outline"
+                            :color = "item.color"
+                            outlined
+                        >
+                            {{ item.status }}
+                        </v-chip>
                     </template>
                     <template #[`item.options`]="{ item }">
                         <v-tooltip bottom>
@@ -55,7 +63,7 @@
                                 <v-btn 
                                     color="blue-grey darken-3" 
                                     :to=item.view
-                                    @click="detailCotizacion(item.id)"
+                                    @click="detailCotizacion(item.order_id)"
                                     fab 
                                     dark
                                     v-bind="attrs"
@@ -74,7 +82,7 @@
                                 <v-btn 
                                     color="blue-grey darken-3" 
                                     :to=item.edit
-                                    @click="viewCotizacion(item.id)"
+                                    @click="viewOrder(item.order_id)"
                                     fab 
                                     dark
                                     v-bind="attrs"
@@ -108,7 +116,8 @@
                         </v-tooltip>
                     </template>
                 </v-data-table>
-                <!-- <div class="text-center pt-2">
+            </v-card-actions>
+            <div class="text-center pt-2">
                     <v-pagination 
                         v-model="page" 
                         :length="pageCount" 
@@ -116,8 +125,7 @@
                         circle 
                         color="blue-grey darken-3" 
                     ></v-pagination>
-                </div> -->
-            </v-card-actions>
+                </div>
         </v-card>
         <!-- Dialog Canceled  -->
         <v-dialog
@@ -176,7 +184,6 @@
         data () {
             return { 
                 tab: null,
-                isPartner:false,
                 search: '',
                 page: 1,
                 pageCount: 0,
@@ -193,12 +200,12 @@
                         align: 'start',
                         value: 'order_id',
                     },
-                    { text: 'Cliente', value: 'client_id' },
+                    { text: 'Cliente', align: 'center', value: 'client_id' },
                     { text: 'Nombre Cliente', value: 'name_cte' },
                     { text: 'Agente', value: 'name_agent' },
                     { text: 'Creación', value: 'register' },
                     { text: 'Total', value: 'total_ord' },
-                    { text: 'Status', value: 'status' },
+                    { text: 'Status', align: 'center', value: 'status' },
                     { 
                         text: 'Acciones', 
                         sortable: false,
@@ -226,15 +233,17 @@
                 this.scrollSync.left = e.target.scrollLeft
             },
             async GetOrders() { // obtenemos los pedidos
-                if(Number.parseInt(this.getUserApi.ip) == 1) {
-                this.isPartner = true
-                }
                 let payload = { 
                 token: this.getUserApi.token,
                 user_id: this.getUserApi.uid
                 }
                 await this.$store.dispatch('eord/getOrders',payload);
                 this.skeletorTable = false
+            },
+            viewOrder(id) {
+               this.loading=true
+               this.$store.dispatch('modals/loaderfull',true); // activamos el overlay cargando
+               this.$router.push(`/pedidos/${id}`)
             },
          
             // async canceledCot(cotID,statusID) {
@@ -270,11 +279,7 @@
             //    }
             // },
 
-            // viewCotizacion(id) {
-            //    this.loading=true
-            //    this.$store.dispatch('modals/loaderfull',true); // activamos el overlay cargando
-            //    this.$router.push(`/cotizaciones/${id}`)
-            // },
+            
 
             // async detailCotizacion(id) {
 

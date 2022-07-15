@@ -110,4 +110,22 @@ class APIController extends Controller
             ], 200);
         }
     }
+    public function orderParts(Request $request)
+    {
+        try {
+            $dataOrdPart = HTTP::asForm()->post(config('app.ApiUrl').'/API/shades/orders/getOrderParts.php' , [
+                'token' => $request->token,
+                'user_id' => $request->user_id,
+                'order_id' => $request->order_id,
+            ]);
+            return response()->json([
+                'success' => true,
+                'dataOrdPart' => $dataOrdPart->json(),
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+            ], 200);
+        }
+    }
 }

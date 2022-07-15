@@ -4,11 +4,10 @@ import store from '../store/store'
 const eord = {
    namespaced:true,
    state: {
-    dataOrders:[],
-    dataOrdersS:[],
-    dataOrdersC:[],
-
-    optionsDate: { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour24:"false"}
+      dataOrders:[],
+      dataOrdersS:[],
+      dataOrdersC:[],
+      optionsDate: { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour24:"false"}
    },
    mutations: {
       DATA_ORDERS (state,data) {

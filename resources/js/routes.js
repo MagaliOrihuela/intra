@@ -4,6 +4,8 @@ import Home from './views/Home.vue'
 import Index from './views/Index.vue'
 import Cotizaciones from './views/Cotizaciones.vue'
 import Cotizacion from './views/Cotizacion.vue'
+import Orders from './views/Orders.vue'
+import Order from './views/Order.vue'
 import Configuracion from './views/Configuracion.vue'
 import NotAutorized from './views/errors/401.vue'
 import checkToken  from './guards/token.guard'
@@ -61,13 +63,29 @@ const routes = [
    },
    {
       path:'/pedidos',
-      name:'Pedidos',
-      component: () => import("./views/Orders.vue"),
-      meta: { 
-         Auth: true,
-         title: 'Pedidos | Cotizador Shades',
-      },
-      beforeEnter: checkToken , 
+      component: () => import("./views/ViewAll.vue"),
+      children: [
+         {
+            path: "",
+            name:'Pedidos',
+            component: Orders,
+            meta: { 
+               Auth: true,
+               title: 'Pedidos | Cotizador Shades',
+            },
+            beforeEnter: checkToken , 
+         },
+         {
+            path: ":order_id",
+            name: "Pedido",
+            component: Order, 
+            meta: { 
+               Auth: true, 
+               title: 'Pedido | Cotizador Shades',
+            },
+            beforeEnter: checkClientCot ,
+         },
+      ],
    },
    {
       path:'/herramientas',

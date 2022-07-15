@@ -1,19 +1,19 @@
 <template>
   <div>
     <ModalLoginComponent />
-    <OrderComponent />
+    <OrdersComponent />
   </div>
 </template>
 
 <script>
 import ModalLoginComponent from "../components/ModalLoginComponent";
-import OrderComponent from "../components/orders/OrderComponent";
+import OrdersComponent from "../components/orders/OrdersComponent";
 
 export default {
   name: "Orders",
   components: {
       ModalLoginComponent,
-      OrderComponent,
+      OrdersComponent,
   },
 };
 </script>
