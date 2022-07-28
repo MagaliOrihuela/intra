@@ -74,7 +74,7 @@
                                     <v-icon size="15px">mdi-clipboard-search-outline</v-icon>
                                 </v-btn>
                             </template>
-                            <span>Revisar Cotización </span>
+                            <span>Revisar pedido</span>
                         </v-tooltip>
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
@@ -93,7 +93,7 @@
                                     <v-icon size="15px">mdi-clipboard-edit-outline</v-icon>
                                 </v-btn>
                             </template>
-                            <span>Editar Cotización </span>
+                            <span>Editar pedido</span>
                         </v-tooltip>
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
@@ -111,7 +111,7 @@
                                     <v-icon size="15px">mdi-cancel</v-icon>
                                 </v-btn>
                             </template>
-                            <span>Cancelar Cotización </span>
+                            <span>Cancelar pedido</span>
                         </v-tooltip>
                     </template>
                 </v-data-table>

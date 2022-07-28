@@ -13,6 +13,7 @@ use App\Http\Controllers\DViewsNotificationController;
 use App\Http\Controllers\APIController;
 use App\Http\Controllers\EInvoiceController;
 use App\Http\Controllers\Email;
+use App\Http\Controllers\DOrdersController;
 
 Route::get('csrf', function () {
    return csrf_token();
@@ -115,6 +116,14 @@ Route::group(['prefix' => 'API'], function () {
    Route::post('/orders/getOrdersS', [APIController::class, 'ordersAllS']);
    Route::post('/orders/getOrdersC', [APIController::class, 'ordersAllC']);
    Route::post('/orders/getPartOrder', [APIController::class, 'orderParts']);
+});
+
+// DOrders
+Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'order'], function () {
+   Route::post('/deliBoard', [DOrdersController::class, 'index']);
+   Route::post('/cateFree', [DOrdersController::class, 'cateFree']);
+   Route::post('/address', [DOrdersController::class, 'address']);
+   Route::post('/freeOrder', [DOrdersController::class, 'freeOrder']);
 });
 
 Route::group(['prefix' => 'invoice'], function () {

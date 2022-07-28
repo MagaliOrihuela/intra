@@ -1,0 +1,564 @@
+<template>
+    <v-row justify="center">
+        <v-dialog
+            v-model="orderFreeM"
+            persistent
+            width="90%"
+        >
+        <v-card>
+            <v-card-text class="cot-text-info">
+                <v-row class="mt-5">
+                    <v-col 
+                        xs="12"
+                        sm="12"
+                        md="3"
+                        lg="3"
+                        xl="3"
+                        style="font-size: 20px;"
+                    >
+                        <v-tabs
+                        v-model="tab"
+                        background-color="transparent"
+                        color="basil"
+                        grow
+                        >
+                            <v-tab>
+                                <v-icon left>mdi-lock-open-outline</v-icon> Libera pedido
+                            </v-tab>
+                        </v-tabs>
+                    </v-col>
+                    <v-col 
+                        xs="12"
+                        sm="12"
+                        md="3"
+                        lg="3"
+                        xl="3"
+                        style="font-size: 20px;"
+                    ></v-col>
+                    <v-col 
+                        xs="12"
+                        sm="12"
+                        md="6"
+                        lg="6"
+                        xl="6"
+                        style="font-size: 20px;"
+                    >
+                        <v-btn
+                            color="green darken-1"
+                            text
+                            @click="closeModal()"
+                            class="float-right"
+                        >
+                            <v-icon left>mdi-close</v-icon> Cerrar
+                        </v-btn>
+                    </v-col>
+                </v-row>
+            </v-card-text>
+            <v-tabs-items v-model="tab">
+                <v-tab-item>
+                    <v-card-text class="cot-text-info">
+                        <v-row>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="4"
+                                lg="4"
+                                xl="4"
+                                style="font-size: 16px;"
+                                class="pl-3 pr-0 pb-3 pt-3 ma-0  "
+                            >
+                                <v-icon left>mdi-clipboard-text-outline</v-icon> Pedido: {{ detOrder.no_ped }}
+                            </v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="4"
+                                lg="4"
+                                xl="4"
+                                style="font-size: 16px;"
+                                class="pl-0 pr-0 pb-3 pt-3 ma-0  "
+                            >
+                                <v-icon left>mdi-briefcase-account-outline</v-icon> Cliente: {{ detOrder.nom_cte }}
+                            </v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="4"
+                                lg="4"
+                                xl="4"
+                                style="font-size: 16px;"
+                                class="pl-0 pr-0 pb-3 pt-3 ma-0  "
+                            >
+                                <v-icon left>mdi-account-tie</v-icon> Agente: {{ detOrder.nom_age }}
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="4"
+                                lg="4"
+                                xl="4"
+                                style="font-size: 16px;"
+                                class="pl-3 pr-0 pb-3 pt-3 ma-0 "
+                            >
+                                <v-icon left>mdi-chart-timeline-variant</v-icon>Estatus: &nbsp;
+                                <v-chip
+                                    close-icon="mdi-close-outline"
+                                    color = "red"
+                                    outlined
+                                >
+                                    {{ detOrder.status }}
+                                </v-chip>
+                            </v-col>
+                        </v-row>
+                    </v-card-text>
+                    <v-card-text class="text-success bg-light mb-5">
+                        <v-row>
+                            <v-col cols="12" class="col-price">
+                                <div class="total-cotizacion"> Subtotal: </div>
+                                <div class="data_price_cot"> $ {{ subOrd.toLocaleString('en-US') }} </div>
+                                <div class="total-cotizacion"> Iva: </div>
+                                <div class="data_price_cot"> $ {{ ivaOrd.toLocaleString('en-US') }}  </div>
+                                <div class="total-cotizacion"> Total: </div>
+                                <div class="data_price_cot"> $ {{ totOrd.toLocaleString('en-US') }} </div>
+                            </v-col>
+                            <!-- <v-col cols="3">
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn
+                                            fab 
+                                            :elevation="3"
+                                            max-width="28px"
+                                            max-height="28px"
+                                            v-bind="attrs"
+                                            v-on="on"
+                                            @click="PDFexport()">
+                                            <v-icon size="28px" color="red">mdi-file-pdf-outline</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>PDF</span>
+                                </v-tooltip>
+                                <v-tooltip bottom>
+                                    <template v-slot:activator="{ on, attrs }">
+                                        <v-btn
+                                            fab 
+                                            :elevation="3"
+                                            max-width="28px"
+                                            max-height="28px"
+                                            v-bind="attrs"
+                                            v-on="on" 
+                                            @click = "emailPDF()">
+                                            <v-icon size="25px" >mdi-email-send-outline</v-icon>
+                                        </v-btn>
+                                    </template>
+                                    <span>enviar</span>
+                                </v-tooltip>
+                            </v-col> -->
+                        </v-row>
+                    </v-card-text>
+                    <v-card-text class="cot-text-info">
+                        <v-row>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="3"
+                                lg="3"
+                                xl="3"
+                            >
+                                <v-select
+                                    v-model="selParcial"
+                                    :items="idParcial"
+                                    item-text="identify"
+                                    item-value="id"
+                                    label="Parcial"
+                                    hint="¿Deseas parcializarlo?"
+                                    @change="chgParcial()"
+                                    outlined
+                                    dense
+                                ></v-select>
+                            </v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="8"
+                                lg="8"
+                                xl="8"
+                            >
+                                    <!-- :items="ModulesData" -->
+                                <v-autocomplete
+                                    v-model="selectC"
+                                    :items="gridCate"
+                                    chips
+                                    color="blue-grey lighten-2"
+                                    label="Grupos"
+                                    item-text="module"
+                                    item-value="id"
+                                    multiple
+                                    outlined
+                                    :disabled="disParcial"
+                                >
+                                    <template v-slot:selection="data">
+                                        <v-chip
+                                            v-bind="data.attrs"
+                                            :input-value="data.selected"
+                                            @click="data.select"
+                                            :color="data.item.color"
+                                        >
+                                            <v-avatar left>
+                                                <v-icon > {{ data.item.icon }}</v-icon>
+                                            </v-avatar>
+                                            {{ data.item.category }}
+                                        </v-chip>
+                                    </template>    
+                                    <template v-slot:item="data" @click="Selectec">
+                                        <template v-if= " typeof data.item !== 'object' ">
+                                            <v-list-item-content v-text="data.item"></v-list-item-content>
+                                        </template>
+                                        <template v-else>
+                                            <v-icon class="pr-2">
+                                                {{ data.item.icon }}
+                                            </v-icon>
+                                            <v-list-item-content>
+                                                <v-list-item-title v-html="data.item.category"></v-list-item-title>
+                                            </v-list-item-content>
+                                        </template>
+                                    </template>
+                                </v-autocomplete>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="3"
+                                lg="3"
+                                xl="3"
+                            >
+                                <v-select
+                                    v-model="selDelivery"
+                                    :items="deliOrder"
+                                    item-text="delivery_type"
+                                    item-value="id"
+                                    label="Tipo entrega"
+                                    hint="¿Cómo deseas que sea la entrega?"
+                                    @change="chgDeli()"
+                                    outlined
+                                    dense
+                                ></v-select>
+                            </v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="8"
+                                lg="8"
+                                xl="8"
+                            >
+                                <div v-if="disDeli">
+                                    <v-select
+                                        v-model="selDestiny"
+                                        :items="destiny"
+                                        item-text="adrss"
+                                        item-value="id"
+                                        label="Destino"
+                                        hint="Dirección a donde se enviará el pedido"
+                                        persistent-hint
+                                        outlined
+                                        dense
+                                    ></v-select>
+                                </div>
+                            </v-col>
+                        </v-row>
+                        <v-row v-if="disDeli2">
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="3"
+                                lg="3"
+                                xl="3"
+                            >
+                                <v-select
+                                    v-model="selBoard"
+                                    :items="boardOrder"
+                                    item-text="boarding_type"
+                                    item-value="id"
+                                    label="Tipo embarque"
+                                    hint="Elige el tipo de embarque"
+                                    outlined
+                                    dense
+                                ></v-select>
+                            </v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="3"
+                                lg="3"
+                                xl="3"
+                            >
+                                <v-select
+                                    v-model="selDeliCo"
+                                    :items="deliCo"
+                                    item-text="companie"
+                                    item-value="id"
+                                    label="Fletera"
+                                    hint="Elige la fletera deseada"
+                                    outlined
+                                    dense
+                                ></v-select>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="6"
+                                lg="6"
+                                xl="6"
+                            >
+                                <v-textarea
+                                    v-model="coment"
+                                    name="input-7-1"
+                                    label="Comentario"
+                                    hint="Información adicional del pedido"
+                                ></v-textarea>
+                                    <!-- :error-messages="descriptionErrors" -->
+                            </v-col>
+                            <v-col
+                                xs="12"
+                                sm="12"
+                                md="4"
+                                lg="4"
+                                xl="4" 
+                                class="pa-1 ma-0 align-self-center"
+                            >
+                                <v-btn 
+                                    block 
+                                    @click="libera()"
+                                >
+                                    <!-- :disabled='disCot' -->
+                                    <v-icon
+                                    left
+                                    dark
+                                    color="green darken-1"
+                                    >
+                                        mdi-lock-open-outline
+                                    </v-icon>
+                                    Liberar
+                                </v-btn>
+                            </v-col>
+                        </v-row>
+                    </v-card-text>
+                </v-tab-item>
+            </v-tabs-items>
+      </v-card>
+    </v-dialog>
+  </v-row>
+</template>
+<script>
+
+    import { mapActions, mapGetters } from 'vuex'
+    import { jsPDF } from 'jspdf';
+    import html2canvas from 'html2canvas';//
+    import socketClientEmit from '../../shared/socketEmit';
+    // import store from '../store/store'
+
+
+    export default {
+        data () {
+            return {
+                tab: null,
+                dialog: false,
+                page: 1,
+                pageCount: 0,
+                itemsPerPage: 10,
+                headers: [
+                    {
+                        text: '#',
+                        align: 'start',
+                        value: 'entry_id',
+                    },
+                    { text: 'Articulo', value: 'article' },
+                    { text: 'Categoria', value: 'category' },
+                    { text: 'Cantidad', value: 'quantity' },
+                    { text: 'Unidad', value: 'unit' },
+                    { text: 'Precio', value: 'price' },
+                    { text: 'Subtotal', value: 'subt' },
+                    { text: 'Desc', value: 'desc' },
+                ],
+                idParcial: [
+                    { id:0,identify:'No' },
+                    { id:1,identify:'Si' }
+                ],
+                selectParcial:0,
+                disParcial: true,
+                disDeli: false,
+                disDeli2: false,
+                selParcial: 0,
+                selModules: '',
+                selDelivery: '',
+                selBoard: '',
+                selDeliCo: '',
+                selDestiny: '',
+                pruf:'',
+                boardOrder:[],
+                deliOrder: [],
+                deliCo: [],
+                destiny: [],
+                selectC: [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ],
+                coment: ''
+            }
+        },
+        computed: {
+            ...mapGetters({
+                getUserApi: 'auth/getUserApi',
+                orderFreeM: 'modals/getOrderFreeModal',
+                detOrder: 'dord/getDetOrder',
+                subOrd: 'dord/getSubOrd',
+                ivaOrd: 'dord/getIvaOrd',
+                totOrd: 'dord/getTotOrd',
+                gridCate: 'dord/getcateFree',
+                selCate: 'dord/getSelCate',
+                dataOrder:'dord/getDataOrder'
+            }),
+        },
+        // beforeCreate(){
+        //     console.log('esto es antes de entrar a las rutas')
+        // },
+        created(){
+            // console.log(store.getters['auth/getUserApi'])
+        },
+        methods: {
+
+            async closeModal() {
+                var payload = {
+                    name_modal:  'orderFree', // modal 
+                    state_modal: false,
+                    id: 0
+                }
+                await this.$store.dispatch('modals/IdentifyModal',payload);
+            },
+
+            chgParcial(){
+                if(this.selParcial == 1){
+                    this.disParcial = false
+                } else{
+                    this.disParcial = true
+                }
+                this.selectC = this.selCate
+            },
+
+            async chgDeli(){
+                if(this.selDelivery !== 3){
+                    this.disDeli = true
+                    this.disDeli2 = false
+                    var payload = {
+                        token: this.getUserApi.token,
+                        cveCte: this.detOrder.cve_cte
+                    }
+                    const res = await this.$store.dispatch('dord/address',payload); 
+                    if(res.success){
+                        if(res.address.length == 1){
+                            this.selDestiny = res.address[0].id
+                        }
+                        this.destiny = res.address
+                    }
+                    if(this.selDelivery == 1){
+                        this.disDeli2 = true                         
+                    }
+                } else{
+                    this.disDeli = false
+                    this.disDeli2 = false 
+                }
+            },
+
+            async deliBoard(){
+                var payload = {
+                    token: this.getUserApi.token
+                }
+                const data = await this.$store.dispatch('dord/getDeliBoard',payload);
+                this.deliOrder = data.deliveryType
+                this.deliCo = data.deliveryComp
+                this.boardOrder = data.boardType
+            },
+
+            async libera(){
+                let payload = {
+                    token: this.getUserApi.token,
+                    userId: this.getUserApi.uid,
+                    no_ped: this.detOrder.no_ped,
+                    clientId: this.detOrder.cve_cte,
+                    agentId: this.detOrder.cve_age,
+                    tot: this.totOrd,
+                    subtot: this.subOrd,
+                    iva: this.ivaOrd,
+                    gridDO: this.dataOrder,
+                    selParcial: this.selParcial,
+                    selectC: this.selectC,
+                    selDelivery: this.selDelivery,
+                    selDestiny: this.selDestiny,
+                    selBoard: this.selBoard,
+                    selDeliCo: this.selDeliCo,
+                    coment: this.coment
+                }
+                const res = await socketClientEmit.freeOrderEmit(payload)
+            }
+
+        },
+        mounted(){
+            this.deliBoard()
+        },
+    }
+</script>
+<style scoped>
+
+    .col-price {
+        display:flex;
+        justify-content:flex-end;
+        align-items:center;
+    }
+
+    .col-days {
+        display:flex;
+        justify-content:flex-start;
+        align-items:center;
+    }
+    
+    .info_price_cot {
+        color:#307E85;
+        font-size:15px
+    }
+
+    .data_price_cot {
+        color: #2C4244;
+        font-size: 18px;
+        padding-right: 20px;
+        padding-left: 5px;
+    }
+
+    .header-detail-cotizacion {
+        font-weight: 500;
+        font-size: 20px;
+    }
+
+    .backgrond-info {
+        background-color: #d2ffb9;
+    }
+
+    .backgrond-detail {
+        background-color: #d2ffb9;
+        margin-bottom: 40px;
+    }
+    .total-cotizacion {
+        font-size: 15px;
+        font-weight: 400;
+        padding-top: 3px;
+        color: green;
+    }
+
+</style>

@@ -116,11 +116,12 @@ class APIController extends Controller
             $dataOrdPart = HTTP::asForm()->post(config('app.ApiUrl').'/API/shades/orders/getOrderParts.php' , [
                 'token' => $request->token,
                 'user_id' => $request->user_id,
-                'order_id' => $request->order_id,
+                'order_id' => $request->order_id
             ]);
+
             return response()->json([
                 'success' => true,
-                'dataOrdPart' => $dataOrdPart->json(),
+                'dataOrdPart' => $dataOrdPart->json()
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([

@@ -6,6 +6,7 @@ const modals = {
       newCotModal: false, 
       detailCotModal: false, 
       editCotModal: false, 
+      orderFreeModal: false,
       editCotId:0,
       loaderFull: false, 
    },
@@ -23,6 +24,9 @@ const modals = {
       LOAD_FULL_EDIT(state,data){ 
          state.loaderFull = data 
       },
+      ORDER_FREE_MODAL(state,data){ 
+         state.orderFreeModal = data 
+      },
    },
    actions: {
       IdentifyModal({commit},payload) {
@@ -37,6 +41,9 @@ const modals = {
             case 'editCotizacion':
                commit('MODAL_EDIT_COTIZACION',payload.state_modal)
             break;
+            case 'orderFree':
+               commit('ORDER_FREE_MODAL',payload.state_modal)
+            break;
          }
       },
       loaderfull({commit},payload) {
@@ -49,6 +56,7 @@ const modals = {
       getLoaderfull: state => state.loaderFull,
       getDetailCotModal: state => state.detailCotModal,
       getCotIdModal: state => state.editCotId,
+      getOrderFreeModal: state => state.orderFreeModal,
    }
 }
 

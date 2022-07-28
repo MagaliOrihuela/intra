@@ -57,26 +57,22 @@ class socketEmit {
 
 
     //COTIZACIONES
-
     async createCotizacionesEmit(payload) {
         const { data } = await axios.post('/cotizaciones/create', payload,  { headers: { Authorization: "Bearer " + payload.token } }) 
         socket.emit('cotizaciones:create',data.eCot)
         return Promise.resolve(data)
     }
-
     async canceledCotizacionesEmit(payload) {
 
         const { data } = await axios.post('/cotizaciones/canceledCot', payload, { headers: { Authorization: "Bearer " + payload.token } })
         socket.emit('cotizaciones:delete',data.datacot)
         return Promise.resolve(data)
     }
-    
     async recoverCotizacionesEmit(payload) {
         const { data } = await axios.post('/cotizaciones/recover', payload,  { headers: { Authorization: "Bearer " + payload.token } }) 
         socket.emit('cotizaciones:recover',data.datacot)
         return Promise.resolve(data)
     }
-
     async proccessOrderEmit(payload) {
 
         const { data } = await axios.post('/cotizaciones/proccessOrder', payload,  { headers: { Authorization: "Bearer " + payload.token } }) 
@@ -106,6 +102,13 @@ class socketEmit {
             return Promise.resolve(data)
         }
     }
+
+    // DOrders
+    async freeOrderEmit(payload){
+        const { data } = await axios.post('/order/freeOrder', payload,{ headers: { Authorization: "Bearer" + payload.token }})
+        console.log(data)
+    }
+
  
  }
 

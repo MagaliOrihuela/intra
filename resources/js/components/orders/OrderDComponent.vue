@@ -58,68 +58,33 @@
                      style="font-size: 16px;"
                   > <!--  Cliente  -->
                      <!-- <v-icon left> mdi-briefcase-account-outline </v-icon> Estatus: <b class="font-weight-regular"> {{ status }} </b> -->
-                     <v-icon left> mdi-briefcase-account-outline </v-icon> Estatus: &nbsp;
-                        <v-chip
-                            close-icon="mdi-close-outline"
-                            :color = "colorStat"
-                            outlined
-                        >
-                            {{ status }}
-                        </v-chip>
+                     <v-icon left>mdi-chart-timeline-variant</v-icon>Estatus: &nbsp;
+                     <v-chip
+                           close-icon="mdi-close-outline"
+                           :color = "colorStat"
+                           outlined
+                     >
+                           {{ status }}
+                     </v-chip>
                   </v-col>
                </v-row>
-               <!-- <v-row class="pa-0 ma-0" >
+               <v-row class="pa-0 ma-0" >
                   <v-col
+                     class="pa-0 pt-4 ma-0" 
                      xs="12"
                      sm="12"
                      md="9"
                      lg="9"
-                     xl="9"  -->
-                  <!-- > -->
-                     <!-- poner informacion de algo -->
-                  <!-- </v-col>
-                  
-               </v-row> -->
-            </v-container>
-         </v-card-subtitle>
-         <v-divider class="mt-1 mb-1"></v-divider>
-      </v-card>
-      <!-- Panel de datos Cotizacion -->
-      <v-card
-         class="mx-auto rounded-0 border-0 "
-         max-width="99%"
-         :elevation="0"
-      >
-         <v-card-subtitle  class="pa-2 ma-0 ">
-            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" >
-               <v-row class="pa-0 ma-0" >
-                  <v-col
-                     xs="12"
-                     sm="12"
-                     md="3"
-                     lg="3"
-                     xl="3" 
-                  >
-                     <div style="display:flex;" class="totE_order">Subtotal: <div class="tot_order">&nbsp;$ 9999999 </div> </div>
-                  </v-col>
-                  <v-col
-                     xs="12"
-                     sm="12"
-                     md="3"
-                     lg="3"
-                     xl="3" 
-                  >
-                     <div style="display:flex;" class="totE_order">Iva: <div class="tot_order">&nbsp;$ 55555 </div> </div>
-                  </v-col>
-                  <v-col
-                     xs="12"
-                     sm="12"
-                     md="3"
-                     lg="3"
-                     xl="3" 
-                  >
-                     <div style="display:flex;" class="totE_order">Total: <div class="tot_order">&nbsp;$ 00000000 </div> </div>
-                  </v-col>
+                     xl="9"
+                     style="font-size: 16px;"
+
+                  > 
+                     <v-icon left>mdi-lock-open-outline</v-icon>Liberado: 
+                     <v-icon 
+                        left
+                        color="#008000">mdi-checkbox-marked-circle-outline
+                     </v-icon>
+                  </v-col> 
                   <v-col
                      xs="12"
                      sm="12"
@@ -172,6 +137,71 @@
                </v-row>
             </v-container>
          </v-card-subtitle>
+         <v-divider class="mt-1 mb-1"></v-divider>
+      </v-card>
+      <v-card
+         class="mx-auto rounded-0 border-0 "
+         max-width="99%"
+         :elevation="0"
+      >
+         <v-card-subtitle  class="pa-2 ma-0 ">
+            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" >
+               <v-row class="pa-0 ma-0" >
+                  <v-col
+                     xs="12"
+                     sm="12"
+                     md="3"
+                     lg="3"
+                     xl="3" 
+                  >
+                     <div style="display:flex;" class="totE_order">Subtotal: <div class="tot_order">&nbsp;$ {{ sub.toLocaleString('en-US') }}</div> </div>
+                  </v-col>
+                  <v-col
+                     xs="12"
+                     sm="12"
+                     md="3"
+                     lg="3"
+                     xl="3" 
+                  >
+                     <div style="display:flex;" class="totE_order">Iva: <div class="tot_order">&nbsp;$ {{ iva.toLocaleString('en-US') }} </div> </div>
+                  </v-col>
+                  <v-col
+                     xs="12"
+                     sm="12"
+                     md="3"
+                     lg="3"
+                     xl="3" 
+                  >
+                     <div style="display:flex;" class="totE_order">Total: <div class="tot_order">&nbsp;$ {{ total.toLocaleString('en-US') }} </div> </div>
+                  </v-col>
+                  <v-col
+                      xs="12"
+                     sm="12"
+                     md="1"
+                     lg="1"
+                     xl="1" 
+                  >
+                     <v-btn 
+                        small 
+                        block 
+                        depressed 
+                        :elevation="2" 
+                        @click="freeModal($route.params.order_id)"
+                     >
+                        <!-- :disabled='disCot' -->
+                        <v-icon
+                           left
+                           dark
+                           color="#008000"
+                        >
+                           mdi-lock-open-outline
+                        </v-icon>
+                        Liberar
+                     </v-btn>
+                  </v-col>
+               </v-row>
+            </v-container>
+         </v-card-subtitle>
       </v-card>
       <v-card
          class="mx-auto rounded-0 border-0 cot-card-info "
@@ -192,66 +222,40 @@
                loading-text="Cargando Articulos ..."
                sort-by="fol_prod"
             >
-            <!-- scroll.sync="scrollSync" -->
-            <v-progress-linear 
-               v-show="loadingTable" 
-               slot="progress" 
-               color="red darken-4" 
-               indeterminate>
-            </v-progress-linear>
-            <template #[`item.category`]="{ item }">
-                  <v-chip
-                     class="ma-2"
-                     :color="item.color"
-                     text-color="blue-grey darken-4"
-                     label
-                     style="width: 62%;"
+               <!-- scroll.sync="scrollSync" -->
+               <v-progress-linear 
+                  v-show="loadingTable" 
+                  slot="progress" 
+                  color="red darken-4" 
+                  indeterminate>
+               </v-progress-linear>
+               <template #[`item.category`]="{ item }">
+                     <v-chip
+                        class="ma-2"
+                        :color="item.color"
+                        text-color="blue-grey darken-4"
+                        label
+                        style="width: 100%;"
+                     >
+                        <v-icon left>
+                           {{ item.icon }}
+                        </v-icon>
+                        {{ item.category }}
+                     </v-chip>
+               </template>
+               <template #[`item.price`]="{ item }">
+                  <div style="display:flex;">$ {{ formatPrice(item.price) }} </div>
+               </template>
+               <template #[`item.subtot`]="{ item }">
+                  <div style="display:flex;"><div class="total-cotizacion">$ {{ item.subtot.toLocaleString('en-US') }} </div></div>
+               </template>
+               <template #[`item.status`]="{ item }">
+                  <v-icon 
+                     left
+                     color="#008000"  
                   >
-                     <v-icon left>
-                        {{ item.icon }}
-                     </v-icon>
-                     {{ item.category }}
-                  </v-chip>
-            </template>
-            <template #[`item.options`]="{ item }" class="cotizacion-action-buttom"  >
-                  <v-tooltip bottom>
-                     <template v-slot:activator="{ on, attrs }" v-if="item.category != 'Servicios'">
-                        <v-btn 
-                           color="blue-grey darken-3" 
-                           @click="updatePCot(item.id)"
-                           fab 
-                           dark
-                           v-bind="attrs"
-                           v-on="on"
-                           :elevation="3"
-                           max-width="25px"
-                           max-height="25px"
-                           :disabled='disCot'
-                        >
-                           <v-icon size="15px">mdi-square-edit-outline</v-icon>
-                        </v-btn>
-                     </template>
-                     <span>Editar Partida </span>
-                  </v-tooltip>
-                  <v-tooltip bottom>
-                     <template v-slot:activator="{ on, attrs }" v-if="item.category != 'Servicios'">
-                        <v-btn 
-                           color="blue-grey darken-3"
-                           v-on:click="deletedPCot(item.id,item.entry_id)" 
-                           fab 
-                           dark 
-                           v-bind="attrs"
-                           v-on="on"
-                           :elevation="3"
-                           max-width="25px"
-                           max-height="25px"
-                           :disabled='disCot'
-                        >
-                           <v-icon size="15px">mdi-trash-can-outline</v-icon>
-                        </v-btn>
-                     </template>
-                     <span>Eliminar Partida </span>
-                  </v-tooltip>
+                     {{ item.status }}
+                  </v-icon>
                </template>
             </v-data-table>
             <div class="text-center pt-2">
@@ -274,12 +278,10 @@
    import { required, requiredIf, maxLength, minLength, email, maxValue, minValue } from 'vuelidate/lib/validators'
    import SAQuestions from '../../services/SweetAlertQuestion'
    import SAToasts from '../../services/SweetAlertToast'
-   import ProductZoomer from 'vue-product-zoomer'
    import { mapActions, mapState, mapGetters } from 'vuex'
    import store from '../../store/store'
    import socketClientEmit from '../../shared/socketEmit'
    
-   Vue.use(ProductZoomer)
    export default {
       data () {
          return {
@@ -292,17 +294,12 @@
             loadingTable: true,
             isPartner: false,
 
-            idCategory: 0,
-            idProduct: 0,
-            idModel: 0,
-
-            // totales cotizacion
-            subtotalQuote: 0,
-            discountQuote: 0,
-            quoteAmount: 0,
+            // totales order
+            sub: 0,
+            iva: 0,
+            total: 0,
 
             // data Table
-
             page: 1,
             pageCount: 0,
             itemsPerPage: 10,
@@ -312,84 +309,16 @@
                   align: 'start',
                   value: 'part',
                },
-               { text: 'Clave Sai', value: 'cve_sai' },
-               { text: 'Articulo', value: 'name_prod' },
-               { text: 'Grupo', value: 'class' },
+               { text: 'Clave Sai', width:'10%', value: 'cve_sai' },
+               { text: 'Articulo', width:'30%', value: 'name_prod' },
+               { text: 'Grupo', value: 'category' },
                { text: 'Cantidad', value: 'qty' },
                { text: 'Unidad', value: 'unidad' },
-               { text: 'Precio', value: 'price' },
-               { text: 'Subtotal', value: 'price' },
+               { text: 'Precio', width:'10%', value: 'price' },
+               { text: 'Subtotal', width:'10%', value: 'subtot' },
                { text: 'Saldo', value: 'total_ord' },
                { text: 'Estatus', value: 'status' },
             ],
-            // itemparts: [],
-
-            // imagenes 
-
-            images: {
-               thumbs: [
-                  {
-                     id: 1,
-                     url: '/images/sin-imagen_mini.png'
-                  },
-               ],
-               normal_size: [
-                  {
-                     id: 1,
-                     url: '/images/sin-imagen_mini_web.png'
-                  },
-               ],
-               large_size: [
-                  {
-                     id: 1,
-                     url: '/images/sin-imagen.png'
-                  }, 
-               ]
-            },
-
-            // Elements
-
-            labelPrice: 'Precio',
-            labelCant: 'Cantidad',
-            hintCant: '',
-
-            // results
-            result_data: [ ],                     // lista del resultado obtenido por las opciones elejidas en el panel para busqueda de articulo
-            dataUnit: [ ],
-            dataArticleRes: [],
-            dataPrice: 0.0,
-            dataPrice1: 0.0,
-            dataPrice2: 0.0,
-            dataPaking1: 0,
-            dataPaking2: 0,
-            dataDesc: '',
-            units: [],
-
-            // colors
-            color1: 'green',
-            color2: '',
-            color3: '',
-            categoInfo: '',
-            productInfo: '',
-            modelInfo: '',
-
-            // Boolean require
-            RArticles: true,
-            RUnit: true,
-            RQuantity: true,
-
-            result: 0,
-            updCot: 0,
-            msgStatus: '',
-            msgColor:'',
-            submit:'',
-            dbtnCancel: false,
-            noEditPart: '',
-            colorMsg: '',
-            iconMsg: '',
-            cantid: 0,
-            flagVal: true
-
          }
       },
       mixins: [validationMixin],
@@ -399,7 +328,7 @@
          ...mapGetters({ 
             datadord: 'dord/getDataOrder',
             getUserApi: 'auth/getUserApi',
-            
+            // orderFreeModal: 'modals/getOrderFreeModal',
          }),        
       },
       methods: {
@@ -418,7 +347,6 @@
          },
 
          async getOrder() { // obtenemos las partidas del pedido
-            console.log('a')
             var payload = {
                token: this.getUserApi.token,
                order_id: this.order_id,
@@ -427,14 +355,14 @@
             const res = await this.$store.dispatch('dord/getPartOrder',payload);
             if(res.success) {
                var arrPartOrd = res.dataOrdPart[0]
-               var prodCte = arrPartOrd.prodCte
-               var agent = arrPartOrd.agent
-            //    var days = res.days
-            //    this.CDesc1 = res.cDesc1
-            //    this.CDesc2 = res.cDesc2
-               this.nameAgent = agent.nom_age
-               this.nameClient = prodCte.nom_cte
-               this.status = prodCte.status
+               var arrDet = arrPartOrd.detOrder
+               this.nameAgent = arrDet.nom_age
+               this.nameClient = arrDet.nom_cte
+               this.status = arrDet.status
+               this.sub = arrPartOrd.sub
+               this.iva = arrPartOrd.iva
+               this.total = arrPartOrd.total
+
                switch(this.status.trim()){
                   case 'Parcial':
                      this.colorStat = '#EAA20A';
@@ -464,18 +392,26 @@
             //       this.msgStatus = 'NOTA: La cotización ya no se encuentra vigente (Límite 3 días).'
             //    } 
                this.loadingTable = false
-
             }
          },
-         
-         enabledInputs() {
-            this.$store.commit('dcot/SET_VALUE_ARTICLES',false)
-            this.$store.commit('dcot/SET_VALUE_CANT',false)
-            this.$store.commit('dcot/SET_VALUE_DESC',false)
-            this.$store.commit('dcot/SET_VALUE_PRICE',false)
-            this.$store.commit('dcot/SET_VALUE_BTNSAVE',false)
+
+         formatPrice(value) {
+            let val = (value/1).toFixed(2).replace('.', ',')
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
          },
 
+         async freeModal(orderId){
+            var payload = {
+               token: this.getUserApi.token,
+               name_modal:  'orderFree', // modal 
+               state_modal: true,
+               noPed: orderId,
+               grid: this.datadord
+            }
+            await this.$store.dispatch('dord/getCate',payload);
+            await this.$store.dispatch('modals/IdentifyModal',payload);
+         },
+         
          disabledInputs() {
             this.$store.commit('dcot/SET_VALUE_ARTICLES',true)
             this.$store.commit('dcot/SET_VALUE_UNITS',true)
@@ -485,27 +421,6 @@
             this.$store.commit('dcot/SET_VALUE_BTNSAVE',true)
          },
 
-         dataChangeArticle() {
-            this.FUnit = ''
-            this.hintCant = ''
-            this.dataPrice = ''
-            this.$store.commit('dcot/SET_VALUE_UNITS',false)
-            this.$v.$reset()
-            this.dataUnit = []
-            this.dataArticleRes = this.result_data.find( article => article.id === this.FArticles);
-            Object.values(this.dataArticleRes['units']).forEach(val => { 
-                  this.dataUnit.push( {'id':val.id,'unit':val.unit } )
-               });
-         },
-
-         openEditCotModal() {
-            var payload = {
-               name_modal:  'editCotizacion', // modal 
-               state_modal: true
-            }
-            this.$store.dispatch('modals/IdentifyModal',payload);
-         },     
-         
          async deleteCotA(idCot){
             var icon_alrt = 'warning'
             var title_alrt = 'CANCELAR'
@@ -519,17 +434,6 @@
                this.deleteCot(idCot)
             }
             
-         },
-
-         async deleteCot(cotid){
-            var payload = {
-               token: this.getUserApi.token,
-               idCot: cotid
-            }
-            const res = await this.$store.dispatch('ecot/canceledCot',payload);
-            if(res.success){
-               this.$router.push('/cotizaciones')
-            }
          },
 
          viewAllOrders() {
@@ -614,5 +518,11 @@
    .scroller-at-bottom .thumb-list {
       display: none !important;
    }
+   .total-cotizacion {
+        font-size: 15px;
+        font-weight: 400;
+        padding-top: 3px;
+        color: green;
+    }
 
 </style>

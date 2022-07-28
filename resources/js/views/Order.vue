@@ -1,19 +1,19 @@
 <template>
   <div>
     <OrderDComponent />
-    <!-- <prub /> -->
+    <OrderFreeModal />
   </div>
 </template>
 
 <script>
 import OrderDComponent from "../components/orders/OrderDComponent";
-// import prub from "../views/Index.vue";
+import OrderFreeModal from "../components/orders/OrderFreeModal";
 
 export default {
   name: "Pedido",
   components: {
       OrderDComponent,
-      // prub
+      OrderFreeModal,
   },
 };
 </script>
