@@ -34,7 +34,7 @@
                     :items="orders"
                     :page.sync="page"
                     :items-per-page="itemsPerPage"
-                    sort-by="order_id" 
+                    sort-by="no_ped" 
                     :sort-desc="true"
                     :search="search"
                     hide-default-footer
@@ -57,21 +57,13 @@
                             {{ item.status }}
                         </v-chip>
                     </template>
-                    <template #[`item.lib`]="{ item }">
-                        <v-icon 
-                            left
-                            color="#008000"  
-                        >
-                            {{ item.lib }}
-                        </v-icon>
-                    </template>
                     <template #[`item.options`]="{ item }">
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn 
                                     color="blue-grey darken-3" 
                                     :to=item.view
-                                    @click="detailCotizacion(item.order_id)"
+                                    @click="detailCotizacion(item.no_ped)"
                                     fab 
                                     dark
                                     v-bind="attrs"
@@ -90,7 +82,7 @@
                                 <v-btn 
                                     color="blue-grey darken-3" 
                                     :to=item.edit
-                                    @click="viewOrder(item.order_id)"
+                                    @click="viewOrder(item.no_ped)"
                                     fab 
                                     dark
                                     v-bind="attrs"
@@ -206,7 +198,7 @@
                     {
                         text: 'Pedido',
                         align: 'start',
-                        value: 'order_id',
+                        value: 'no_ped',
                     },
                     { text: 'Cliente', align: 'center', value: 'client_id' },
                     { text: 'Nombre Cliente', value: 'name_cte' },
@@ -214,7 +206,6 @@
                     { text: 'Creación', value: 'register' },
                     { text: 'Total', value: 'total_ord' },
                     { text: 'Status', align: 'center', value: 'status' },
-                    { text: 'Liberado', value: 'lib' },
                     { 
                         text: 'Acciones', 
                         sortable: false,

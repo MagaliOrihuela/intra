@@ -24,7 +24,7 @@
                      xl="3"
                      style="font-size: 16px;"
                   >
-                     <v-icon color="red darken-1"> mdi-clipboard-text-outline </v-icon> &nbsp;&nbsp;Pedido: <b class="font-weight-regular">{{ $route.params.order_id }}</b>
+                     <v-icon color="red darken-1"> mdi-clipboard-text-outline </v-icon> &nbsp;&nbsp;Pedido: <b class="font-weight-regular">{{ $route.params.no_ped }}</b>
                   </v-col>
                   <v-col 
                      class="pa-0 pt-4 ma-0"
@@ -48,6 +48,8 @@
                   > <!--  Cliente  -->
                      <v-icon left> mdi-briefcase-account-outline </v-icon> Cliente: <b class="font-weight-regular"> {{ nameClient }} </b>
                   </v-col>
+               </v-row>
+               <v-row class="pa-0 ma-0" >
                   <v-col 
                      class="pa-0 pt-4 ma-0" 
                      xs="12"
@@ -56,8 +58,7 @@
                      lg="3"
                      xl="3"
                      style="font-size: 16px;"
-                  > <!--  Cliente  -->
-                     <!-- <v-icon left> mdi-briefcase-account-outline </v-icon> Estatus: <b class="font-weight-regular"> {{ status }} </b> -->
+                  > 
                      <v-icon left>mdi-chart-timeline-variant</v-icon>Estatus: &nbsp;
                      <v-chip
                            close-icon="mdi-close-outline"
@@ -67,23 +68,28 @@
                            {{ status }}
                      </v-chip>
                   </v-col>
-               </v-row>
-               <v-row class="pa-0 ma-0" >
                   <v-col
                      class="pa-0 pt-4 ma-0" 
                      xs="12"
                      sm="12"
-                     md="9"
-                     lg="9"
-                     xl="9"
+                     md="6"
+                     lg="6"
+                     xl="6"
                      style="font-size: 16px;"
-
                   > 
                      <v-icon left>mdi-lock-open-outline</v-icon>Liberado: 
-                     <v-icon 
+                     <v-icon v-if="free == 1"
                         left
-                        color="#008000">mdi-checkbox-marked-circle-outline
+                        :color="c"  
+                     >
+                        mdi-checkbox-marked-circle-outline 
                      </v-icon>
+                     <v-chip v-else-if="free == 2"
+                           :color="c"  
+                           outlined
+                     >
+                           {{ s }}
+                     </v-chip>
                   </v-col> 
                   <v-col
                      xs="12"
@@ -186,7 +192,7 @@
                         block 
                         depressed 
                         :elevation="2" 
-                        @click="freeModal($route.params.order_id)"
+                        @click="freeModal($route.params.no_ped)"
                      >
                         <!-- :disabled='disCot' -->
                         <v-icon
@@ -220,7 +226,7 @@
                @page-count="pageCount = $event"
                :loading="loadingTable"
                loading-text="Cargando Articulos ..."
-               sort-by="fol_prod"
+               sort-by="part"
             >
                <!-- scroll.sync="scrollSync" -->
                <v-progress-linear 
@@ -247,7 +253,7 @@
                   <div style="display:flex;">$ {{ formatPrice(item.price) }} </div>
                </template>
                <template #[`item.subtot`]="{ item }">
-                  <div style="display:flex;"><div class="total-cotizacion">$ {{ item.subtot.toLocaleString('en-US') }} </div></div>
+                  <div style="display:flex;"><div class="total-cotizacion">$ {{ formatPrice(item.subtot) }} </div></div>
                </template>
                <template #[`item.status`]="{ item }">
                   <v-icon 
@@ -255,6 +261,14 @@
                      color="#008000"  
                   >
                      {{ item.status }}
+                  </v-icon>
+               </template>
+               <template #[`item.free`]="{ item }">
+                  <v-icon v-if="item.free"
+                     left
+                     :color="item.colorF"  
+                  >
+                     mdi-checkbox-marked-circle-outline 
                   </v-icon>
                </template>
             </v-data-table>
@@ -285,7 +299,7 @@
    export default {
       data () {
          return {
-            order_id: Number.parseInt(this.$route.params.order_id),
+            no_ped: Number.parseInt(this.$route.params.no_ped),
             nameAgent: '',
             nameClient: '',
             status: '',
@@ -293,6 +307,13 @@
             loading: false,
             loadingTable: true,
             isPartner: false,
+            free: 0,
+            colorF: '',
+            iconF: '',
+            color: '',
+            status: '',
+            c: '',
+            s: '',
 
             // totales order
             sub: 0,
@@ -318,6 +339,7 @@
                { text: 'Subtotal', width:'10%', value: 'subtot' },
                { text: 'Saldo', value: 'total_ord' },
                { text: 'Estatus', value: 'status' },
+               { text: 'Liberada', value: 'free' },
             ],
          }
       },
@@ -328,6 +350,7 @@
          ...mapGetters({ 
             datadord: 'dord/getDataOrder',
             getUserApi: 'auth/getUserApi',
+            detOrder: 'dord/getDetOrder',
             // orderFreeModal: 'modals/getOrderFreeModal',
          }),        
       },
@@ -349,7 +372,7 @@
          async getOrder() { // obtenemos las partidas del pedido
             var payload = {
                token: this.getUserApi.token,
-               order_id: this.order_id,
+               no_ped: this.no_ped,
                user_id: this.getUserApi.uid,
             }
             const res = await this.$store.dispatch('dord/getPartOrder',payload);
@@ -362,6 +385,9 @@
                this.sub = arrPartOrd.sub
                this.iva = arrPartOrd.iva
                this.total = arrPartOrd.total
+               this.free = arrDet.free
+               this.s = arrDet.statusF
+               this.c = arrDet.colorF
 
                switch(this.status.trim()){
                   case 'Parcial':
@@ -378,38 +404,36 @@
                      break;
                   default:
                }
-               // this.itemparts = res.gridpCot
-               // this.import_cot = res.sumSubt
-               // this.desc_cot = res.sumDesc
-               // this.tot_iva_cot = res.totIva
-            //    this.submit = 'GUARDAR REGISTRO'
-
-            //    if(Number.parseInt(days) >= 3){
-            //       this.$store.commit('dcot/SET_VALUE_DISCOT',true)
-            //       this.$store.commit('dcot/SET_VALUE_PANELCPM',true)
-            //       this.iconMsg = 'mdi-alert-outline' 
-            //       this.colorMsg = '#F9D73B'    
-            //       this.msgStatus = 'NOTA: La cotización ya no se encuentra vigente (Límite 3 días).'
-            //    } 
                this.loadingTable = false
             }
          },
 
          formatPrice(value) {
-            let val = (value/1).toFixed(2).replace('.', ',')
-            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+            let val = (value/1).toFixed(2)
+            return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
          },
 
-         async freeModal(orderId){
+         async freeModal(noPed){
             var payload = {
                token: this.getUserApi.token,
                name_modal:  'orderFree', // modal 
                state_modal: true,
-               noPed: orderId,
+               noPed: noPed,
+               cveCte: this.detOrder.cve_cte,
                grid: this.datadord
             }
-            await this.$store.dispatch('dord/getCate',payload);
-            await this.$store.dispatch('modals/IdentifyModal',payload);
+            const res = await this.$store.dispatch('dord/getCate',payload);
+            if(res.success){
+               if(res.flg == 1){
+                  Swal.fire({
+                     icon: 'error',
+                     title: 'Oops...',
+                     text: 'Cliente no dado de alta en la web.',
+                  })
+               } else{
+                  await this.$store.dispatch('modals/IdentifyModal',payload);
+               }
+            } 
          },
          
          disabledInputs() {

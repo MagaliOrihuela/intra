@@ -76,7 +76,7 @@ const routes = [
             beforeEnter: checkToken , 
          },
          {
-            path: ":order_id",
+            path: ":no_ped",
             name: "Pedido",
             component: Order, 
             meta: { 

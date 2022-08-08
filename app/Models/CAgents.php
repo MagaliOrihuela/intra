@@ -15,4 +15,8 @@ class CAgents extends Model
       return $this->hasMany(CClients::class,'agent_id','id');
    }
 
+   public function orders(){
+      return $this->hasMany(EOrders::class,'client_id','id');
+   }
+
 }

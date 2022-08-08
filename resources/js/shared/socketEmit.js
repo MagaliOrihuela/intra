@@ -106,7 +106,15 @@ class socketEmit {
     // DOrders
     async freeOrderEmit(payload){
         const { data } = await axios.post('/order/freeOrder', payload,{ headers: { Authorization: "Bearer" + payload.token }})
-        console.log(data)
+        if(data.success){
+            return Promise.resolve(data)
+        }
+    }
+    async valFreeOrderEmit(payload){
+        const { data } = await axios.post(`/API/orders/freeOrder`, payload, { headers: { Authorization: "Bearer " + payload.token } })
+        if(data.success){
+            return Promise.resolve(data)
+        }
     }
 
  

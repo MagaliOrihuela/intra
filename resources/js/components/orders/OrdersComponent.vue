@@ -6,13 +6,6 @@
          elevation="0"
          transition="scale-transition"
       >
-         <!-- <v-progress-linear
-            :active="loading"
-            :indeterminate="loading"
-            absolute
-            top
-            color="red darken-4"
-         ></v-progress-linear> -->
          <v-card-title class="h4 invoice-header-text">
             <v-icon color="red" left>
                mdi-clipboard-edit-outline
@@ -27,7 +20,7 @@
             <v-tab
                @click="tabOrder = 'tab1'"
             >
-               Por surtir
+               Por liberar
                <v-icon right>
                   mdi-clipboard-alert-outline
                </v-icon>
@@ -35,13 +28,29 @@
             <v-tab
                @click="tabOrder = 'tab2'"
             >
+               Por surtir
+               <v-icon right>
+                  mdi-clipboard-clock-outline
+               </v-icon>
+            </v-tab>
+            <v-tab
+               @click="tabOrder = 'tab3'"
+            >
                Surtidos
                <v-icon right>
                   mdi-clipboard-check-outline
                </v-icon>
             </v-tab>
             <v-tab
-               @click="tabOrder = 'tab3'"
+               @click="tabOrder = 'tab4'"
+            >
+               Facturados
+               <v-icon right>
+                  mdi-clipboard-file-outline
+               </v-icon>
+            </v-tab>
+            <v-tab
+               @click="tabOrder = 'tab5'"
             >
                Cancelados
                <v-icon right>
@@ -58,10 +67,20 @@
             <v-tab-item
                value="tab2"
             >
-               <ordersSurt />
+               <ordersFree />
             </v-tab-item>
             <v-tab-item
                value="tab3"
+            >
+               <ordersSurt />
+            </v-tab-item>
+            <v-tab-item
+               value="tab4"
+            >
+               <ordersSurt />
+            </v-tab-item>
+            <v-tab-item
+               value="tab5"
             >
                <ordersCanc />
             </v-tab-item>
@@ -72,6 +91,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import orderStock from "../orders/OrderStockComponent.vue"
+import ordersFree from "../orders/OrdersFreeComponent.vue"
 import ordersSurt from "../orders/OrdersSurtComponent.vue"
 import ordersCanc from "../orders/OrdersCancelComponent.vue"
 
@@ -88,6 +108,7 @@ import ordersCanc from "../orders/OrdersCancelComponent.vue"
       },
       components:{
          orderStock,
+         ordersFree,
          ordersSurt,
          ordersCanc,
       },

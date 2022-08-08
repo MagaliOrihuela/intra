@@ -27,10 +27,11 @@ class DOrdersController extends Controller
         $deliveryType = CDeliveryType::where('is_active','=',1)
                                     ->orderBy('id','desc')
                                         ->get();
-        $boardType = CBoardingType::all();
+        $boardType = CBoardingType::where('is_active','=',1)
+                                    ->get();
         $deliveryComp = CDeliveryServiceCompanies::where('is_active','=',1)
                                     ->orderBy('order','asc')
-                                        ->get();      
+                                        ->get();    
         return response()->json([
             'success' =>  true,
             'deliveryType' =>  $deliveryType,
@@ -57,30 +58,37 @@ class DOrdersController extends Controller
      */
     public function cateFree(Request $request)
     {
-        $cate = CCategory::all();
-        // categories del pedido
-        $grid = $request->grid;
-        $arrCate = array_unique(array_column($grid,'category'));
-        $dOrd = EOrders::where('no_ped',$request->noPed)
-                            ->get();
-
-        if(!empty($dOrd)){
-
+        //verificar si el cliente está dado de alta en la web
+        $cte = CClients::Select('id')
+                            ->where('client_id',$request->cveCte)
+                                ->get();
+        $gridCate = [];
+        $selCate = [];
+        if(empty($cte[0])){
+            $flg = 1;
+        } else{
+            $flg = 0;
+            $arrCate = [];        
+            // categories del pedido
+            foreach($request->grid as $grid){
+                if(trim($grid['free']) == ''){
+                    array_push($arrCate,$grid['category']);
+                    if(!in_array(intval($grid['catId']),$selCate)){
+                        array_push($selCate,intval($grid['catId']));
+                    }
+                }
+            }
+            if(!empty($arrCate)){
+                $gridCate = CCategory::select('id','category','icon','color')
+                                        ->whereIn('category',array_unique($arrCate))
+                                            ->get();
+            }
         }
-        $gridCate = CCategory::select('id','category','icon','color')
-                                    ->whereIn('category',$arrCate)
-                                        ->get();
-        $gridSel = $gridCate;
-        $arrCate = [];        
-        foreach($gridSel as $sel){
-            array_push($arrCate,$sel->id);
-        }
-        
-       
         return response()->json([
             'success' => true,
+            'flg' => $flg,
             'gridCate' => $gridCate,
-            'selCate' => $arrCate
+            'selCate' => $selCate
         ], 200);
     }
     
@@ -89,19 +97,26 @@ class DOrdersController extends Controller
         $cte = CClients::Select('id')
                             ->where('client_id',$request->cveCte)
                                 ->get();
-        $c = $cte[0];
-        $address = CShippingAddress::where('client_id',$c->id)
-                            ->get();    
         $arrAddrss = [];
-        foreach($address as $d){
-            $arrTmp = array(
-                "id" => $d['id'],
-                "adrss" => $d->address_line.' No.'.$d->n_ext.' '.$d->n_int.',Col. '.$d->suburb.','.$d->city.','.$d->state
-            );
-            array_push($arrAddrss,$arrTmp);
+        if(empty($cte[0])){
+            $flg = 1;
+        } else{
+            $c = $cte[0];
+            $address = CShippingAddress::where('client_id',$c->id)
+                                ->get();    
+            foreach($address as $d){
+                $arrTmp = array(
+                    "id" => $d['id'],
+                    "adrss" => $d->address_line.' No.'.$d->n_ext.' '.$d->n_int.',Col. '.$d->suburb.','.$d->city.','.$d->state
+                );
+                array_push($arrAddrss,$arrTmp);
+            }
+            $flg = 0;
         }
+        
         return response()->json([
             'success' => true,
+            'flg' => $flg,
             'address' => $arrAddrss,
         ], 200);
     }
@@ -109,10 +124,12 @@ class DOrdersController extends Controller
     public function freeOrder(Request $request){
         $eOrder = EOrders::where('no_ped',$request->no_ped)
                     ->get();
+        $client = CClients::where('client_id',$request->clientId)
+                            ->get();
         if(empty($eOrder[0])){
             $order = new EOrders;
             $order->no_ped = $request->no_ped;
-            $order->client_id = $request->clientId;
+            $order->client_id = $client[0]->id;
             $order->agent_id = $request->agentId;
             $order->status_id = 1;
             $order->total = $request->tot;
@@ -123,19 +140,20 @@ class DOrdersController extends Controller
         } else{
             $orderId = $eOrder[0]->id;
         }
-
-        $array = [];
         $arrGrid = $request->gridDO;
         $arrSel = $request->selectC;
+
         $freeOrd = new EFreeOrds;
         $freeOrd->delivery_id = $request->selDelivery;
-        $freeOrd->deli_serv_id = $request->selDeliCo;
-        $freeOrd->board_id = $request->selBoard;
-        $freeOrd->destiny_id = $request->selDestiny;
+        $freeOrd->deli_serv_id = $request->selDeliCo <> null ? $request->selDeliCo : 0;
+        $freeOrd->board_id = $request->selBoard <> null ? $request->selBoard : 0;
+        $freeOrd->destiny_id = $request->selDestiny <> null ? $request->selDestiny : 0;
         $freeOrd->coment = $request->coment;
+        $freeOrd->user_id = $request->user_id;
         $freeOrd->save();
+
         foreach($arrGrid as $grid){
-            if($request->selParcial == 0 || in_array($grid['catId'],$arrSel)){
+            if(in_array($grid['catId'],$arrSel)){
                 $arti = CArticles::where('sai_id',$grid['cve_sai'])
                                     ->get();
                 switch($grid['unidad']){
@@ -157,17 +175,18 @@ class DOrdersController extends Controller
                 $dOrd->order_id = $orderId;
                 $dOrd->article_id = $arti[0]->id;
                 $dOrd->unit_id = $unitId;
-                $dOrd->status_id = 3;
+                $dOrd->status_id = 1;
                 $dOrd->quantity = $grid['qty'];
                 $dOrd->price = $grid['price'];
-                $dOrd->free = 1;
                 $dOrd->free_id = $freeOrd->id;
+                $dOrd->fol_prod = $grid['fol_prod'];
                 $dOrd->save();
-
             }
         }
         return response()->json([
-            'array' => 'olo'
+            'success' => true,
+            'orderId' => $orderId,
+            'no_ped' => $request->no_ped
         ],200);
     }
    

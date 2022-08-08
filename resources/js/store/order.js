@@ -52,7 +52,10 @@ const dord = {
       },
       async getCate({commit},payload){
          const { data } = await axios.post(`/order/cateFree`, payload, { headers: { Authorization: "Bearer " + payload.token } })
-         commit("DATA_CATE_MODAL",data)
+         if(data.flg == 0){
+            commit("DATA_CATE_MODAL",data)
+         }
+         return Promise.resolve(data)
       },
       async address({commit},payload){
          const { data } = await axios.post(`/order/address`, payload, { headers: { Authorization: "Bearer " + payload.token } })

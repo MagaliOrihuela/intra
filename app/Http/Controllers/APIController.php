@@ -116,9 +116,28 @@ class APIController extends Controller
             $dataOrdPart = HTTP::asForm()->post(config('app.ApiUrl').'/API/shades/orders/getOrderParts.php' , [
                 'token' => $request->token,
                 'user_id' => $request->user_id,
-                'order_id' => $request->order_id
+                'no_ped' => $request->no_ped,
+                'flgFree' => 0
             ]);
 
+            return response()->json([
+                'success' => true,
+                'dataOrdPart' => $dataOrdPart->json()
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+            ], 200);
+        }
+    }
+    public function freeOrder(Request $request)
+    {
+        try {
+            $dataOrdPart = HTTP::asForm()->post(config('app.ApiUrl').'/API/shades/orders/freeOrder.php' , [
+                'token' => $request->token,
+                'user_id' => $request->user_id,
+                'no_ped' => $request->no_ped
+            ]);
             return response()->json([
                 'success' => true,
                 'dataOrdPart' => $dataOrdPart->json()

@@ -11,9 +11,9 @@
                     <v-col 
                         xs="12"
                         sm="12"
-                        md="3"
-                        lg="3"
-                        xl="3"
+                        md="6"
+                        lg="6"
+                        xl="6"
                         style="font-size: 20px;"
                     >
                         <v-tabs
@@ -25,16 +25,11 @@
                             <v-tab>
                                 <v-icon left>mdi-lock-open-outline</v-icon> Libera pedido
                             </v-tab>
+                            <v-tab>
+                                <v-icon left>mdi-clipboard-text-outline</v-icon> Detalle libera
+                            </v-tab>
                         </v-tabs>
                     </v-col>
-                    <v-col 
-                        xs="12"
-                        sm="12"
-                        md="3"
-                        lg="3"
-                        xl="3"
-                        style="font-size: 20px;"
-                    ></v-col>
                     <v-col 
                         xs="12"
                         sm="12"
@@ -123,38 +118,6 @@
                                 <div class="total-cotizacion"> Total: </div>
                                 <div class="data_price_cot"> $ {{ totOrd.toLocaleString('en-US') }} </div>
                             </v-col>
-                            <!-- <v-col cols="3">
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-btn
-                                            fab 
-                                            :elevation="3"
-                                            max-width="28px"
-                                            max-height="28px"
-                                            v-bind="attrs"
-                                            v-on="on"
-                                            @click="PDFexport()">
-                                            <v-icon size="28px" color="red">mdi-file-pdf-outline</v-icon>
-                                        </v-btn>
-                                    </template>
-                                    <span>PDF</span>
-                                </v-tooltip>
-                                <v-tooltip bottom>
-                                    <template v-slot:activator="{ on, attrs }">
-                                        <v-btn
-                                            fab 
-                                            :elevation="3"
-                                            max-width="28px"
-                                            max-height="28px"
-                                            v-bind="attrs"
-                                            v-on="on" 
-                                            @click = "emailPDF()">
-                                            <v-icon size="25px" >mdi-email-send-outline</v-icon>
-                                        </v-btn>
-                                    </template>
-                                    <span>enviar</span>
-                                </v-tooltip>
-                            </v-col> -->
                         </v-row>
                     </v-card-text>
                     <v-card-text class="cot-text-info">
@@ -185,7 +148,6 @@
                                 lg="8"
                                 xl="8"
                             >
-                                    <!-- :items="ModulesData" -->
                                 <v-autocomplete
                                     v-model="selectC"
                                     :items="gridCate"
@@ -349,6 +311,134 @@
                         </v-row>
                     </v-card-text>
                 </v-tab-item>
+                <v-tab-item>
+                    <v-card-text class="cot-text-info" 
+                        v-for="order in dataOrder"
+                        :key="order.catId"
+                    >
+                        <v-row>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="3"
+                                lg="3"
+                                xl="3"
+                                style="font-size: 16px;"
+                                class="pl-3 pr-0 pb-3 pt-3 ma-0  "
+                            >
+                                <v-icon left>mdi-clipboard-check-multiple-outline</v-icon> Liberación: {{ order.category }}
+                            </v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="9"
+                                lg="9"
+                                xl="9"
+                                style="font-size: 13px;"
+                                class="pl-0 pr-0 pb-3 pt-3 ma-0  "
+                            >
+                                <v-icon left>mdi-ballot-outline</v-icon> Grupos: 
+                                <v-chip
+                                    close-icon="mdi-close-outline"
+                                    color = "red"
+                                    outlined
+                                >
+                                    {{ detOrder.nom_cte }}
+                                </v-chip>
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col 
+                                md="3"
+                                lg="3"
+                                xl="3"
+                                style="font-size: 13px;"
+                                class="pl-3 pr-0 pb-3 pt-3 ma-0  "
+                            ></v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="3"
+                                lg="3"
+                                xl="3"
+                                style="font-size: 13px;"
+                                class="pl-0 pr-0 pb-3 pt-3 ma-0  "
+                            >
+                            <!-- dolly  mdi-share-outline    -->
+                            <!-- map-marker-radius-outline  map-marker-account-outline-->
+                            <!-- truck-cargo-container  truck-fast-outline -->
+                                <v-icon left>mdi-briefcase-account-outline</v-icon> Tipo entrega: {{ detOrder.nom_cte }}
+                            </v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="6"
+                                lg="6"
+                                xl="6"
+                                style="font-size: 13px;"
+                                class="pl-0 pr-0 pb-3 pt-3 ma-0  "
+                            >
+                                <v-icon left>mdi-briefcase-account-outline</v-icon> Destino: {{ detOrder.nom_cte }}
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col 
+                                md="3"
+                                lg="3"
+                                xl="3"
+                                style="font-size: 13px;"
+                                class="pl-3 pr-0 pb-3 pt-3 ma-0  "
+                            ></v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="3"
+                                lg="3"
+                                xl="3"
+                                style="font-size: 13px;"
+                                class="pl-0 pr-0 pb-3 pt-3 ma-0  "
+                            >
+                                <v-icon left>mdi-briefcase-account-outline</v-icon> Tipo embarque: {{ detOrder.nom_cte }}
+                            </v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="3"
+                                lg="3"
+                                xl="3"
+                                style="font-size: 13px;"
+                                class="pl-0 pr-0 pb-3 pt-3 ma-0  "
+                            >
+                                <v-icon left>mdi-briefcase-account-outline</v-icon> fletera: {{ detOrder.nom_cte }}
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col 
+                                md="3"
+                                lg="3"
+                                xl="3"
+                                style="font-size: 13px;"
+                                class="pl-3 pr-0 pb-3 pt-3 ma-0  "
+                            ></v-col>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="6"
+                                lg="6"
+                                xl="6"
+                                style="font-size: 13px;"
+                                class="pl-0 pr-0 pb-3 pt-3 ma-0  "
+                            >
+                                <v-icon left>mdi-briefcase-account-outline</v-icon> Comentario: {{ detOrder.nom_cte }}
+                            </v-col>
+                        </v-row>
+                        <v-row>
+                            <v-col>
+                                <v-divider></v-divider>
+                            </v-col>
+                        </v-row>
+                    </v-card-text>
+                </v-tab-item>
             </v-tabs-items>
       </v-card>
     </v-dialog>
@@ -360,6 +450,7 @@
     import { jsPDF } from 'jspdf';
     import html2canvas from 'html2canvas';//
     import socketClientEmit from '../../shared/socketEmit';
+    import SAToasts from '../../services/SweetAlertToast'
     // import store from '../store/store'
 
 
@@ -393,7 +484,7 @@
                 disParcial: true,
                 disDeli: false,
                 disDeli2: false,
-                selParcial: 0,
+                selParcial: '',
                 selModules: '',
                 selDelivery: '',
                 selBoard: '',
@@ -404,13 +495,7 @@
                 deliOrder: [],
                 deliCo: [],
                 destiny: [],
-                selectC: [
-                    1,
-                    2,
-                    3,
-                    4,
-                    5
-                ],
+                selectC: '',
                 coment: ''
             }
         },
@@ -428,10 +513,8 @@
             }),
         },
         // beforeCreate(){
-        //     console.log('esto es antes de entrar a las rutas')
         // },
         created(){
-            // console.log(store.getters['auth/getUserApi'])
         },
         methods: {
 
@@ -449,8 +532,8 @@
                     this.disParcial = false
                 } else{
                     this.disParcial = true
+                    this.selectC = this.selCate
                 }
-                this.selectC = this.selCate
             },
 
             async chgDeli(){
@@ -463,10 +546,18 @@
                     }
                     const res = await this.$store.dispatch('dord/address',payload); 
                     if(res.success){
-                        if(res.address.length == 1){
-                            this.selDestiny = res.address[0].id
+                        if(res.flg == 0){
+                            if(res.address.length == 1){
+                                this.selDestiny = res.address[0].id
+                            }
+                            this.destiny = res.address
+                        } else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Cliente no dado de alta en la web.',
+                            })
                         }
-                        this.destiny = res.address
                     }
                     if(this.selDelivery == 1){
                         this.disDeli2 = true                         
@@ -490,7 +581,7 @@
             async libera(){
                 let payload = {
                     token: this.getUserApi.token,
-                    userId: this.getUserApi.uid,
+                    user_id: this.getUserApi.uid,
                     no_ped: this.detOrder.no_ped,
                     clientId: this.detOrder.cve_cte,
                     agentId: this.detOrder.cve_age,
@@ -507,8 +598,25 @@
                     coment: this.coment
                 }
                 const res = await socketClientEmit.freeOrderEmit(payload)
-            }
+                if(res.success){
+                    let payload2 = {
+                        token: this.getUserApi.token,
+                        user_id: this.getUserApi.uid,
+                        no_ped: res.no_ped
+                    }
+                    const res2 = await socketClientEmit.valFreeOrderEmit(payload2)
 
+
+
+
+                    let iconToast = 'success'
+                    let msjToast = '¡El pedido ha sido liberado!'
+                    let positionToast = 'bottom-end'
+                    let timerToast = 3000
+                    const SAToastsVar = new SAToasts(iconToast,msjToast,positionToast,timerToast)
+                    SAToastsVar.getToast()
+                }
+            }
         },
         mounted(){
             this.deliBoard()

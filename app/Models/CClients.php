@@ -26,4 +26,8 @@ class CClients extends Model
       return $this->belongsTo(CCategoriesCte::class,'category_cte_id','id');
    }
 
+   public function orders(){
+      return $this->hasMany(EOrders::class,'id','client_id');
+   }
+
 }

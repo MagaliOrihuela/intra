@@ -5,6 +5,7 @@ const eord = {
    namespaced:true,
    state: {
       dataOrders:[],
+      dataOrdersF:[],
       dataOrdersS:[],
       dataOrdersC:[],
       optionsDate: { year: "numeric", month: "long", day: "numeric", hour: "numeric", minute: "numeric", hour24:"false"}
@@ -21,6 +22,9 @@ const eord = {
         // }
          state.dataOrders = data
       },
+      DATA_ORDERS_F (state,data) {
+         state.dataOrdersF = data
+      },
       DATA_ORDERS_S (state,data) {
          state.dataOrdersS = data
       },
@@ -33,6 +37,15 @@ const eord = {
         await axios.post('API/orders/getOrders',payload )
         .then( response => {
             commit("DATA_ORDERS",response.data.dataOrders)
+        })
+        .catch( (error) => {
+            console.log(error.response)
+        })
+      },
+      async getOrdersF({commit},payload) {
+        await axios.post('orders/freeOrders',payload )
+        .then( response => {
+            commit("DATA_ORDERS_F",response.data.dataOrders)
         })
         .catch( (error) => {
             console.log(error.response)
@@ -59,6 +72,7 @@ const eord = {
    },
    getters: {
       getDataOrders: state => state.dataOrders,
+      getDataOrdersF: state => state.dataOrdersF,
       getDataOrdersS: state => state.dataOrdersS,
       getDataOrdersC: state => state.dataOrdersC,
    }

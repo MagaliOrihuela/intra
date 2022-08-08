@@ -15,15 +15,8 @@ class EOrders extends Model
     }
     
     public function agent() {
-        return $this->hasOne(CAgents::class, 'agent_id', 'id');
+        return $this->hasOne(CAgents::class, 'id', 'agent_id');
     } 
-   
-    // public function dcotizaciones(){
-    //     return $this->hasMany(DCotizaciones::class,'cotizacion_id','id');
-    // }
 
-    // public function status(){
-    //     return $this->belongsTo(CStatu::class,'status_id','id');
-    // }
 }
 
