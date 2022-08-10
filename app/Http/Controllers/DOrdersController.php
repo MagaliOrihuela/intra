@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DCotizaciones;
 use App\Models\CArticles;
 use App\Models\CClients;
 use App\Models\DOrders;
@@ -188,6 +189,45 @@ class DOrdersController extends Controller
             'orderId' => $orderId,
             'no_ped' => $request->no_ped
         ],200);
+    }
+
+    public function freeDetail(Request $request){
+        $free = EfreeOrds::with('delitype:id,delivery_type')
+                            ->with('deliserv:id,companie')
+                            ->with('board:id,boarding_type')
+                            ->with('destiny')
+                            ->with('dorders.article.category:id,category,icon,color')
+                                ->get();
+        $arrFrees = [];
+        foreach($free as $f){
+            $dords = $f->dorders;
+            $arrGroups = [];
+            $int = $f->destiny->n_int <> null ? ', int: '.$f->destiny->n_int : '';
+            $destiny = 'calle '.$f->destiny->address_line.' '.$f->destiny->n_ext.
+                        $int.', '.$f->destiny->suburb.', '.$f->destiny->cp.', '.$f->destiny->city.
+                        ', '.$f->destiny->state;
+            foreach($dords as $do){
+                $tmp = [];
+                $tmp = $do->article->category;
+                array_push($arrGroups,$tmp);
+            }
+            $arrFree = array(
+                'id'=> $f->id,
+                'deli'=> $f->delitype->delivery_type,
+                'deliserv'=> $f->deliserv->companie,
+                'board'=> $f->board->boarding_type,
+                'destiny'=> $destiny,
+                'coment'=> $f->coment,
+                'created_at'=> $f->created_at,
+                'arrGroups' => $arrGroups
+            );
+            array_push($arrFrees,$arrFree);
+        }
+        return response()->json([
+            'success' => true,
+            'arrFree' => $arrFrees,
+        ],200);
+
     }
    
 

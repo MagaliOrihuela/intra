@@ -13,4 +13,8 @@ class DOrders extends Model
     public function article(){
         return $this->belongsTo(CArticles::class,'article_id','id');
     }
+
+    public function freeOrder(){
+        return $this->belongsTo(EFreeOrders::class,'free_id','id');
+    }
 }

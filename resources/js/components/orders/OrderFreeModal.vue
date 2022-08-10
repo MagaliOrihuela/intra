@@ -25,7 +25,7 @@
                             <v-tab>
                                 <v-icon left>mdi-lock-open-outline</v-icon> Libera pedido
                             </v-tab>
-                            <v-tab>
+                            <v-tab v-on:click="freeDetail">
                                 <v-icon left>mdi-clipboard-text-outline</v-icon> Detalle libera
                             </v-tab>
                         </v-tabs>
@@ -313,8 +313,8 @@
                 </v-tab-item>
                 <v-tab-item>
                     <v-card-text class="cot-text-info" 
-                        v-for="order in dataOrder"
-                        :key="order.catId"
+                        v-for="detf in freedet"
+                        :key="detf.id"
                     >
                         <v-row>
                             <v-col 
@@ -326,7 +326,7 @@
                                 style="font-size: 16px;"
                                 class="pl-3 pr-0 pb-3 pt-3 ma-0  "
                             >
-                                <v-icon left>mdi-clipboard-check-multiple-outline</v-icon> Liberación: {{ order.category }}
+                                <v-icon left>mdi-clipboard-check-multiple-outline</v-icon> Liberación: {{ detf.id }}
                             </v-col>
                             <v-col 
                                 xs="12"
@@ -339,11 +339,16 @@
                             >
                                 <v-icon left>mdi-ballot-outline</v-icon> Grupos: 
                                 <v-chip
-                                    close-icon="mdi-close-outline"
-                                    color = "red"
-                                    outlined
+                                    v-for="group in detf.arrGroups"
+                                    :key="group.id"
+                                    :color = "group.color"
+                                    class="ma-2"
+                                    text-color="blue-grey darken-4"
                                 >
-                                    {{ detOrder.nom_cte }}
+                                    <v-icon left>
+                                        {{ group.icon }}
+                                    </v-icon>
+                                    {{ group.category }}
                                 </v-chip>
                             </v-col>
                         </v-row>
@@ -367,7 +372,7 @@
                             <!-- dolly  mdi-share-outline    -->
                             <!-- map-marker-radius-outline  map-marker-account-outline-->
                             <!-- truck-cargo-container  truck-fast-outline -->
-                                <v-icon left>mdi-briefcase-account-outline</v-icon> Tipo entrega: {{ detOrder.nom_cte }}
+                                <v-icon left>mdi-dolly</v-icon> Tipo entrega: {{ detf.deli }}
                             </v-col>
                             <v-col 
                                 xs="12"
@@ -378,7 +383,7 @@
                                 style="font-size: 13px;"
                                 class="pl-0 pr-0 pb-3 pt-3 ma-0  "
                             >
-                                <v-icon left>mdi-briefcase-account-outline</v-icon> Destino: {{ detOrder.nom_cte }}
+                                <v-icon left>mdi-map-marker-radius-outline</v-icon> Destino: {{ detf.destiny }}
                             </v-col>
                         </v-row>
                         <v-row>
@@ -398,7 +403,7 @@
                                 style="font-size: 13px;"
                                 class="pl-0 pr-0 pb-3 pt-3 ma-0  "
                             >
-                                <v-icon left>mdi-briefcase-account-outline</v-icon> Tipo embarque: {{ detOrder.nom_cte }}
+                                <v-icon left>mdi-card-bulleted-outline</v-icon> Tipo embarque: {{ detf.board }}
                             </v-col>
                             <v-col 
                                 xs="12"
@@ -409,7 +414,7 @@
                                 style="font-size: 13px;"
                                 class="pl-0 pr-0 pb-3 pt-3 ma-0  "
                             >
-                                <v-icon left>mdi-briefcase-account-outline</v-icon> fletera: {{ detOrder.nom_cte }}
+                                <v-icon left>mdi-truck-fast-outline</v-icon> fletera: {{ detf.deliserv }}
                             </v-col>
                         </v-row>
                         <v-row>
@@ -429,7 +434,7 @@
                                 style="font-size: 13px;"
                                 class="pl-0 pr-0 pb-3 pt-3 ma-0  "
                             >
-                                <v-icon left>mdi-briefcase-account-outline</v-icon> Comentario: {{ detOrder.nom_cte }}
+                                <v-icon left>mdi-comment-processing-outline</v-icon> Comentario: {{ detf.coment }}
                             </v-col>
                         </v-row>
                         <v-row>
@@ -496,7 +501,9 @@
                 deliCo: [],
                 destiny: [],
                 selectC: '',
-                coment: ''
+                coment: '',
+                pruf: 0,
+                freedet: [],
             }
         },
         computed: {
@@ -615,6 +622,17 @@
                     let timerToast = 3000
                     const SAToastsVar = new SAToasts(iconToast,msjToast,positionToast,timerToast)
                     SAToastsVar.getToast()
+                }
+            },
+
+            async freeDetail(){
+                let payload = {
+                    token: this.getUserApi.token,
+                    user_id: this.getUserApi.uid,
+                }
+                const res = await this.$store.dispatch('dord/freeDetail',payload);
+                if(res.success){
+                    this.freedet = res.arrFree
                 }
             }
         },

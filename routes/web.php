@@ -131,6 +131,7 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'order'], function () {
    Route::post('/cateFree', [DOrdersController::class, 'cateFree']);
    Route::post('/address', [DOrdersController::class, 'address']);
    Route::post('/freeOrder', [DOrdersController::class, 'freeOrder']);
+   Route::post('/freeDetail', [DOrdersController::class, 'freeDetail']);
 });
 
 Route::group(['prefix' => 'invoice'], function () {

@@ -21,6 +21,9 @@ class CArticles extends Model
     public function cotizaciones(){
         return $this->hasMany(DCotizaciones::class,'id','article_id');
     }
+    public function dorders(){
+        return $this->hasMany(DOrders::class,'id','article_id');
+    }
 
     public function units(){
         return $this->belongsToMany(CUnit::class,'c_articles_c_unit','article_id','unit_id');

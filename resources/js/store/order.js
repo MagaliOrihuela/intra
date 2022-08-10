@@ -60,6 +60,10 @@ const dord = {
       async address({commit},payload){
          const { data } = await axios.post(`/order/address`, payload, { headers: { Authorization: "Bearer " + payload.token } })
          return Promise.resolve(data)
+      },
+      async freeDetail({commit},payload){
+         const { data } = await axios.post('/order/freeDetail', payload, { headers: { Authorization: "Bearer " + payload.token } })
+         return Promise.resolve(data)
       }
    },
    getters: {

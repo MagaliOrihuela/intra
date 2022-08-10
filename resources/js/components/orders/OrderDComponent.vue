@@ -80,15 +80,15 @@
                      <v-icon left>mdi-lock-open-outline</v-icon>Liberado: 
                      <v-icon v-if="free == 1"
                         left
-                        :color="c"  
+                        :color="colors"  
                      >
                         mdi-checkbox-marked-circle-outline 
                      </v-icon>
                      <v-chip v-else-if="free == 2"
-                           :color="c"  
+                           :color="colors"  
                            outlined
                      >
-                           {{ s }}
+                           {{ statusd }}
                      </v-chip>
                   </v-col> 
                   <v-col
@@ -312,8 +312,8 @@
             iconF: '',
             color: '',
             status: '',
-            c: '',
-            s: '',
+            colors: '',
+            statusd: '',
 
             // totales order
             sub: 0,
@@ -386,8 +386,8 @@
                this.iva = arrPartOrd.iva
                this.total = arrPartOrd.total
                this.free = arrDet.free
-               this.s = arrDet.statusF
-               this.c = arrDet.colorF
+               this.statusd = arrDet.statusF
+               this.colors = arrDet.colorF
 
                switch(this.status.trim()){
                   case 'Parcial':
