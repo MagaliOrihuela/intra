@@ -65,6 +65,7 @@ class DOrdersController extends Controller
                                 ->get();
         $gridCate = [];
         $selCate = [];
+        $disFree = true;
         if(empty($cte[0])){
             $flg = 1;
         } else{
@@ -83,13 +84,15 @@ class DOrdersController extends Controller
                 $gridCate = CCategory::select('id','category','icon','color')
                                         ->whereIn('category',array_unique($arrCate))
                                             ->get();
+                $disFree = false;
             }
         }
         return response()->json([
             'success' => true,
             'flg' => $flg,
             'gridCate' => $gridCate,
-            'selCate' => $selCate
+            'selCate' => $selCate,
+            'disFree' => $disFree
         ], 200);
     }
     
@@ -108,10 +111,20 @@ class DOrdersController extends Controller
             foreach($address as $d){
                 $arrTmp = array(
                     "id" => $d['id'],
-                    "adrss" => $d->address_line.' No.'.$d->n_ext.' '.$d->n_int.',Col. '.$d->suburb.','.$d->city.','.$d->state
+                    "adrss" => $d->address_line.' No.'.$d->n_ext.' '.$d->n_int.',Col. '.$d->suburb.', cp. '.$d->cp.', '.$d->city.','.$d->state,
+                    "contact" => $d->contact_name
+
                 );
                 array_push($arrAddrss,$arrTmp);
             }
+            $arrTmp = array(
+                "id" => 0,
+                "adrss" => 'Otra dirección...',
+                "contact" => ''
+            );
+            array_push($arrAddrss,$arrTmp);
+
+
             $flg = 0;
         }
         
@@ -143,12 +156,53 @@ class DOrdersController extends Controller
         }
         $arrGrid = $request->gridDO;
         $arrSel = $request->selectC;
-
+        $contact = '';
+        $street = '';
+        $extNum = '';
+        $intNum = '';
+        $cp = '';
+        $suburb = '';
+        $city = '';
+        $state = '';
+        $phone = '';
+        if($request->selDelivery <> 3 && $request->selDestiny == 0){
+            $contact = $request->contact;
+            $street = $request->street;
+            $extNum = $request->extNum;
+            $intNum = $request->intNum;
+            $cp = $request->cp;
+            $suburb = $request->suburb;
+            $city = $request->city;
+            $state = $request->state;
+            $phone = $request->phone;
+        } else if($request->selDelivery <> 3){
+            $address = CShippingAddress::join('c_clients','c_clients.id','c_shipping_addresses.client_id')
+                                        ->where('c_clients.client_id',$request->clientId)
+                                            ->get();   
+            $addrss = $address[0];
+            $contact = $addrss->contact_name;
+            $street = $addrss->address_line;
+            $extNum = $addrss->n_ext;
+            $intNum = $addrss->n_int;
+            $cp = $addrss->cp;
+            $suburb = $addrss->suburb;
+            $city = $addrss->city;
+            $state = $addrss->state; 
+            $phone = $addrss->phone;
+        }
         $freeOrd = new EFreeOrds;
         $freeOrd->delivery_id = $request->selDelivery;
         $freeOrd->deli_serv_id = $request->selDeliCo <> null ? $request->selDeliCo : 0;
         $freeOrd->board_id = $request->selBoard <> null ? $request->selBoard : 0;
-        $freeOrd->destiny_id = $request->selDestiny <> null ? $request->selDestiny : 0;
+        $freeOrd->contact = $contact;
+        $freeOrd->street = $street;
+        $freeOrd->extNum = $extNum;
+        $freeOrd->intNum = $intNum;
+        $freeOrd->cp = $cp;
+        $freeOrd->suburb = $suburb;
+        $freeOrd->city = $city;
+        $freeOrd->state = $state;
+        $freeOrd->phone = $phone;
         $freeOrd->coment = $request->coment;
         $freeOrd->user_id = $request->user_id;
         $freeOrd->save();
@@ -192,40 +246,44 @@ class DOrdersController extends Controller
     }
 
     public function freeDetail(Request $request){
-        $free = EfreeOrds::with('delitype:id,delivery_type')
-                            ->with('deliserv:id,companie')
-                            ->with('board:id,boarding_type')
-                            ->with('destiny')
-                            ->with('dorders.article.category:id,category,icon,color')
-                                ->get();
-        $arrFrees = [];
+        $free = EfreeOrds::select('e_free_ords.*','e_free_ords.created_at','c_delivery_types.delivery_type','c_delivery_service_companies.companie','c_boarding_types.boarding_type')
+                            ->join('c_delivery_types','c_delivery_types.id','e_free_ords.delivery_id')
+                            ->join('c_delivery_service_companies','c_delivery_service_companies.id','e_free_ords.deli_serv_id')
+                            ->join('c_boarding_types','c_boarding_types.id','e_free_ords.board_id')
+                            ->join('d_orders','d_orders.free_id','e_free_ords.id')
+                                ->where('d_orders.order_id',$request->orderId)
+                                    ->groupBy('e_free_ords.id')
+                                        ->get();
+        $arrFree = [];
         foreach($free as $f){
-            $dords = $f->dorders;
-            $arrGroups = [];
-            $int = $f->destiny->n_int <> null ? ', int: '.$f->destiny->n_int : '';
-            $destiny = 'calle '.$f->destiny->address_line.' '.$f->destiny->n_ext.
-                        $int.', '.$f->destiny->suburb.', '.$f->destiny->cp.', '.$f->destiny->city.
-                        ', '.$f->destiny->state;
-            foreach($dords as $do){
-                $tmp = [];
-                $tmp = $do->article->category;
-                array_push($arrGroups,$tmp);
+            $destiny = '';
+            if(trim($f->street) <> '' || $f->street <> null){
+                $int = $f->intNum <> null ? ', int: '.$f->intNum : '';
+                $destiny = 'calle '.$f->street.' '.$f->extNum.$int.', '.$f->suburb.', '.$f->cp.', '.$f->city.
+                            ', '.$f->state;
             }
-            $arrFree = array(
+            $groups = CCategory::select('c_categories.id as idC','c_categories.category','c_categories.color','c_categories.icon')
+                                ->join('c_articles','c_articles.category_id','c_categories.id')
+                                ->join('d_orders','d_orders.article_id','c_articles.id')
+                                    ->where('d_orders.free_id',$f->id)
+                                        ->groupBy('c_categories.id')
+                                            ->orderBy('c_categories.id')
+                                                ->get();
+            $tmp = array(
                 'id'=> $f->id,
-                'deli'=> $f->delitype->delivery_type,
-                'deliserv'=> $f->deliserv->companie,
-                'board'=> $f->board->boarding_type,
+                'deli'=> $f->delivery_type,
+                'deliserv'=> $f->companie,
+                'board'=> $f->boarding_type,
                 'destiny'=> $destiny,
                 'coment'=> $f->coment,
                 'created_at'=> $f->created_at,
-                'arrGroups' => $arrGroups
+                'arrGroups' => $groups
             );
-            array_push($arrFrees,$arrFree);
+            array_push($arrFree,$tmp);
         }
         return response()->json([
             'success' => true,
-            'arrFree' => $arrFrees,
+            'arrFree' => $arrFree ,
         ],200);
 
     }

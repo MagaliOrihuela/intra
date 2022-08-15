@@ -30,4 +30,8 @@ class CClients extends Model
       return $this->hasMany(EOrders::class,'id','client_id');
    }
 
+   public function shippings(){
+      return $this->hasMany(CShippingAddress::class,'id','client_id');
+   }
+
 }

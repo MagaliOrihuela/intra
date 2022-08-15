@@ -22,7 +22,4 @@ class EFreeOrds extends Model
         return $this->belongsTo(CBoardingType::class,'board_id','id');
     }
 
-    public function destiny(){
-        return $this->belongsTo(CShippingAddress::class,'destiny_id','id');
-    }
 }

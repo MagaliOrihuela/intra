@@ -351,7 +351,6 @@
             datadord: 'dord/getDataOrder',
             getUserApi: 'auth/getUserApi',
             detOrder: 'dord/getDetOrder',
-            // orderFreeModal: 'modals/getOrderFreeModal',
          }),        
       },
       methods: {

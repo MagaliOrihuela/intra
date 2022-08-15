@@ -10,6 +10,7 @@ const dord = {
       cateFree: [],
       selCate: [],
 
+      disFree: true,
       sub: 0,
       iva: 0,
       total: 0,
@@ -35,6 +36,7 @@ const dord = {
       DATA_CATE_MODAL (state,data) {
          state.cateFree = data.gridCate
          state.selCate = data.selCate
+         state.disFree = data.disFree
       }
    },
    actions: {
@@ -73,7 +75,8 @@ const dord = {
       getIvaOrd: state => state.iva,
       getTotOrd: state => state.total,
       getcateFree: state => state.cateFree, 
-      getSelCate: state => state.selCate
+      getSelCate: state => state.selCate,
+      getDisFree: state => state.disFree
    }
 }
 

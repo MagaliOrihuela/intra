@@ -139,6 +139,7 @@
                                     @change="chgParcial()"
                                     outlined
                                     dense
+                                    :disabled="disFree"
                                 ></v-select>
                             </v-col>
                             <v-col 
@@ -207,30 +208,191 @@
                                     @change="chgDeli()"
                                     outlined
                                     dense
+                                    :disabled="disFree"
                                 ></v-select>
                             </v-col>
-                            <v-col 
-                                xs="12"
-                                sm="12"
+                            <v-col  
+                                xs="12" 
+                                sm="12" 
                                 md="8"
                                 lg="8"
                                 xl="8"
+                                v-if="disDeli"
                             >
-                                <div v-if="disDeli">
-                                    <v-select
-                                        v-model="selDestiny"
-                                        :items="destiny"
-                                        item-text="adrss"
-                                        item-value="id"
-                                        label="Destino"
-                                        hint="Dirección a donde se enviará el pedido"
-                                        persistent-hint
-                                        outlined
-                                        dense
-                                    ></v-select>
-                                </div>
+                                <v-text-field
+                                    v-model="contact"
+                                    label="Nombre completo"
+                                    hint="Quien recibe el paquete"
+                                    persistent-hint
+                                    dense
+                                    autocomplete="off"
+                                    outlined
+                                ></v-text-field>
                             </v-col>
                         </v-row>
+                        <v-row>
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="11"
+                                lg="11"
+                                xl="11"
+                                v-if="disDeli"
+                            >
+                                <v-select
+                                    v-model="selDestiny"
+                                    :items="destiny"
+                                    item-text="adrss"
+                                    item-value="id"
+                                    label="Destino"
+                                    hint="Dirección a donde se enviará el pedido"
+                                    persistent-hint
+                                    outlined
+                                    dense
+                                    @change="chgDestiny()"
+                                ></v-select>
+                            </v-col>
+                        </v-row>
+                        <v-card
+                            v-if="disDestiny"
+                            elevation="10"
+                            class="mb-4"
+                        >
+                            <v-row
+                                class="p-4" 
+                            >
+                                <!-- 
+                                    :error-messages="quantityErrors"
+                                    @input="$v.FQuantity.$touch()"
+                                -->
+                                <v-col  
+                                    xs="12" 
+                                    sm="12" 
+                                    md="3"
+                                    lg="3"
+                                    xl="3" 
+                                >
+                                    <v-text-field
+                                        v-model="street"
+                                        label="Calle"
+                                        dense
+                                        autocomplete="off"
+                                        outlined
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col  
+                                    xs="12" 
+                                    sm="12" 
+                                    md="3"
+                                    lg="3"
+                                    xl="3" 
+                                >
+                                    <v-text-field
+                                        v-model="extNum"
+                                        label="Número exterior"
+                                        dense
+                                        autocomplete="off"
+                                        outlined
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col  
+                                    xs="12" 
+                                    sm="12" 
+                                    md="3"
+                                    lg="3"
+                                    xl="3" 
+                                >
+                                    <v-text-field
+                                        v-model="intNum"
+                                        label="Número interior"
+                                        dense
+                                        autocomplete="off"
+                                        outlined
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col  
+                                    xs="12" 
+                                    sm="12" 
+                                    md="3"
+                                    lg="3"
+                                    xl="3" 
+                                >
+                                    <v-text-field
+                                        v-model="cp"
+                                        label="CP"
+                                        hint="Código postal"
+                                        persistent-hint
+                                        dense
+                                        autocomplete="off"
+                                        outlined
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row> 
+                            <v-row
+                                class="p-4" 
+                            >
+                                <v-col  
+                                    xs="12" 
+                                    sm="12" 
+                                    md="3"
+                                    lg="3"
+                                    xl="3" 
+                                >
+                                    <v-text-field
+                                        v-model="suburb"
+                                        label="Colonia"
+                                        dense
+                                        autocomplete="off"
+                                        outlined
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col  
+                                    xs="12" 
+                                    sm="12" 
+                                    md="3"
+                                    lg="3"
+                                    xl="3" 
+                                >
+                                    <v-text-field
+                                        v-model="city"
+                                        label="Ciudad"
+                                        dense
+                                        autocomplete="off"
+                                        outlined
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col  
+                                    xs="12" 
+                                    sm="12" 
+                                    md="3"
+                                    lg="3"
+                                    xl="3" 
+                                >
+                                    <v-text-field
+                                        v-model="state"
+                                        label="Estado"
+                                        dense
+                                        autocomplete="off"
+                                        outlined
+                                    ></v-text-field>
+                                </v-col>
+                                <v-col  
+                                    xs="12" 
+                                    sm="12" 
+                                    md="3"
+                                    lg="3"
+                                    xl="3" 
+                                >
+                                    <v-text-field
+                                        v-model="phone"
+                                        label="Teléfono"
+                                        dense
+                                        autocomplete="off"
+                                        outlined
+                                    ></v-text-field>
+                                </v-col>
+                            </v-row> 
+                        </v-card>
                         <v-row v-if="disDeli2">
                             <v-col 
                                 xs="12"
@@ -296,8 +458,8 @@
                                 <v-btn 
                                     block 
                                     @click="libera()"
+                                    :disabled='disFree'
                                 >
-                                    <!-- :disabled='disCot' -->
                                     <v-icon
                                     left
                                     dark
@@ -489,21 +651,34 @@
                 disParcial: true,
                 disDeli: false,
                 disDeli2: false,
+                disDestiny: false,
+                chkClient: true,
                 selParcial: '',
-                selModules: '',
                 selDelivery: '',
                 selBoard: '',
                 selDeliCo: '',
                 selDestiny: '',
-                pruf:'',
+                contact: '',
+                street: '',
+                extNum: '',
+                intNum: '',
+                cp: '',
+                suburb: '',
+                city: '',
+                state: '',
+                phone: '',
                 boardOrder:[],
                 deliOrder: [],
                 deliCo: [],
                 destiny: [],
                 selectC: '',
                 coment: '',
-                pruf: 0,
                 freedet: [],
+                checked: true,
+                label: "On",
+                active: 1,
+                dataOn: "On",
+                dataOff: "Off"
             }
         },
         computed: {
@@ -516,7 +691,8 @@
                 totOrd: 'dord/getTotOrd',
                 gridCate: 'dord/getcateFree',
                 selCate: 'dord/getSelCate',
-                dataOrder:'dord/getDataOrder'
+                dataOrder:'dord/getDataOrder',
+                disFree: 'dord/getDisFree'
             }),
         },
         // beforeCreate(){
@@ -547,6 +723,7 @@
                 if(this.selDelivery !== 3){
                     this.disDeli = true
                     this.disDeli2 = false
+                    this.contact = this.detOrder.nom_cte
                     var payload = {
                         token: this.getUserApi.token,
                         cveCte: this.detOrder.cve_cte
@@ -572,6 +749,8 @@
                 } else{
                     this.disDeli = false
                     this.disDeli2 = false 
+                    this.disDestiny = false
+                    this.selDestiny = ''
                 }
             },
 
@@ -596,13 +775,21 @@
                     subtot: this.subOrd,
                     iva: this.ivaOrd,
                     gridDO: this.dataOrder,
-                    selParcial: this.selParcial,
                     selectC: this.selectC,
                     selDelivery: this.selDelivery,
                     selDestiny: this.selDestiny,
                     selBoard: this.selBoard,
                     selDeliCo: this.selDeliCo,
-                    coment: this.coment
+                    coment: this.coment,
+                    contact: this.contact,
+                    street: this.street,
+                    extNum: this.extNum,
+                    intNum: this.intNum,
+                    cp: this.cp,
+                    suburb: this.suburb,
+                    city: this.city,
+                    state: this.state,
+                    phone: this.phone
                 }
                 const res = await socketClientEmit.freeOrderEmit(payload)
                 if(res.success){
@@ -629,12 +816,26 @@
                 let payload = {
                     token: this.getUserApi.token,
                     user_id: this.getUserApi.uid,
+                    orderId: this.detOrder.orderId
                 }
                 const res = await this.$store.dispatch('dord/freeDetail',payload);
                 if(res.success){
                     this.freedet = res.arrFree
                 }
-            }
+            },
+
+            chgDestiny(){
+                var arr = this.destiny.find(this.findDestiny)
+                if(this.selDestiny == 0){
+                    this.disDestiny = true
+                } else{
+                    this.disDestiny = false
+                    this.contact = arr.contact
+                }
+            },
+            findDestiny(dest){
+                return dest.id === this.selDestiny
+            },
         },
         mounted(){
             this.deliBoard()
