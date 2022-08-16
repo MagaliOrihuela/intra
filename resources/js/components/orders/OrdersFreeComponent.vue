@@ -206,7 +206,7 @@
                         value: 'no_ped',
                     },
                     { text: 'Cliente', align: 'center',value: 'client' },
-                    { text: 'Nombre Cliente', value: 'nameCte' },
+                    { text: 'Nombre cliente', value: 'nameCte' },
                     { text: 'Agente', value: 'nameAgt' },
                     { text: 'Creación', value: 'created' },
                     { text: 'Total', value: 'total' },

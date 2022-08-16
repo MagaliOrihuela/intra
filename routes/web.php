@@ -15,6 +15,7 @@ use App\Http\Controllers\EInvoiceController;
 use App\Http\Controllers\Email;
 use App\Http\Controllers\EOrdersController;
 use App\Http\Controllers\DOrdersController;
+use App\Http\Controllers\EFreeController;
 
 Route::get('csrf', function () {
    return csrf_token();
@@ -132,6 +133,11 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'order'], function () {
    Route::post('/address', [DOrdersController::class, 'address']);
    Route::post('/freeOrder', [DOrdersController::class, 'freeOrder']);
    Route::post('/freeDetail', [DOrdersController::class, 'freeDetail']);
+});
+
+Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'almacen'], function () {
+   Route::post('/supply/supplyWait', [EFreeController::class, 'freeOrders']);
+
 });
 
 Route::group(['prefix' => 'invoice'], function () {

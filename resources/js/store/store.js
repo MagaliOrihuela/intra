@@ -8,6 +8,7 @@ import ecot from '../store/cotizaciones'
 import dcot from '../store/cotizacion'
 import eord from '../store/orders'
 import dord from '../store/order'
+import efree from '../store/supply'
 import timerLogin from '../store/timerLogin'
 import modals from '../store/modals'
 import clientsIO from '../store/ClientsIO'
@@ -34,6 +35,7 @@ const store = new Vuex.Store({
       dcot,
       eord,
       dord,
+      efree,
       timerLogin,
       modals,
       socketIO,

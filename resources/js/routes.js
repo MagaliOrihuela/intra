@@ -6,6 +6,8 @@ import Cotizaciones from './views/Cotizaciones.vue'
 import Cotizacion from './views/Cotizacion.vue'
 import Orders from './views/Orders.vue'
 import Order from './views/Order.vue'
+import Supply from './views/Supply.vue'
+import SupplyH from './views/SupplyH.vue'
 import Configuracion from './views/Configuracion.vue'
 import NotAutorized from './views/errors/401.vue'
 import checkToken  from './guards/token.guard'
@@ -45,7 +47,7 @@ const routes = [
             component: Cotizaciones,
             meta: { 
                Auth: true, 
-               title: 'Cotizaciones | Cotizador Shades',
+               title: 'Cotizaciones | Shades de México',
             },
             beforeEnter: checkToken , 
          },
@@ -55,7 +57,7 @@ const routes = [
             component: Cotizacion, 
             meta: { 
                Auth: true, 
-               title: 'cotización | Cotizador Shades',
+               title: 'cotización | Shades de México',
             },
             beforeEnter: checkClientCot ,
          },
@@ -71,7 +73,7 @@ const routes = [
             component: Orders,
             meta: { 
                Auth: true,
-               title: 'Pedidos | Cotizador Shades',
+               title: 'Pedidos | Shades de México',
             },
             beforeEnter: checkToken , 
          },
@@ -81,10 +83,46 @@ const routes = [
             component: Order, 
             meta: { 
                Auth: true, 
-               title: 'Pedido | Cotizador Shades',
+               title: 'Pedido | Shades de México',
             },
             beforeEnter: checkClientCot ,
          },
+      ],
+   },
+   // {
+   //    path:'/almacen/surtir',
+   //    name:'Supply',
+   //    component: Supply,
+   //    meta: { 
+   //       Auth: true,
+   //       title: 'Surtir | Shades de México',
+   //    },
+   //    beforeEnter: checkToken , 
+   // },
+   {
+      path:'/almacen/surtir',
+      component: () => import("./views/ViewAll.vue"),
+      children: [
+         {
+            path: "",
+            name:'supply',
+            component: Supply,
+            meta: { 
+               Auth: true,
+               title: 'Surtir | Shades de México',
+            },
+            beforeEnter: checkToken , 
+         },
+         // {
+         //    path: ":orderId",
+         //    name: "SupplyH",
+         //    component: SupplyH, 
+         //    meta: { 
+         //       Auth: true, 
+         //       title: 'SurtirH | Shades de México',
+         //    },
+         //    beforeEnter: checkClientCot ,
+         // },
       ],
    },
    {
@@ -93,7 +131,7 @@ const routes = [
       component: () => import("./views/tools/Tools.vue"),
       meta: { 
          Auth: true,
-         title: 'Herramientas | Cotizador Shades',
+         title: 'Herramientas | Shades de México',
       },
       beforeEnter: checkToken , 
    },
@@ -103,7 +141,7 @@ const routes = [
       component: () => import("./views/tools/NewsTools.vue"),
       meta: { 
          Auth: true, 
-         title: 'Noticias | Cotizador Shades',
+         title: 'Noticias | Shades de México',
       },
       beforeEnter: checkToken,
    },
@@ -113,7 +151,7 @@ const routes = [
       component: Configuracion,
       meta: { 
          Auth: true, 
-         title: 'Configuracion | Cotizador Shades',
+         title: 'Configuracion | Shades de México',
       },
       beforeEnter: checkToken , 
    },
@@ -123,7 +161,7 @@ const routes = [
       component: () => import("./views/News.vue"),
       meta: { 
          Auth: true,
-         title: 'Noticias | Cotizador Shades',
+         title: 'Noticias | Shades de México',
       },
       beforeEnter: checkToken , 
    },
@@ -133,7 +171,7 @@ const routes = [
       component: () => import("./views/New.vue"),
       meta: { 
          Auth: true,
-         title: 'Noticia | Cotizador Shades',
+         title: 'Noticia | Shades de México',
       },
       beforeEnter: checkToken , 
    },
@@ -143,7 +181,7 @@ const routes = [
       component: () => import("./views/account/AccountUser.vue"),
       meta: { 
          Auth: true,
-         title: 'Noticia | Cotizador Shades',
+         title: 'Noticia | Shades de México',
       },
       beforeEnter: checkToken , 
    },
@@ -153,7 +191,7 @@ const routes = [
       component: () => import("./views/configuration/Accounts.vue"),
       meta: { 
          Auth: true,
-         title: 'Cuentas | Cotizador Shades',
+         title: 'Cuentas | Shades de México',
       },
       beforeEnter: checkToken , 
    },
@@ -163,7 +201,7 @@ const routes = [
       component: () => import("./views/configuration/NewAccount.vue"),
       meta: { 
          Auth: true,
-         title: 'Nueva Cuenta | Cotizador Shades',
+         title: 'Nueva Cuenta | Shades de México',
       },
       beforeEnter: checkToken , 
    },
@@ -173,7 +211,7 @@ const routes = [
       component: () => import("./views/configuration/EditAccount.vue"),
       meta: { 
          Auth: true,
-         title: 'Nueva Cuenta | Cotizador Shades',
+         title: 'Nueva Cuenta | Shades de México',
       },
       beforeEnter: checkToken , 
    },
@@ -183,7 +221,7 @@ const routes = [
       component: () => import("./views/warehouse/Inventory.vue"),
       meta: { 
          Auth: true,
-         title: 'Inventario | Cotizador Shades',
+         title: 'Inventario | Shades de México',
       },
       beforeEnter: checkToken , 
    },
@@ -193,7 +231,7 @@ const routes = [
       component: () => import("./views/invoice/Invoice.vue"),
       meta: { 
          Auth: true,
-         title: 'Liberar Facturas | Cotizador Shades',
+         title: 'Liberar Facturas | Shades de México',
       },
       beforeEnter: checkToken , 
    },
