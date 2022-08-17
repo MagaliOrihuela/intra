@@ -10,7 +10,7 @@ import OrderDComponent from "../components/orders/OrderDComponent";
 import OrderFreeModal from "../components/orders/OrderFreeModal";
 
 export default {
-  name: "SupplyH",
+  name: "supplyD",
   components: {
       OrderDComponent,
       OrderFreeModal,

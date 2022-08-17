@@ -137,6 +137,7 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'order'], function () {
 
 Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'almacen'], function () {
    Route::post('/supply/supplyWait', [EFreeController::class, 'freeOrders']);
+   Route::post('/supply/supplyChk', [EFreeController::class, 'freeOrdersChk']);
 
 });
 

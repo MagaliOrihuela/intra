@@ -43,7 +43,7 @@
             <v-tab-item
                value="tab2"
             >
-               <Supplies />
+               <SupplyChk />
             </v-tab-item>
          </v-tabs-items>
       </v-card>
@@ -52,6 +52,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Supplies from "../warehouse/SuppliesComponent.vue"
+import SupplyChk from "../warehouse/SupplyChkComponent.vue"
 
   export default {
       data () {
@@ -66,6 +67,7 @@ import Supplies from "../warehouse/SuppliesComponent.vue"
       },
       components:{
          Supplies,
+         SupplyChk
       },
       methods: {
       },

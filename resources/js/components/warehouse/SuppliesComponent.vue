@@ -43,6 +43,9 @@
                     @page-count="pageCount = $event"
 
                 >
+                    <template #[`item.no_ped`]="{ item }">
+                        <div class="orders-color">{{ item.no_ped }}</div>
+                    </template>
                     <template #[`item.created_at`]="{ item }" >
                         {{ formatDate(item.created_at) }}
                     </template>
@@ -188,10 +191,13 @@
                         align: 'start',
                         value: 'id',
                     },
-                    { text: 'Pedido', align: 'center', value: 'no_ped' },
+                    { text: 'Pedido', align: 'center', value: 'no_ped'},
                     { text: 'Cliente', align: 'center', value: 'client_id' },
                     { text: 'Nombre cliente', value: 'short_name' },
                     { text: 'Agente', value: 'name_agent' },
+                    { text: 'Entrega', value: 'delivery_type' },
+                    { text: 'Embarque', value: 'boarding_type' },
+                    { text: 'Fletera', value: 'companie' },
                     { text: 'Creación', value: 'created_at' },
                     { text: 'Status', align: 'center', value: 'status_id' },
                     { 
@@ -231,8 +237,10 @@
                 let dateComp = date.substring(0,10) + ' ' + date.substring(11,19);
                 return dateComp
             },
-            viewFree(){
-
+            viewFree(id){
+                this.loading=true
+               this.$store.dispatch('modals/loaderfull',true); // activamos el overlay cargando
+               this.$router.push(`/almacen/surtir/${id}`)
             }
  
         },
@@ -244,3 +252,12 @@
         }
     }
 </script>
+<style>
+    .orders-color {
+        font-size: 15px;
+        font-weight: 400;
+        padding-top: 3px;
+        color: green;
+    }
+
+</style>

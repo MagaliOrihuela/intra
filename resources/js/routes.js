@@ -7,7 +7,7 @@ import Cotizacion from './views/Cotizacion.vue'
 import Orders from './views/Orders.vue'
 import Order from './views/Order.vue'
 import Supply from './views/Supply.vue'
-import SupplyH from './views/SupplyH.vue'
+import supplyD from './views/supplyD.vue'
 import Configuracion from './views/Configuracion.vue'
 import NotAutorized from './views/errors/401.vue'
 import checkToken  from './guards/token.guard'
@@ -89,16 +89,6 @@ const routes = [
          },
       ],
    },
-   // {
-   //    path:'/almacen/surtir',
-   //    name:'Supply',
-   //    component: Supply,
-   //    meta: { 
-   //       Auth: true,
-   //       title: 'Surtir | Shades de México',
-   //    },
-   //    beforeEnter: checkToken , 
-   // },
    {
       path:'/almacen/surtir',
       component: () => import("./views/ViewAll.vue"),
@@ -113,16 +103,16 @@ const routes = [
             },
             beforeEnter: checkToken , 
          },
-         // {
-         //    path: ":orderId",
-         //    name: "SupplyH",
-         //    component: SupplyH, 
-         //    meta: { 
-         //       Auth: true, 
-         //       title: 'SurtirH | Shades de México',
-         //    },
-         //    beforeEnter: checkClientCot ,
-         // },
+         {
+            path: ":orderId",
+            name: "supplyD",
+            component: supplyD, 
+            meta: { 
+               Auth: true, 
+               title: 'SurtirH | Shades de México',
+            },
+            beforeEnter: checkClientCot ,
+         },
       ],
    },
    {
