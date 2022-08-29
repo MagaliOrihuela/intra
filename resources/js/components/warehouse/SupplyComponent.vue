@@ -6,11 +6,16 @@
          elevation="0"
          transition="scale-transition"
       >
-         <v-card-title class="h4 invoice-header-text">
-            <v-icon color="red" left>
+         <v-card-title
+            class="headline mb-1"
+         >
+            <v-icon
+               color="red darken-1"
+               class="pr-2"
+            > 
                mdi-dolly
-            </v-icon>
-            Surtir
+            </v-icon>Surtir
+
          </v-card-title>
          <v-tabs
             color="shades_five"

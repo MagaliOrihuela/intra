@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\EFreeOrds;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EFreeController extends Controller
 {
@@ -14,21 +15,12 @@ class EFreeController extends Controller
      */
     public function freeOrders(Request $request)
     {
-        $eFree = EFreeOrds::select('e_free_ords.id','e_free_ords.coment','c_delivery_types.delivery_type','c_delivery_service_companies.companie','c_boarding_types.boarding_type','e_free_ords.created_at','e_orders.no_ped','c_clients.client_id','c_clients.short_name','c_agents.name_agent','c_status_ords.name','c_status_ords.color')
-                            ->join('d_orders','d_orders.free_id','e_free_ords.id')
-                            ->join('e_orders','e_orders.id','d_orders.order_id')
-                            ->join('c_clients','c_clients.id','e_orders.client_id')
-                            ->join('c_agents','c_agents.id','e_orders.agent_id')
-                            ->join('c_status_ords','c_status_ords.id','e_free_ords.status_id')
-                            ->join('c_delivery_types','c_delivery_types.id','e_free_ords.delivery_id')
-                            ->join('c_delivery_service_companies','c_delivery_service_companies.id','e_free_ords.deli_serv_id')
-                            ->join('c_boarding_types','c_boarding_types.id','e_free_ords.board_id')
-                                ->where('e_free_ords.status_id',1)
-                                    ->groupBy('e_free_ords.id','e_orders.no_ped')
-                                        ->get();
+        $eFree = DB::select('call ps_orders(1,0)');
+        $gridEF = collect($eFree);
+                                
         return response()->json([
             'success' =>  true,
-            'dataF' => $eFree,
+            'dataF' => $gridEF,
         ], 200);
     }
     public function freeOrdersChk(Request $request)
@@ -45,6 +37,7 @@ class EFreeController extends Controller
                                 ->where('e_free_ords.status_id',4)
                                     ->groupBy('e_free_ords.id','e_orders.no_ped')
                                         ->get();
+
         return response()->json([
             'success' =>  true,
             'dataFChk' => $eFree,
@@ -68,3 +61,8 @@ class EFreeController extends Controller
      * @return \Illuminate\Http\Response
      */
 }
+
+// call procedures
+// $eFree = DB::select('call ps_pruba()');
+// $prub = collect($eFree);
+

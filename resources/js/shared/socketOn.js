@@ -75,6 +75,18 @@ class socketOn{
         })
     }
 
+    dataOrdersOn(){
+        socket.on('FREE_DORDERS', response => {
+            store.dispatch('dord/freeDOrders',response);
+        })
+        socket.on('FREE_MODAL', response => {
+            store.dispatch('modals/IdentifyModal',response);
+        })
+        socket.on('FREE_STATUS', response => {
+            store.dispatch('dord/free_status',response);
+        })
+    }    
+
 }
 
 const socketClientOn = new socketOn()

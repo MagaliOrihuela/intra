@@ -7,6 +7,7 @@ const modals = {
       detailCotModal: false, 
       editCotModal: false, 
       orderFreeModal: false,
+      supplyModal: false,
       editCotId:0,
       loaderFull: false, 
    },
@@ -27,6 +28,9 @@ const modals = {
       ORDER_FREE_MODAL(state,data){ 
          state.orderFreeModal = data 
       },
+      SUPPLY_MODAL(state,data){ 
+         state.supplyModal = data 
+      },
    },
    actions: {
       IdentifyModal({commit},payload) {
@@ -42,7 +46,11 @@ const modals = {
                commit('MODAL_EDIT_COTIZACION',payload.state_modal)
             break;
             case 'orderFree':
+               
                commit('ORDER_FREE_MODAL',payload.state_modal)
+            break;
+            case 'supplyFree':
+               commit('SUPPLY_MODAL',payload.state_modal)
             break;
          }
       },
@@ -57,6 +65,7 @@ const modals = {
       getDetailCotModal: state => state.detailCotModal,
       getCotIdModal: state => state.editCotId,
       getOrderFreeModal: state => state.orderFreeModal,
+      getSupplyModal: state => state.supplyModal,
    }
 }
 

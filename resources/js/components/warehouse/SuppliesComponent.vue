@@ -119,14 +119,14 @@
                 </v-data-table>
             </v-card-actions>
             <div class="text-center pt-2">
-                    <v-pagination 
-                        v-model="page" 
-                        :length="pageCount" 
-                        total-visible="7"
-                        circle 
-                        color="blue-grey darken-3" 
-                    ></v-pagination>
-                </div>
+                <v-pagination 
+                    v-model="page" 
+                    :length="pageCount" 
+                    total-visible="7"
+                    circle 
+                    color="blue-grey darken-3" 
+                ></v-pagination>
+            </div>
         </v-card>
         <!-- Dialog Canceled  -->
         <v-dialog
@@ -194,7 +194,8 @@
                     { text: 'Pedido', align: 'center', value: 'no_ped'},
                     { text: 'Cliente', align: 'center', value: 'client_id' },
                     { text: 'Nombre cliente', value: 'short_name' },
-                    { text: 'Agente', value: 'name_agent' },
+                    { text: 'Agente', value: 'agent' },
+                    { text: 'Usuario', value: 'user_name' },
                     { text: 'Entrega', value: 'delivery_type' },
                     { text: 'Embarque', value: 'boarding_type' },
                     { text: 'Fletera', value: 'companie' },

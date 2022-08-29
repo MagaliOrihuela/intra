@@ -40,7 +40,7 @@ class EOrdersController extends Controller
                 'no_ped' => $order->no_ped,
                 'client' => $order->client->client_id,
                 'nameCte' => $order->client->short_name,
-                'nameAgt' => $order->agent->name_agent,
+                'nameAgt' => $order->agent->agent,
                 'created' => $order->created_at,
                 'total' => $order->total,
                 'free' => $order->free,

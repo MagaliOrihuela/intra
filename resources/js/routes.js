@@ -24,7 +24,7 @@ const routes = [
       component: Index,
       meta: { 
          Auth: true, 
-         title: 'Cotizador Shades',
+         title: 'Shades de Mexico',
       },
    },
    // {
@@ -104,12 +104,12 @@ const routes = [
             beforeEnter: checkToken , 
          },
          {
-            path: ":orderId",
+            path: ":freeId",
             name: "supplyD",
             component: supplyD, 
             meta: { 
                Auth: true, 
-               title: 'SurtirH | Shades de México',
+               title: 'Surtir | Shades de México',
             },
             beforeEnter: checkClientCot ,
          },

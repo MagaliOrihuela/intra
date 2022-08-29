@@ -6,7 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         
         <link rel="shortcut icon" href="/images/shades.ico" />
-        <title> Cotizador Shades</title>
+        <title> Shades de México</title>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600&display=swap" rel="stylesheet">
         <!-- Styles -->

@@ -35,7 +35,7 @@
                      xl="3" 
                      style="font-size: 16px;"
                   > <!--  Agente  -->
-                     <v-icon left> mdi-account-tie </v-icon> Agente: <b class="font-weight-regular"> {{ nameAgent }} </b>
+                     <v-icon left> mdi-account-tie </v-icon> Agente: <b class="font-weight-regular"> {{ detOrder.nom_age }} </b>
                   </v-col>
                   <v-col 
                      class="pa-0 pt-4 ma-0" 
@@ -46,7 +46,7 @@
                      xl="3"
                      style="font-size: 16px;"
                   > <!--  Cliente  -->
-                     <v-icon left> mdi-briefcase-account-outline </v-icon> Cliente: <b class="font-weight-regular"> {{ nameClient }} </b>
+                     <v-icon left> mdi-briefcase-account-outline </v-icon> Cliente: <b class="font-weight-regular"> {{ detOrder.nom_cte }} </b>
                   </v-col>
                </v-row>
                <v-row class="pa-0 ma-0" >
@@ -78,17 +78,17 @@
                      style="font-size: 16px;"
                   > 
                      <v-icon left>mdi-lock-open-outline</v-icon>Liberado: 
-                     <v-icon v-if="free == 1"
+                     <v-icon v-if="detOrder.free == 1"
                         left
-                        :color="colors"  
+                        :color="detOrder.colorF"  
                      >
                         mdi-checkbox-marked-circle-outline 
                      </v-icon>
-                     <v-chip v-else-if="free == 2"
-                           :color="colors"  
+                     <v-chip v-else-if="detOrder.free == 2"
+                           :color="detOrder.colorF"  
                            outlined
                      >
-                           {{ statusd }}
+                           {{ detOrder.statusF }}
                      </v-chip>
                   </v-col> 
                   <v-col
@@ -259,14 +259,15 @@
                   <v-icon 
                      left
                      color="#008000"  
+                      v-if="item.status"
                   >
-                     {{ item.status }}
+                     mdi-archive-arrow-up-outline
                   </v-icon>
                </template>
                <template #[`item.free`]="{ item }">
                   <v-icon v-if="item.free"
                      left
-                     :color="item.colorF"  
+                     color="#008000"  
                   >
                      mdi-checkbox-marked-circle-outline 
                   </v-icon>
@@ -300,20 +301,14 @@
       data () {
          return {
             no_ped: Number.parseInt(this.$route.params.no_ped),
-            nameAgent: '',
-            nameClient: '',
             status: '',
             colorStat: '',
             loading: false,
             loadingTable: true,
             isPartner: false,
             free: 0,
-            colorF: '',
-            iconF: '',
             color: '',
             status: '',
-            colors: '',
-            statusd: '',
 
             // totales order
             sub: 0,
@@ -338,7 +333,7 @@
                { text: 'Precio', width:'10%', value: 'price' },
                { text: 'Subtotal', width:'10%', value: 'subtot' },
                { text: 'Saldo', value: 'total_ord' },
-               { text: 'Estatus', value: 'status' },
+               { text: 'Surtida', value: 'status' },
                { text: 'Liberada', value: 'free' },
             ],
          }
@@ -378,16 +373,10 @@
             if(res.success) {
                var arrPartOrd = res.dataOrdPart[0]
                var arrDet = arrPartOrd.detOrder
-               this.nameAgent = arrDet.nom_age
-               this.nameClient = arrDet.nom_cte
                this.status = arrDet.status
                this.sub = arrPartOrd.sub
                this.iva = arrPartOrd.iva
                this.total = arrPartOrd.total
-               this.free = arrDet.free
-               this.statusd = arrDet.statusF
-               this.colors = arrDet.colorF
-
                switch(this.status.trim()){
                   case 'Parcial':
                      this.colorStat = '#EAA20A';
@@ -456,7 +445,6 @@
             if(resAlert){
                this.deleteCot(idCot)
             }
-            
          },
 
          viewAllOrders() {
@@ -465,7 +453,6 @@
          },
 
          async proccessOrder() {
-
              var payload = {  
                token: this.getUserApi.token,
             }

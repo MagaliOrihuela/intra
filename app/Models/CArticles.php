@@ -22,7 +22,7 @@ class CArticles extends Model
         return $this->hasMany(DCotizaciones::class,'id','article_id');
     }
     public function dorders(){
-        return $this->hasMany(DOrders::class,'id','article_id');
+        return $this->hasMany(DOrders::class,'article_id','id');
     }
 
     public function units(){

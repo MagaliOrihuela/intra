@@ -16,6 +16,7 @@ use App\Http\Controllers\Email;
 use App\Http\Controllers\EOrdersController;
 use App\Http\Controllers\DOrdersController;
 use App\Http\Controllers\EFreeController;
+use App\Http\Controllers\EFreeDController;
 
 Route::get('csrf', function () {
    return csrf_token();
@@ -135,11 +136,19 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'order'], function () {
    Route::post('/freeDetail', [DOrdersController::class, 'freeDetail']);
 });
 
+//EFree
 Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'almacen'], function () {
    Route::post('/supply/supplyWait', [EFreeController::class, 'freeOrders']);
    Route::post('/supply/supplyChk', [EFreeController::class, 'freeOrdersChk']);
+   //EFreeD
+   Route::post('surtir/supply/supplyD', [EFreeDController::class, 'supplyD']);
+   Route::post('surtir/supply/supplyScan', [EFreeDController::class, 'supplyScan']);
 
 });
+
+// //EFreeD
+// Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'almacen'], function () {
+// });
 
 Route::group(['prefix' => 'invoice'], function () {
    Route::post('/get_config', [EInvoiceController::class, 'getConfigInvoice']);

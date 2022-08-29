@@ -146,6 +146,7 @@ class DOrdersController extends Controller
             $order->client_id = $client[0]->id;
             $order->agent_id = $request->agentId;
             $order->status_id = 1;
+            $order->free = 2;
             $order->total = $request->tot;
             $order->subtot = $request->subtot;
             $order->iva = $request->iva;
@@ -160,11 +161,11 @@ class DOrdersController extends Controller
         $street = '';
         $extNum = '';
         $intNum = '';
-        $cp = '';
+        $cp = 0;
         $suburb = '';
         $city = '';
         $state = '';
-        $phone = '';
+        $phone = 0;
         if($request->selDelivery <> 3 && $request->selDestiny == 0){
             $contact = $request->contact;
             $street = $request->street;
@@ -241,7 +242,10 @@ class DOrdersController extends Controller
         return response()->json([
             'success' => true,
             'orderId' => $orderId,
-            'no_ped' => $request->no_ped
+            'no_ped' => $request->no_ped,
+            'catLib' => $arrSel,
+            'name_modal' => 'orderFree',
+            'state_modal' => false
         ],200);
     }
 

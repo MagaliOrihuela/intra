@@ -705,7 +705,8 @@
                 var payload = {
                     name_modal:  'orderFree', // modal 
                     state_modal: false,
-                    id: 0
+                    id: 0,
+                    flagF: 1
                 }
                 await this.$store.dispatch('modals/IdentifyModal',payload);
             },
@@ -789,8 +790,11 @@
                     suburb: this.suburb,
                     city: this.city,
                     state: this.state,
-                    phone: this.phone
+                    phone: this.phone,
+                    name_modal:  'orderFree', // modal 
+                    state_modal: false
                 }
+                // libera las categorias seleccionadas
                 const res = await socketClientEmit.freeOrderEmit(payload)
                 if(res.success){
                     let payload2 = {
@@ -798,6 +802,9 @@
                         user_id: this.getUserApi.uid,
                         no_ped: res.no_ped
                     }
+                    // cierra modal free
+                    // await this.$store.dispatch('modals/IdentifyModal',payload3);
+                    
                     const res2 = await socketClientEmit.valFreeOrderEmit(payload2)
 
 

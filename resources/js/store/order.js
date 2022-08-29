@@ -19,14 +19,6 @@ const dord = {
    },
    mutations: {
       DATA_ORDPARTS (state,data) {
-        //  for( let i in data ) {
-        //     const isFind = state.gridCot.find( cotizaciones => cotizaciones.id === data[i].id )
-        //     var date = new Date(data[i].created_at);
-        //     data[i].created_at = date.toLocaleDateString("es-ES",state.optionsDate)  
-        //     if(typeof isFind === 'undefined') {
-        //         state.gridCot.push(data[i]);
-        //     }
-        // }
          state.dataOrder = data.dataOrder
          state.detOrder = data.detOrder
          state.sub = data.sub
@@ -37,6 +29,24 @@ const dord = {
          state.cateFree = data.gridCate
          state.selCate = data.selCate
          state.disFree = data.disFree
+      },
+      DATA_FREE(state,data){
+         const gDataOrder = store.getters['dord/getDataOrder']
+         let arrCat = data.catLib
+         for( let i in  arrCat) {
+            for(let j in gDataOrder){
+               if(arrCat[i] == gDataOrder[j].catId){
+                  let tmp = gDataOrder[j]
+                  tmp.free = 1
+                  state.dataOrder.splice(j,1,tmp)
+               }
+           }
+         }
+      },
+      DATA_FREE_STAT(state,data){
+         state.detOrder.free = data.free
+         state.detOrder.statusF = data.statusF
+         state.detOrder.colorF = data.colorF
       }
    },
    actions: {
@@ -66,7 +76,20 @@ const dord = {
       async freeDetail({commit},payload){
          const { data } = await axios.post('/order/freeDetail', payload, { headers: { Authorization: "Bearer " + payload.token } })
          return Promise.resolve(data)
-      }
+      },
+      async freeDOrders({commit},data){ // a medias RT
+         let detOrder = store.getters['dord/getDetOrder']
+         if(detOrder.no_ped == data.no_ped){
+            commit("DATA_FREE",data)
+         }
+      },
+      async free_status({commit},data){ // a medias RT
+         let detOrder = store.getters['dord/getDetOrder']
+         let dat = data.dataOrdPart
+         if(detOrder.no_ped == dat.no_ped){
+            commit("DATA_FREE_STAT",dat)
+         }
+      },
    },
    getters: {
       getDataOrder: state => state.dataOrder,

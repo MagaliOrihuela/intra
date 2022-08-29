@@ -107,11 +107,20 @@ class socketEmit {
     async freeOrderEmit(payload){
         const { data } = await axios.post('/order/freeOrder', payload,{ headers: { Authorization: "Bearer" + payload.token }})
         if(data.success){
+            socket.emit('dorders:free',data)
+            socket.emit('dorders:freeModal',data)
             return Promise.resolve(data)
         }
     }
     async valFreeOrderEmit(payload){
         const { data } = await axios.post(`/API/orders/freeOrder`, payload, { headers: { Authorization: "Bearer " + payload.token } })
+        if(data.success){
+            socket.emit('dorders:freeStatus',data)
+            return Promise.resolve(data)
+        }
+    }
+    async supplyScanEmit(payload){
+        const { data } = await axios.post('supply/supplyScan', payload, { headers: { Authorization: "Bearer " + payload.token } })
         if(data.success){
             return Promise.resolve(data)
         }

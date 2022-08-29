@@ -1,19 +1,19 @@
 <template>
   <div>
-    <OrderDComponent />
-    <OrderFreeModal />
+    <SupplyDComponent />
+    <SupplyModal />
   </div>
 </template>
 
 <script>
-import OrderDComponent from "../components/orders/OrderDComponent";
-import OrderFreeModal from "../components/orders/OrderFreeModal";
+import SupplyDComponent from "../components/warehouse/SupplyDComponent";
+import SupplyModal from "../components/warehouse/SupplyModal";
 
 export default {
   name: "supplyD",
   components: {
-      OrderDComponent,
-      OrderFreeModal,
+      SupplyDComponent,
+      SupplyModal,
   },
 };
 </script>
