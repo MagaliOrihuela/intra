@@ -148,4 +148,43 @@ class APIController extends Controller
             ], 200);
         }
     }
+    public function supplyScan(Request $request)
+    {
+        try {
+            $dataSuppScan = HTTP::asForm()->post(config('app.ApiUrl').'/API/shades/supply/supplyScan.php' , [
+                'token' => $request->token,
+                'user_id' => $request->user_id,
+                'dord_id' => $request->dord_id,
+                'cat_id' => $request->cat_id,
+                'lot' => $request->lot
+            ]);
+            return response()->json([
+                'success' => true,
+                'dataSuppScan' => $dataSuppScan->json()
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+            ], 200);
+        }
+    }
+    public function gridsModal(Request $request)
+    {
+        try {
+            $gridSupplyModal = HTTP::asForm()->post(config('app.ApiUrl').'/API/shades/supply/gridsModal.php' , [
+                'token' => $request->token,
+                'user_id' => $request->user_id,
+                'dordId' => $request->dordId,
+            ]);
+            return response()->json([
+                'success' => true,
+                'gridSupplyModal' => $gridSupplyModal->json()
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'error' => "fails",
+            ], 200);
+        }
+    }
 }

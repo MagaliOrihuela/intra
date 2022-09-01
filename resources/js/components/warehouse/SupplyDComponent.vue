@@ -25,7 +25,7 @@
                             xl="3"
                             style="font-size: 16px;"
                         >
-                            <v-icon color="red darken-1">mdi-clipboard-check-multiple-outline</v-icon> &nbsp;&nbsp;Liberación: <b class="font-weight-regular">{{ freeId }}</b>
+                            <v-icon color="red darken-1">mdi-clipboard-check-multiple-outline</v-icon> &nbsp;&nbsp;Liberación: <b class="font-weight-regular">{{ dataSuppD.id }}</b>
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0"
@@ -36,7 +36,7 @@
                             xl="3"
                             style="font-size: 16px;"
                         >
-                            <v-icon left>mdi-clipboard-text-outline</v-icon> &nbsp;&nbsp;Pedido: <b class="font-weight-regular">{{ noPed }}</b>
+                            <v-icon left>mdi-clipboard-text-outline</v-icon> &nbsp;&nbsp;Pedido: <b class="font-weight-regular">{{ dataSuppD.no_ped }}</b>
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0"
@@ -47,7 +47,7 @@
                             xl="3" 
                             style="font-size: 16px;"
                         > <!--  Agente  -->
-                            <v-icon left>mdi-account-tie</v-icon> Agente: <b class="font-weight-regular"> {{ nameAgent }} </b>
+                            <v-icon left>mdi-account-tie</v-icon> Agente: <b class="font-weight-regular"> {{ dataSuppD.agent }} </b>
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0" 
@@ -58,7 +58,7 @@
                             xl="3"
                             style="font-size: 16px;"
                         > <!--  Cliente  -->
-                            <v-icon left> mdi-briefcase-account-outline </v-icon> Cliente: <b class="font-weight-regular"> {{ nameClient }} </b>
+                            <v-icon left> mdi-briefcase-account-outline </v-icon> Cliente: <b class="font-weight-regular"> {{ dataSuppD.short_name }} </b>
                         </v-col>
                     </v-row>
                     <v-row class="pa-0 ma-0" >
@@ -74,10 +74,10 @@
                             <v-icon left>mdi-chart-timeline-variant</v-icon>Estatus: &nbsp;
                             <v-chip
                                 close-icon="mdi-close-outline"
-                                :color = "colorStat"
+                                :color = "dataSuppD.color"
                                 outlined
                             >
-                                {{ status }}
+                                {{ dataSuppD.name }}
                             </v-chip>
                         </v-col>
                         <v-col
@@ -89,7 +89,7 @@
                             xl="3"
                             style="font-size: 16px;"
                         > 
-                            <v-icon left>mdi-calendar-month-outline</v-icon>Liberada: <b class="font-weight-regular"> {{ formatDate(date) }} </b>
+                            <v-icon left>mdi-calendar-month-outline</v-icon>Liberada: <b class="font-weight-regular"> {{ dataSuppD.created_at }} </b>
                         </v-col> 
                         <v-col
                             class="pa-0 pt-4 ma-0" 
@@ -100,7 +100,7 @@
                             xl="3"
                             style="font-size: 16px;"
                         > 
-                            <v-icon left>mdi-account-circle-outline</v-icon>Usuario: <b class="font-weight-regular"> {{userName}} </b>
+                            <v-icon left>mdi-account-circle-outline</v-icon>Usuario: <b class="font-weight-regular"> {{ dataSuppD.username }} </b>
                         </v-col> 
                         <v-col
                             xs="12"
@@ -142,7 +142,7 @@
                             xl="4"
                             style="font-size: 16px;"
                         >
-                            <v-icon left>mdi-dolly</v-icon> Tipo entrega: <b class="info-free"> {{ deliveryt }} </b>
+                            <v-icon left>mdi-dolly</v-icon> Tipo entrega: <b class="info-free"> {{ dataSuppD.delivery_type }} </b>
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0" 
@@ -153,7 +153,7 @@
                             xl="4"
                             style="font-size: 16px;"
                         >
-                            <v-icon left>mdi-card-bulleted-outline</v-icon> Tipo embarque: <b class="info-free"> {{ board }} </b>
+                            <v-icon left>mdi-card-bulleted-outline</v-icon> Tipo embarque: <b class="info-free"> {{ dataSuppD.boarding_type }} </b>
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0" 
@@ -164,7 +164,7 @@
                             xl="4"
                             style="font-size: 16px;"
                         >
-                            <v-icon left>mdi-truck-fast-outline</v-icon> Fletera: <b class="info-free"> {{ deliserv }} </b>
+                            <v-icon left>mdi-truck-fast-outline</v-icon> Fletera: <b class="info-free"> {{ dataSuppD.companie }} </b>
                         </v-col>
                     </v-row>
                     <v-row class="pa-0 ma-0 mb-1">
@@ -189,7 +189,7 @@
                             xl="6"
                             style="font-size: 16px;"
                         >
-                            <v-icon left>mdi-comment-processing-outline</v-icon> Comentario: <b class="info-free"> {{ coment }} </b>
+                            <v-icon left>mdi-comment-processing-outline</v-icon> Comentario: <b class="info-free"> {{ dataSuppD.coment }} </b>
                         </v-col> 
                     </v-row>
                     <v-row class="pa-0 ma-0 mb-1">
@@ -203,7 +203,7 @@
                             style="font-size: 16px;"
                             v-if = contact
                         > 
-                            <v-icon left>mdi-account-circle</v-icon>Quien recibe: <b class="info-free"> {{ contact }} </b>
+                            <v-icon left>mdi-account-circle</v-icon>Quien recibe: <b class="info-free"> {{ dataSuppD.contact }} </b>
                         </v-col>
                     </v-row>
                 </v-container>
@@ -247,7 +247,7 @@
                     >
                         <v-card-subtitle  class="pa-2 ma-0 ">
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
-                                v-if="gridT.length > 0"
+                                v-if="dataSuppT.length > 0"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -277,7 +277,7 @@
                                 <v-data-table
                                     v-model="selected"
                                     :headers="headers"
-                                    :items="gridT"
+                                    :items="dataSuppT"
                                     :page.sync="pageT"
                                     :items-per-page="itemsPerPageT"
                                     hide-default-footer
@@ -306,7 +306,7 @@
                                                 <v-btn
                                                     icon
                                                     color="#EAA20A"
-                                                    @click="scanModal(item.dord_id)" 
+                                                    @click="scanModal(item.dord_id,item.num)" 
                                                 >
                                                     <v-icon>mdi-barcode-scan</v-icon>
                                                 </v-btn>
@@ -338,7 +338,7 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
-                                v-if="gridT2.length > 0"
+                                v-if="dataSuppT2.length > 0"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -390,7 +390,7 @@
                                 <v-data-table
                                     v-model="selected"
                                     :headers="headers"
-                                    :items="gridT2"
+                                    :items="dataSuppT2"
                                     :page.sync="pageT2"
                                     :items-per-page="itemsPerPageT2"
                                     hide-default-footer
@@ -419,7 +419,7 @@
                                                 <v-btn
                                                     icon
                                                     color="#EAA20A"
-                                                    @click="scanModal(item.dord_id)" 
+                                                    @click="scanModal(item.dord_id,item.num)" 
                                                 >
                                                     <v-icon>mdi-barcode-scan</v-icon>
                                                 </v-btn>
@@ -451,7 +451,7 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
-                                v-if="gridC.length > 0"
+                                v-if="dataSuppC.length > 0"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -481,7 +481,7 @@
                                 <v-data-table
                                     v-model="selected"
                                     :headers="headers2"
-                                    :items="gridC"
+                                    :items="dataSuppC"
                                     :page.sync="pageC"
                                     :items-per-page="itemsPerPageC"
                                     :sort-desc="false"
@@ -513,7 +513,7 @@
                                                 <v-btn
                                                     icon
                                                     color="#EAA20A"
-                                                    @click="scanModal(item.dord_id)" 
+                                                    @click="scanModal(item.dord_id,item.num)" 
                                                 >
                                                     <v-icon>mdi-barcode-scan</v-icon>
                                                 </v-btn>
@@ -545,7 +545,7 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
-                                v-if="gridP.length > 0"
+                                v-if="dataSuppP.length > 0"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -573,9 +573,9 @@
                                     </v-col>
                                 </v-row>
                                 <v-data-table
-                                    v-model="gridP"
+                                    v-model="selected"
                                     :headers="headers2"
-                                    :items="gridP"
+                                    :items="dataSuppP"
                                     :page.sync="pageP"
                                     :items-per-page="itemsPerPageP"
                                     hide-default-footer
@@ -605,7 +605,7 @@
                                                 <v-btn
                                                     icon
                                                     color="#EAA20A"
-                                                    @click="scanModal(item.dord_id)" 
+                                                    @click="scanModal(item.dord_id,item.num)" 
                                                 >
                                                     <v-icon>mdi-barcode-scan</v-icon>
                                                 </v-btn>
@@ -637,7 +637,7 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
-                                v-if="gridM.length > 0"
+                                v-if="dataSuppM.length > 0"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -665,9 +665,9 @@
                                     </v-col>
                                 </v-row>
                                 <v-data-table
-                                    v-model="gridM"
+                                    v-model="selected"
                                     :headers="headers2"
-                                    :items="gridM"
+                                    :items="dataSuppM"
                                     :page.sync="pageM"
                                     :items-per-page="itemsPerPageM"
                                     hide-default-footer
@@ -697,7 +697,7 @@
                                                 <v-btn
                                                     icon
                                                     color="#EAA20A"
-                                                    @click="scanModal(item.dord_id)" 
+                                                    @click="scanModal(item.dord_id,item.num)" 
                                                 >
                                                     <v-icon>mdi-barcode-scan</v-icon>
                                                 </v-btn>
@@ -729,7 +729,7 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
-                                v-if="gridTol.length > 0"
+                                v-if="dataSuppTol.length > 0"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -757,9 +757,9 @@
                                     </v-col>
                                 </v-row>
                                 <v-data-table
-                                    v-model="gridTol"
+                                    v-model="selected"
                                     :headers="headers2"
-                                    :items="gridTol"
+                                    :items="dataSuppTol"
                                     :page.sync="pageTol"
                                     :items-per-page="itemsPerPageTol"
                                     hide-default-footer
@@ -788,7 +788,7 @@
                                                 <v-btn
                                                     icon
                                                     color="#EAA20A"
-                                                    @click="scanModal(item.dord_id)" 
+                                                    @click="scanModal(item.dord_id,item.num)" 
                                                 >
                                                     <v-icon>mdi-barcode-scan</v-icon>
                                                 </v-btn>
@@ -901,7 +901,7 @@
                     { text: 'Cantidad', width:'5%', value: 'quantity' },
                     { text: 'Unidad', width:'5%', value: 'unit' },
                     { text: 'Metraje', width:'5%', value: 'packing2' },
-                    { text: 'Estatus', width:'15%', value: 'status' },
+                    { text: 'Surtido', width:'15%', value: 'status' },
                     { text: 'Acciones',width:'15%', value: 'dord_id' },
                 ],
                 headers2: [
@@ -911,7 +911,7 @@
                     { text: 'Cantidad', width:'5%', value: 'quantity' },
                     { text: 'Unidad', width:'5%', value: 'unit' },
                     { text: 'Contenido', width:'5%', value: 'packing2' },
-                    { text: 'Estatus', width:'15%', value: 'status' },
+                    { text: 'Surtido', width:'15%', value: 'status' },
                     { text: 'Acciones', width:'15%',value: 'dord_id' },
                 ],
                 pruba: [],
@@ -924,7 +924,13 @@
         computed: {
             ...mapGetters({ 
                 getUserApi: 'auth/getUserApi',
-                dataSuppD: 'defree/getDataSuppD'
+                dataSuppD: 'defree/getDataSuppD',
+                dataSuppT: 'defree/getDataSuppT',
+                dataSuppT2: 'defree/getDataSuppT2',
+                dataSuppC: 'defree/getDataSuppC',
+                dataSuppP: 'defree/getDataSuppP',
+                dataSuppM: 'defree/getDataSuppM',
+                dataSuppTol: 'defree/getDataSuppTol'
             }),        
         },
         methods: {
@@ -943,31 +949,31 @@
                 const res = await this.$store.dispatch('defree/getFreeD',payload);
                 if(res.success) {
                     this.arrCat = res.arrCat
-                    this.gridT = res.gridT
-                    this.gridT2 = res.gridT2
-                    this.gridC = res.gridC
-                    this.gridP = res.gridP
-                    this.gridM = res.gridM
-                    this.gridTol = res.gridTol
+                    // this.gridT = res.gridT
+                    // this.gridT2 = res.gridT2
+                    // this.gridC = res.gridC
+                    // this.gridP = res.gridP
+                    // this.gridM = res.gridM
+                    // this.gridTol = res.gridTol
                     this.catT = res.arrCat[0]
                     this.catC = res.arrCat[1]
                     this.catP = res.arrCat[2]
                     this.catM = res.arrCat[3]
                     this.catTol = res.arrCat[4]
-                    var arrFree = res.dataF[0]
-                    this.nameAgent = arrFree.agent
-                    this.userName = arrFree.username
-                    this.nameClient = arrFree.short_name
-                    this.noPed = arrFree.no_ped
-                    this.status = arrFree.name
-                    this.colorStat = arrFree.color
+                    // var arrFree = res.dataF[0]
+                    // this.nameAgent = arrFree.agent
+                    // this.userName = arrFree.username
+                    // this.nameClient = arrFree.short_name
+                    // this.noPed = arrFree.no_ped
+                    // this.status = arrFree.name
+                    // this.colorStat = arrFree.color
                     this.destiny = res.destiny
-                    this.date = arrFree.created_at
-                    this.deliveryt = arrFree.delivery_type
-                    this.board = arrFree.boarding_type
-                    this.deliserv = arrFree.companie
-                    this.coment = arrFree.coment
-                    this.contact = arrFree.contact
+                    // this.date = arrFree.created_at
+                    // this.deliveryt = arrFree.delivery_type
+                    // this.board = arrFree.boarding_type
+                    // this.deliserv = arrFree.companie
+                    // this.coment = arrFree.coment
+                    // this.contact = arrFree.contact
 
                     this.loadingTable = false
                 }
@@ -977,14 +983,22 @@
                 return dateComp
             },
 
-            async scanModal(dordId){
+            async scanModal(dordId,part){
                 let payload = {
                     token: this.getUserApi.token,
                     dordId: dordId,
+                    part: part,
                     name_modal:  'supplyFree', // modal 
                     state_modal: true,
                 }
                 // await socketClientEmit.supplyScanEmit(payload)
+                await this.$store.dispatch('defree/getSupplyModal',payload)
+                let payload2 = {
+                    token: this.getUserApi.token,
+                    user_id: this.getUserApi.uid,
+                    dordId: dordId
+                }
+                await this.$store.dispatch('defree/gridsSupplyModal',payload2)
                 await this.$store.dispatch('modals/IdentifyModal',payload);
                 // if(res.success){
 

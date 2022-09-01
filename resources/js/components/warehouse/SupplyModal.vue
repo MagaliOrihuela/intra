@@ -64,15 +64,15 @@
                                 style="text-align: center;"
                             >
                                 <v-chip
-                                    color="blue lighten-3"
+                                    :color="supplyModal.color"
                                     text-color="blue-grey darken-4"
                                     label
-                                    style="width: 35%;"
+                                    style="width: 100%;justify-content: center;"
                                 >
                                     <v-icon left>
-                                        mdi-view-parallel-outline
+                                        {{ supplyModal.icon }}
                                     </v-icon>
-                                    Telas
+                                    {{ supplyModal.category }}
                                 </v-chip>
                             </v-col>
                             <v-col 
@@ -83,7 +83,7 @@
                                 xl="3"
                                 class="pa-1 ma-0"
                             >
-                                Clave sai:<b class="info-free"> DUODB-082-98 </b>
+                                Clave sai:<b class="info-free"> {{ supplyModal.sai_id }} </b>
                             </v-col>
                             <v-col 
                                 xs="12"
@@ -93,7 +93,7 @@
                                 xl="4"
                                 class="pa-1 ma-0"
                             >
-                                Artículo:<b class="info-free"> DUOLINE BASIC DARK GREY 2.50M </b>
+                                Artículo:<b class="info-free"> {{ supplyModal.article }} </b>
                             </v-col>
                         </v-row>
                         <v-row class="pl-5">
@@ -116,7 +116,7 @@
                                 xl="3"
                                 class="pa-1 ma-0"
                             >
-                                Cantidad:<b class="info-free"> 4 </b>
+                                Cantidad:<b class="info-free"> {{ supplyModal.quantity }} </b>
                             </v-col>
                             <v-col 
                                 xs="12"
@@ -126,7 +126,7 @@
                                 xl="3"
                                 class="pa-1 ma-0"
                             >
-                                Unidad:<b class="info-free"> rollo </b>
+                                Unidad:<b class="info-free"> {{ supplyModal.unit }} </b>
                             </v-col>
                             <v-col 
                                 xs="12"
@@ -136,7 +136,7 @@
                                 xl="3"
                                 class="pa-1 ma-0"
                             >
-                                Metraje:<b class="info-free"> 50 </b>
+                                Metraje:<b class="info-free"> {{ supplyModal.packing2 }} </b>
                             </v-col>
                         </v-row>
                         <v-row class="pl-5">
@@ -157,7 +157,7 @@
                                 xl="3"
                                 class="pa-1 ma-0"
                             >
-                                Estatus:<b class="info-free">  </b>
+                                Surtido:<b class="info-free">  </b>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -213,13 +213,13 @@
                                                     style="text-align: center; font-size: 16px; color:red"
                                                     
                                                 >
-                                                    Faltan:<b > 4 </b>
+                                                    Faltan:<b >  </b>
                                                 </v-col>
                                             </v-row>
                                             <v-data-table
                                                 v-model="selected"
                                                 :headers="headers"
-                                                :items="gridModal"
+                                                :items="gridScan"
                                                 :page.sync="page"
                                                 :items-per-page="itemsPerPage"
                                                 hide-default-footer
@@ -234,24 +234,6 @@
                                                     color="red darken-4" 
                                                     indeterminate>
                                                 </v-progress-linear>
-                                                <template #[`item.id`]="{ item }">
-                                                    <v-row>
-                                                        <v-col 
-                                                            md="2"
-                                                            lg="2"
-                                                            xl="2"
-                                                            class="pa-0 ma-0"
-                                                        >
-                                                            <v-btn
-                                                                icon
-                                                                color="#EAA20A"
-                                                                
-                                                            >
-                                                                <v-icon>mdi-barcode-scan</v-icon>
-                                                            </v-btn>
-                                                        </v-col>
-                                                    </v-row>
-                                                </template>
                                             </v-data-table>
                                             <div class="text-center pt-2">
                                                 <v-pagination 
@@ -291,12 +273,12 @@
                                             <v-data-table
                                                 v-model="selected"
                                                 :headers="headers2"
-                                                :items="gridModal"
-                                                :page.sync="page"
-                                                :items-per-page="itemsPerPage"
+                                                :items="gridSug"
+                                                :page.sync="page2"
+                                                :items-per-page="itemsPerPage2"
                                                 hide-default-footer
                                                 class="elevation-0 overflow-y-auto"
-                                                @page-count="pageCount = $event"
+                                                @page-count="pageCount2 = $event"
                                                 :loading="loadingTable"
                                                 :sort-desc="false"
                                             >
@@ -327,9 +309,9 @@
                                             </v-data-table>
                                             <div class="text-center pt-2">
                                                 <v-pagination 
-                                                    v-model="page" 
-                                                    :length="pageCount" 
-                                                    total-visible="7"
+                                                    v-model="page2" 
+                                                    :length="pageCount2" 
+                                                    total-visible="5"
                                                     circle 
                                                     color="blue-grey darken-3" 
                                                 ></v-pagination>
@@ -368,7 +350,10 @@
                 dialog: false,
                 page: 1,
                 pageCount: 0,
-                itemsPerPage: 10,
+                itemsPerPage: 5,
+                page2: 1,
+                pageCount2: 0,
+                itemsPerPage2: 5,
                 headers: [
                     {
                         text: '#',
@@ -376,30 +361,27 @@
                         value: 'id',
                     },
                     { text: 'Lote', value: 'lot' },
-                    { text: 'Metraje', value: 'metraje' },
-                    { text: 'Registro', value: 'date' },
+                    { text: 'Metraje', value: 'quantity' },
+                    { text: 'Registro', value: 'created_at' },
                 ],
                 headers2: [
-                    { text: 'Lote', value: 'lot' },
-                    { text: 'Metraje', value: 'metraje' },
-                    { text: 'Registro', value: 'date' },
+                    { text: 'Lote', value: 'lote' },
+                    { text: 'Metraje', value: 'existencia' },
+                    { text: 'Registro', value: 'fech_umod' },
                 ],
                 lot: '',
                 disLot: false,
                 loadingTable: false,
                 selected: [],
-                gridModal: [],
-                gridSug: [],
-                page: 1,
-                pageCount: 0,
-                itemsPerPage: 5,
-
             }
         },
         computed: {
             ...mapGetters({
                 getUserApi: 'auth/getUserApi',
                 supplyM: 'modals/getSupplyModal',
+                supplyModal: 'defree/getDataSuppModal',
+                gridScan: 'defree/getGridScanModal',
+                gridSug: 'defree/getGridSugModal',
             }),
         },
         // beforeCreate(){
@@ -417,8 +399,15 @@
                 await this.$store.dispatch('modals/IdentifyModal',payload);
             },
 
-            scan(){
-                console.log('olo')
+            async scan(){
+                var payload = {
+                    token: this.getUserApi.token,
+                    user_id: this.getUserApi.uid,
+                    dord_id: this.supplyModal.id,
+                    cat_id: this.supplyModal.catId,
+                    lot: this.lot
+                }
+                const res = await socketClientEmit.supplyScanEmit(payload)
             },
         },
         mounted(){

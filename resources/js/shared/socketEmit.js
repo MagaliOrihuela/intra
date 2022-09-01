@@ -120,7 +120,7 @@ class socketEmit {
         }
     }
     async supplyScanEmit(payload){
-        const { data } = await axios.post('supply/supplyScan', payload, { headers: { Authorization: "Bearer " + payload.token } })
+        const { data } = await axios.post('/API/supply/supplyScan', payload, { headers: { Authorization: "Bearer " + payload.token } })
         if(data.success){
             return Promise.resolve(data)
         }

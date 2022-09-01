@@ -47,6 +47,7 @@ const dord = {
          state.detOrder.free = data.free
          state.detOrder.statusF = data.statusF
          state.detOrder.colorF = data.colorF
+         state.detOrder.orderId = data.orderId
       }
    },
    actions: {

@@ -99,7 +99,7 @@ class EFreeDController extends Controller
         
         return response()->json([
             'success' =>  true,
-            'dataF' => $eFree,
+            'dataF' => $eFree[0],
             'destiny' => $destiny,
             'arrCat' => $arrCat,
             'gridT' => $gridT,
@@ -120,6 +120,39 @@ class EFreeDController extends Controller
             'success' =>  true,
             'saludo' => 'olo',
             'data' => $dord
+        ], 200);
+    }
+
+    public function supplyModal(Request $request){
+        $dataOrd = DOrders::with('article')
+                        ->with('article.category:id,category,icon,color')
+                        ->with('unit')
+                            ->where('id',$request->dordId)
+                                ->get();
+        $dord = $dataOrd[0];
+        $article = $dord->article;
+        $cat = $dord->article->category;
+        $unit = $dord->unit;
+        $detModal = array(
+            "id" => $dord->id,
+            "status" => $dord->status_id,
+            "quantity" => $dord->quantity,
+            "fol_prod" => $dord->fol_prod,
+            "sai_id" => $article->sai_id,
+            "article" => $article->article,
+            "packing2" => $article->packing2,
+            "catId" => $cat->id,
+            "category" => $cat->category,
+            "icon" => $cat->icon,
+            "color" => $cat->color,
+            "unitId" => $unit->id,
+            "unit" => $unit->unit
+        );
+
+        return response()->json([
+            'success' =>  true,
+            'detModal' => $detModal,
+            // 'data' => $arr
         ], 200);
     }
 

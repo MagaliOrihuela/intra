@@ -25,7 +25,7 @@
                             <v-tab>
                                 <v-icon left>mdi-lock-open-outline</v-icon> Libera pedido
                             </v-tab>
-                            <v-tab v-on:click="freeDetail">
+                            <v-tab v-on:click="freeDetail(detOrder.orderId)">
                                 <v-icon left>mdi-clipboard-text-outline</v-icon> Detalle libera
                             </v-tab>
                         </v-tabs>
@@ -52,6 +52,13 @@
             <v-tabs-items v-model="tab">
                 <v-tab-item>
                     <v-card-text class="cot-text-info">
+                        <v-progress-linear
+                            :active="loading"
+                            :indeterminate="loading"
+                            absolute
+                            top
+                            color="red darken-4"
+                        ></v-progress-linear>
                         <v-row>
                             <v-col 
                                 xs="12"
@@ -100,7 +107,7 @@
                                 <v-icon left>mdi-chart-timeline-variant</v-icon>Estatus: &nbsp;
                                 <v-chip
                                     close-icon="mdi-close-outline"
-                                    color = "red"
+                                    :color = "detOrder.color"
                                     outlined
                                 >
                                     {{ detOrder.status }}
@@ -676,9 +683,7 @@
                 freedet: [],
                 checked: true,
                 label: "On",
-                active: 1,
-                dataOn: "On",
-                dataOff: "Off"
+                loading:false
             }
         },
         computed: {
@@ -794,6 +799,7 @@
                     name_modal:  'orderFree', // modal 
                     state_modal: false
                 }
+                this.loading = true
                 // libera las categorias seleccionadas
                 const res = await socketClientEmit.freeOrderEmit(payload)
                 if(res.success){
@@ -809,7 +815,7 @@
 
 
 
-
+                    this.loading = false
                     let iconToast = 'success'
                     let msjToast = '¡El pedido ha sido liberado!'
                     let positionToast = 'bottom-end'
@@ -819,11 +825,11 @@
                 }
             },
 
-            async freeDetail(){
+            async freeDetail(orderId){
                 let payload = {
                     token: this.getUserApi.token,
                     user_id: this.getUserApi.uid,
-                    orderId: this.detOrder.orderId
+                    orderId: orderId
                 }
                 const res = await this.$store.dispatch('dord/freeDetail',payload);
                 if(res.success){

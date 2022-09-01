@@ -120,6 +120,9 @@ Route::group(['prefix' => 'API'], function () {
    Route::post('/orders/getOrdersC', [APIController::class, 'ordersAllC']);
    Route::post('/orders/getPartOrder', [APIController::class, 'orderParts']);
    Route::post('/orders/freeOrder', [APIController::class, 'freeOrder']);
+   Route::post('/supply/supplyScan', [APIController::class, 'supplyScan']);
+   Route::post('supply/gridsModal', [APIController::class, 'gridsModal']);
+
 });
 
 // EOrders
@@ -143,6 +146,7 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'almacen'], function () 
    //EFreeD
    Route::post('surtir/supply/supplyD', [EFreeDController::class, 'supplyD']);
    Route::post('surtir/supply/supplyScan', [EFreeDController::class, 'supplyScan']);
+   Route::post('surtir/supply/supplyModal', [EFreeDController::class, 'supplyModal']);
 
 });
 

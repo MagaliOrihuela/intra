@@ -62,10 +62,10 @@
                      <v-icon left>mdi-chart-timeline-variant</v-icon>Estatus: &nbsp;
                      <v-chip
                            close-icon="mdi-close-outline"
-                           :color = "colorStat"
+                           :color = "detOrder.color"
                            outlined
                      >
-                           {{ status }}
+                           {{ detOrder.status }}
                      </v-chip>
                   </v-col>
                   <v-col
@@ -302,7 +302,7 @@
          return {
             no_ped: Number.parseInt(this.$route.params.no_ped),
             status: '',
-            colorStat: '',
+            // colorStat: '',
             loading: false,
             loadingTable: true,
             isPartner: false,
@@ -372,26 +372,9 @@
             const res = await this.$store.dispatch('dord/getPartOrder',payload);
             if(res.success) {
                var arrPartOrd = res.dataOrdPart[0]
-               var arrDet = arrPartOrd.detOrder
-               this.status = arrDet.status
                this.sub = arrPartOrd.sub
                this.iva = arrPartOrd.iva
                this.total = arrPartOrd.total
-               switch(this.status.trim()){
-                  case 'Parcial':
-                     this.colorStat = '#EAA20A';
-                     break;
-                  case 'Por Surtir':
-                     this.colorStat = '#007DD6';
-                     break;
-                  case 'Surtido':
-                     this.colorStat = '#008000';
-                     break;
-                  case 'Cancelado':
-                     this.colorStat = '#D70000';
-                     break;
-                  default:
-               }
                this.loadingTable = false
             }
          },
