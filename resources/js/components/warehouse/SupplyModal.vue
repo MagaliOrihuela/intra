@@ -234,12 +234,30 @@
                                                     color="red darken-4" 
                                                     indeterminate>
                                                 </v-progress-linear>
+                                                <template #[`item.id`]="{ item }">
+                                                    <v-row>
+                                                        <v-col 
+                                                            md="2"
+                                                            lg="2"
+                                                            xl="2"
+                                                            class="pa-0 ma-0"
+                                                        >
+                                                            <v-btn
+                                                                icon
+                                                                color="red"
+                                                                @click="delSupp(item.id)"
+                                                            >
+                                                                <v-icon>mdi-close-circle-outline</v-icon>
+                                                            </v-btn>
+                                                        </v-col>
+                                                    </v-row>
+                                                </template>
                                             </v-data-table>
                                             <div class="text-center pt-2">
                                                 <v-pagination 
                                                     v-model="page" 
                                                     :length="pageCount" 
-                                                    total-visible="7"
+                                                    total-visible="5"
                                                     circle 
                                                     color="blue-grey darken-3" 
                                                 ></v-pagination>
@@ -279,33 +297,8 @@
                                                 hide-default-footer
                                                 class="elevation-0 overflow-y-auto"
                                                 @page-count="pageCount2 = $event"
-                                                :loading="loadingTable"
                                                 :sort-desc="false"
                                             >
-                                                <v-progress-linear 
-                                                    v-show="loadingTable" 
-                                                    slot="progress" 
-                                                    color="red darken-4" 
-                                                    indeterminate>
-                                                </v-progress-linear>
-                                                <template #[`item.id`]="{ item }">
-                                                    <v-row>
-                                                        <v-col 
-                                                            md="2"
-                                                            lg="2"
-                                                            xl="2"
-                                                            class="pa-0 ma-0"
-                                                        >
-                                                            <v-btn
-                                                                icon
-                                                                color="#EAA20A"
-                                                                
-                                                            >
-                                                                <v-icon>mdi-barcode-scan</v-icon>
-                                                            </v-btn>
-                                                        </v-col>
-                                                    </v-row>
-                                                </template>
                                             </v-data-table>
                                             <div class="text-center pt-2">
                                                 <v-pagination 
@@ -358,11 +351,12 @@
                     {
                         text: '#',
                         align: 'start',
-                        value: 'id',
+                        value: 'num',
                     },
                     { text: 'Lote', value: 'lot' },
                     { text: 'Metraje', value: 'quantity' },
                     { text: 'Registro', value: 'created_at' },
+                    { text: '', value: 'id' },
                 ],
                 headers2: [
                     { text: 'Lote', value: 'lote' },
@@ -389,7 +383,6 @@
         created(){
         },
         methods: {
-
             async closeModal() {
                 var payload = {
                     name_modal:  'supplyFree', // modal 
@@ -398,7 +391,6 @@
                 }
                 await this.$store.dispatch('modals/IdentifyModal',payload);
             },
-
             async scan(){
                 var payload = {
                     token: this.getUserApi.token,
@@ -407,8 +399,26 @@
                     cat_id: this.supplyModal.catId,
                     lot: this.lot
                 }
+                this.loadingTable = true
                 const res = await socketClientEmit.supplyScanEmit(payload)
+                if(res.success){
+                    this.loadingTable = false
+                }
             },
+            async delSupp(id){
+                var payload = {
+                    token: this.getUserApi.token,
+                    user_id: this.getUserApi.uid,
+                    dord_id: this.supplyModal.id,
+                    cat_id: this.supplyModal.catId,
+                    dordLot: id
+                }
+                this.loadingTable = true
+                const res = await socketClientEmit.supplyDelScanEmit(payload)
+                if(res.success){
+                    this.loadingTable = false
+                }
+            }
         },
         mounted(){
         },

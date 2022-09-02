@@ -31,6 +31,28 @@ const defree = {
         DATA_GRIDS_MODAL(state,data){
             state.gridScan = data.dataScan
             state.gridSug = data.dataSug
+        },
+        DATA_SCAN(state,data){
+            state.gridScan.push(data.row)
+            state.gridSug = data.gridSug
+        },
+        DATA_DEL_SCAN(state,data){
+            let dataScan = store.getters['defree/getGridScanModal']
+            let flag = false
+            let x = 0
+            for(let i = 0; i < dataScan.length; i++){
+                if(dataScan[i].id === data.dordLot){
+                    state.gridScan.splice(i,1)
+                    flag = true
+                    x = i                    
+                }
+                if(flag){
+                    x++
+                    // error por no existir la posición i, urge correción 
+                    state.gridScan[i].num = x
+                }
+            }
+            state.gridSug = data.gridSug
         }
     },
     actions: {
@@ -50,12 +72,24 @@ const defree = {
             return Promise.resolve(data)
         },
         async gridsSupplyModal({commit},payload) {
-            // const { data } = await axios.post('/API/supply/gridsModal',payload )
-            const { data } = await axios.post(`/API/supply/gridsModal`, payload, { headers: { Authorization: "Bearer " + payload.token } })
+            const { data } = await axios.post('/API/supply/gridsModal',payload )
+            // const { data } = await axios.post(`/API/supply/gridsModal`, payload, { headers: { Authorization: "Bearer " + payload.token } })
             let arrGrids = data.gridSupplyModal[0]
             commit("DATA_GRIDS_MODAL",arrGrids)
             return Promise.resolve(arrGrids)
         },
+        async modalScan({commit},data) {
+            let dataModal = store.getters['defree/getDataSuppModal']
+            if(data.dord_id == dataModal.id){
+                commit("DATA_SCAN",data)
+            }
+        },
+        async modalDelScan({commit},data) {
+            let dataModal = store.getters['defree/getDataSuppModal']
+            if(data.dord_id == dataModal.id){
+                commit("DATA_DEL_SCAN",data)
+            }
+        }
     },
     getters: {
         getDataSuppD: state => state.dataSuppD,

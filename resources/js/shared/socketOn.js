@@ -85,7 +85,16 @@ class socketOn{
         socket.on('FREE_STATUS', response => {
             store.dispatch('dord/free_status',response);
         })
-    }    
+    }
+    
+    dataSupplyOn(){
+        socket.on('MODAL_SCAN', response => {
+            store.dispatch('defree/modalScan',response);
+        })
+        socket.on('MODAL_DEL_SCAN', response => {
+            store.dispatch('defree/modalDelScan',response);
+        })
+    }
 
 }
 

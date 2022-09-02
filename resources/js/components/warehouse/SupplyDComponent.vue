@@ -996,7 +996,7 @@
                 let payload2 = {
                     token: this.getUserApi.token,
                     user_id: this.getUserApi.uid,
-                    dordId: dordId
+                    dordId: dordId,
                 }
                 await this.$store.dispatch('defree/gridsSupplyModal',payload2)
                 await this.$store.dispatch('modals/IdentifyModal',payload);

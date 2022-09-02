@@ -122,6 +122,14 @@ class socketEmit {
     async supplyScanEmit(payload){
         const { data } = await axios.post('/API/supply/supplyScan', payload, { headers: { Authorization: "Bearer " + payload.token } })
         if(data.success){
+            socket.emit('dsupply:scan',data.dataSuppScan[0])
+            return Promise.resolve(data)
+        }
+    }
+    async supplyDelScanEmit(payload){
+        const { data } = await axios.post('/API/supply/supplyDelScan', payload, { headers: { Authorization: "Bearer " + payload.token } })
+        if(data.success){
+            socket.emit('dsupply:delScan',data.gridSupplyModal[0])
             return Promise.resolve(data)
         }
     }

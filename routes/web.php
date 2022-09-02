@@ -122,6 +122,7 @@ Route::group(['prefix' => 'API'], function () {
    Route::post('/orders/freeOrder', [APIController::class, 'freeOrder']);
    Route::post('/supply/supplyScan', [APIController::class, 'supplyScan']);
    Route::post('supply/gridsModal', [APIController::class, 'gridsModal']);
+   Route::post('supply/supplyDelScan', [APIController::class, 'supplyDelScan']);
 
 });
 

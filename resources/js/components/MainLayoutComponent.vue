@@ -495,6 +495,7 @@
          socketClientOn.dataInvoicesOn()
          socketClientOn.dataCotizacionOn()
          socketClientOn.dataOrdersOn()
+         socketClientOn.dataSupplyOn()
 
          this.loadFinish()
          this.loadIndividualNotifications()
