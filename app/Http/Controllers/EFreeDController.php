@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CAgents;
 use App\Models\CCategory;
-use App\Models\CClients;
-use App\Models\CStatusOrds;
 use App\Models\DOrders;
-use App\Models\EFreeOrds;
+use App\Models\DOrdLots;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -39,14 +36,15 @@ class EFreeDController extends Controller
         $int = $arrFree->intNum <> null ? ', int: '.$arrFree->intNum : '';
         $destiny = 'calle '.$arrFree->street.' '.$arrFree->extNum.$int.', '.$arrFree->suburb.', '.$arrFree->cp.', '.$arrFree->city.
                     ', '.$arrFree->state;
-        $sqlDFree = DB::select("SELECT d.id as dord_id,d.quantity,u.id as unitId,u.unit,a.sai_id,a.article,a.packing2,c.*
+        $sqlDFree = DB::select("SELECT d.id as dord_id,d.quantity,d.status_id,u.id as unit_id,u.unit,a.sai_id,a.article,cacu.pzas,c.*
                                     from e_free_ords f
                                     inner join d_orders d on d.free_id = f.id
-                                    inner join c_units u on u.id = d.unit_id
                                     inner join c_articles a on a.id = d.article_id
+                                    inner join c_articles_c_unit cacu on cacu.article_id = a.id
+                                    inner join c_units u on u.id = cacu.unit_id
                                     inner join c_categories c on c.id = a.category_id
-                                            where f.id = $request->freeId
-                                                    Order by id");     
+                                        where f.id = $request->freeId and cacu.unit_id = d.unit_id
+                                            Order by id ");     
         $arrdFree = collect($sqlDFree);
         $arrCat = CCategory::where('id','<>',6)
                             ->where('id','<>',0)
@@ -70,17 +68,14 @@ class EFreeDController extends Controller
                 "dord_id" => $grid->dord_id,
                 "sai_id" => $grid->sai_id,
                 "quantity" => $grid->quantity,
-                "unitId" => $grid->unitId,
                 "unit" => $grid->unit,
                 "article" => $grid->article,
-                "packing2" => $grid->unitId <> 2 ? $grid->packing2 : '',
-                "lots" => 1,
-                "location" => '',
-                "qty" => ''
+                "pzas" => $grid->pzas,
+                "surt" => $grid->status_id
             );
             switch($grid->id){
                 case 1:
-                    if($grid->unitId == 3){
+                    if($grid->unit_id == 3){
                         array_push($gridT,$tmp);
                     } else{
                         array_push($gridT2,$tmp);
@@ -118,41 +113,51 @@ class EFreeDController extends Controller
 
         return response()->json([
             'success' =>  true,
-            'saludo' => 'olo',
             'data' => $dord
         ], 200);
     }
 
     public function supplyModal(Request $request){
-        $dataOrd = DOrders::with('article')
-                        ->with('article.category:id,category,icon,color')
-                        ->with('unit')
-                            ->where('id',$request->dordId)
-                                ->get();
+        $sqlOrd = DB::select("SELECT d.*,a.sai_id,a.article,a.category_id,u.unit,cacu.pzas,cat.color,cat.icon,cat.category
+                                from d_orders d 
+                                inner join c_articles a on a.id = d.article_id
+                                inner join c_articles_c_unit cacu on cacu.article_id = a.id
+                                inner join c_units u on u.id = cacu.unit_id
+                                inner join c_categories cat on cat.id = a.category_id
+                                        where d.id = $request->dordId and cacu.unit_id = d.unit_id
+                                                Order by id");
+        $dataOrd = collect($sqlOrd);
         $dord = $dataOrd[0];
-        $article = $dord->article;
-        $cat = $dord->article->category;
-        $unit = $dord->unit;
         $detModal = array(
             "id" => $dord->id,
             "status" => $dord->status_id,
             "quantity" => $dord->quantity,
             "fol_prod" => $dord->fol_prod,
-            "sai_id" => $article->sai_id,
-            "article" => $article->article,
-            "packing2" => $article->packing2,
-            "catId" => $cat->id,
-            "category" => $cat->category,
-            "icon" => $cat->icon,
-            "color" => $cat->color,
-            "unitId" => $unit->id,
-            "unit" => $unit->unit
+            "sai_id" => $dord->sai_id,
+            "article" => $dord->article,
+            "pzas" => $dord->pzas,
+            "catId" => $dord->category_id,
+            "category" => $dord->category,
+            "icon" => $dord->icon,
+            "color" => $dord->color,
+            "unit" => $dord->unit,
+            "unit_id" => $dord->unit_id
         );
-
+        
+        if($dord->category_id == 1 && $dord->unit_id == 3){
+            $sqlCount = DB::select("SELECT count(*) as n from d_ord_lots where dord_id = $dord->id");
+            $count = collect($sqlCount);
+            $foul = $dord->quantity - $count[0]->n;
+        } else{
+            $sqlQty = DB::select("SELECT sum(quantity) as n from d_ord_lots where dord_id = $dord->id");
+            $qty = collect($sqlQty);
+            $foul = ($dord->quantity * $dord->pzas) - $qty[0]->n;
+        }
+        
         return response()->json([
             'success' =>  true,
             'detModal' => $detModal,
-            // 'data' => $arr
+            'foul' => $foul
         ], 200);
     }
 

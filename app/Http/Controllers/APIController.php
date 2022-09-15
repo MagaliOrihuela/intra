@@ -156,7 +156,8 @@ class APIController extends Controller
                 'user_id' => $request->user_id,
                 'dord_id' => $request->dord_id,
                 'cat_id' => $request->cat_id,
-                'lot' => $request->lot
+                'lot' => $request->lot,
+                'qty' => $request->qty
             ]);
             return response()->json([
                 'success' => true,

@@ -27,7 +27,7 @@
                             </v-tab>
                             <!-- <v-tab v-on:click="freeDetail"> -->
                             <v-tab>
-                                <v-icon left>mdi-clipboard-text-outline</v-icon> Detalle libera
+                                <v-icon left>mdi-package-variant-closed</v-icon> Detalle libera
                             </v-tab>
                         </v-tabs>
                     </v-col>
@@ -136,7 +136,7 @@
                                 xl="3"
                                 class="pa-1 ma-0"
                             >
-                                Metraje:<b class="info-free"> {{ supplyModal.packing2 }} </b>
+                                Metraje:<b class="info-free"> {{ supplyModal.pzas }} </b>
                             </v-col>
                         </v-row>
                         <v-row class="pl-5">
@@ -157,7 +157,8 @@
                                 xl="3"
                                 class="pa-1 ma-0"
                             >
-                                Surtido:<b class="info-free">  </b>
+                                Surtido:
+                                <v-icon color="#008000" v-if="supplyModal.status == 2">mdi-archive-arrow-up-outline</v-icon>
                             </v-col>
                         </v-row>
                         <v-row>
@@ -176,11 +177,32 @@
                                                     class="pa-0 pt-4 ma-0" 
                                                     xs="12"
                                                     sm="12"
-                                                    md="4"
-                                                    lg="4"
-                                                    xl="4"
+                                                    md="3"
+                                                    lg="3"
+                                                    xl="3"
                                                 > 
                                                     Escaneados
+                                                </v-col>
+                                                <v-col 
+                                                    xs="12"
+                                                    sm="12"
+                                                    md="2"
+                                                    lg="2"
+                                                    xl="2"
+                                                    class="pa-1 ma-0"
+                                                    style="text-align: center;"
+                                                    v-if="supplyModal.unit_id == 1"
+                                                >
+                                                    <v-text-field
+                                                        v-model="qty"
+                                                        label="Cantidad"
+                                                        hint="Agrupar piezas"
+                                                        persistent-hint
+                                                        dense
+                                                        autocomplete="off"
+                                                        outlined
+                                                        :disabled="disLot"
+                                                    ></v-text-field>
                                                 </v-col>
                                                 <v-col 
                                                     xs="12"
@@ -194,7 +216,7 @@
                                                     <v-text-field
                                                         v-model="lot"
                                                         label="Lote"
-                                                        hint="Aquí escanea los lotes"
+                                                        hint="Aquí escanea el lote"
                                                         persistent-hint
                                                         dense
                                                         autocomplete="off"
@@ -213,7 +235,7 @@
                                                     style="text-align: center; font-size: 16px; color:red"
                                                     
                                                 >
-                                                    Faltan:<b >  </b>
+                                                    Faltan:<b > {{ foul }} </b>
                                                 </v-col>
                                             </v-row>
                                             <v-data-table
@@ -355,18 +377,19 @@
                     },
                     { text: 'Lote', value: 'lot' },
                     { text: 'Metraje', value: 'quantity' },
-                    { text: 'Registro', value: 'created_at' },
+                    { text: 'Ubicación', value: 'location' },
                     { text: '', value: 'id' },
                 ],
                 headers2: [
                     { text: 'Lote', value: 'lote' },
                     { text: 'Metraje', value: 'existencia' },
-                    { text: 'Registro', value: 'fech_umod' },
+                    { text: 'Ubicación', value: 'location' },
                 ],
                 lot: '',
                 disLot: false,
                 loadingTable: false,
                 selected: [],
+                qty:1
             }
         },
         computed: {
@@ -376,6 +399,7 @@
                 supplyModal: 'defree/getDataSuppModal',
                 gridScan: 'defree/getGridScanModal',
                 gridSug: 'defree/getGridSugModal',
+                foul: 'defree/getFoul',
             }),
         },
         // beforeCreate(){
@@ -397,12 +421,14 @@
                     user_id: this.getUserApi.uid,
                     dord_id: this.supplyModal.id,
                     cat_id: this.supplyModal.catId,
-                    lot: this.lot
+                    lot: this.lot,
+                    qty: this.qty
                 }
                 this.loadingTable = true
                 const res = await socketClientEmit.supplyScanEmit(payload)
                 if(res.success){
                     this.loadingTable = false
+                    this.lot = ''
                 }
             },
             async delSupp(id){

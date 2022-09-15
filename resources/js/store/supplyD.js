@@ -14,6 +14,8 @@ const defree = {
         dataModal:[],
         gridScan:[],
         gridSug:[],
+        foul:0,
+        surt:1
     },
     mutations: {
         DATA_SUPPD (state,data) {
@@ -26,7 +28,8 @@ const defree = {
             state.dataSuppTol = data.gridTol
         },
         DATA_MODAL(state,data){
-            state.dataModal = data
+            state.dataModal = data.detModal
+            state.foul = data.foul
         },
         DATA_GRIDS_MODAL(state,data){
             state.gridScan = data.dataScan
@@ -35,6 +38,41 @@ const defree = {
         DATA_SCAN(state,data){
             state.gridScan.push(data.row)
             state.gridSug = data.gridSug
+            state.foul = data.foul
+            state.dataModal.status = data.surt
+        },
+        DATA_SCAN_GEN(state,data){
+            var dataScan = []
+            switch(data.catId){
+                case '1': dataScan = data.unitId == 2 ? store.getters['defree/getDataSuppT2'] : store.getters['defree/getDataSuppT']
+                    break;
+                case '2': dataScan = store.getters['defree/getDataSuppC']
+                    break;
+                case '3': dataScan = store.getters['defree/getDataSuppP']
+                    break;
+                case '4': dataScan = store.getters['defree/getDataSuppM']
+                    break;
+                case '5': dataScan = store.getters['defree/getDataSuppTol']
+                    break;
+            }
+            for(let i = 0; i < dataScan.length; i++){
+                if(Number.parseInt(dataScan[i].dord_id) === Number.parseInt(data.dord_id)){
+                    switch(data.catId){
+                        case '1': 
+                            data.unitId == 2 ? state.dataSuppT2[i].surt = data.surt : state.dataSuppT[i].surt = data.surt
+                            break;
+                        case '2': state.dataSuppC[i].surt = data.surt
+                            break;
+                        case '3': state.dataSuppP[i].surt = data.surt
+                            break;
+                        case '4': state.dataSuppM[i].surt = data.surt2
+                            break;
+                        case '5': state.dataSuppTol[i].surt = data.surt
+                            break;
+                    }
+                    break;                   
+                }
+            }
         },
         DATA_DEL_SCAN(state,data){
             let dataScan = store.getters['defree/getGridScanModal']
@@ -48,11 +86,13 @@ const defree = {
                 }
                 if(flag){
                     x++
-                    // error por no existir la posición i, urge correción 
-                    state.gridScan[i].num = x
+                    if(state.gridScan[i]){
+                        state.gridScan[i].num = x
+                    }
                 }
             }
             state.gridSug = data.gridSug
+            state.foul = data.foul
         }
     },
     actions: {
@@ -68,7 +108,7 @@ const defree = {
         },
         async getSupplyModal({commit},payload) {
             const { data } = await axios.post('supply/supplyModal',payload )
-            commit("DATA_MODAL",data.detModal)
+            commit("DATA_MODAL",data)
             return Promise.resolve(data)
         },
         async gridsSupplyModal({commit},payload) {
@@ -80,8 +120,12 @@ const defree = {
         },
         async modalScan({commit},data) {
             let dataModal = store.getters['defree/getDataSuppModal']
+            let dataSuppD = store.getters['defree/getDataSuppD']
             if(data.dord_id == dataModal.id){
                 commit("DATA_SCAN",data)
+            }
+            if(data.freeId == dataSuppD.id){
+                commit("DATA_SCAN_GEN",data)
             }
         },
         async modalDelScan({commit},data) {
@@ -102,6 +146,7 @@ const defree = {
         getDataSuppModal: state => state.dataModal,
         getGridScanModal: state => state.gridScan,
         getGridSugModal: state => state.gridSug,
+        getFoul: state => state.foul,
     }
 }
 
