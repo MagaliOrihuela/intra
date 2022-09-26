@@ -254,9 +254,9 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         style="font-size: 16px;"
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
@@ -265,7 +265,7 @@
                                             :color="catT.color"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 35%;"
+                                            style="width: 60%;"
                                         >
                                             <v-icon left>
                                                 {{ catT.icon }}
@@ -341,7 +341,7 @@
                                     <v-pagination 
                                         v-model="pageT" 
                                         :length="pageCountT" 
-                                        total-visible="7"
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
@@ -379,16 +379,16 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="3"
-                                        lg="3"
-                                        xl="3"
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
                                         style="font-size: 16px;"
                                     > 
                                         <v-chip
                                             class="ma-2"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 90%;"
                                         >
                                             <v-icon left>
                                                 mdi-scissors-cutting
@@ -464,7 +464,7 @@
                                     <v-pagination 
                                         v-model="pageT2" 
                                         :length="pageCountT2" 
-                                        total-visible="7"
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
@@ -478,9 +478,9 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         style="font-size: 16px;"
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
@@ -489,7 +489,7 @@
                                             :color="catC.color"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 35%;"
+                                            style="width: 60%;"
                                         >
                                             <v-icon left>
                                                 {{ catC.icon }}
@@ -568,7 +568,7 @@
                                     <v-pagination 
                                         v-model="pageC" 
                                         :length="pageCountC" 
-                                        total-visible="7"
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
@@ -582,9 +582,9 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         style="font-size: 16px;"
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
@@ -593,7 +593,7 @@
                                             :color="catP.color"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 35%;"
+                                            style="width: 60%;"
                                         >
                                             <v-icon left>
                                                 {{ catP.icon }}
@@ -670,7 +670,7 @@
                                     <v-pagination 
                                         v-model="pageP" 
                                         :length="pageCountP" 
-                                        total-visible="7"
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
@@ -684,9 +684,9 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         style="font-size: 16px;"
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
@@ -695,7 +695,7 @@
                                             :color="catM.color"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 35%;"
+                                            style="width: 60%;"
                                         >
                                             <v-icon left>
                                                 {{ catM.icon }}
@@ -772,7 +772,7 @@
                                     <v-pagination 
                                         v-model="pageM" 
                                         :length="pageCountM" 
-                                        total-visible="7"
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
@@ -786,9 +786,9 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         style="font-size: 16px;"
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
@@ -797,7 +797,7 @@
                                             :color="catTol.color"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 35%;"
+                                            style="width: 60%;"
                                         >
                                             <v-icon left>
                                                 {{ catTol.icon }}
@@ -873,7 +873,7 @@
                                     <v-pagination 
                                         v-model="pageTol" 
                                         :length="pageCountTol" 
-                                        total-visible="7"
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
@@ -885,7 +885,6 @@
                 <v-tab-item
                     value="tab2"
                 >
-                    <!-- <SupplyChk /> -->
                     <v-card
                         class="mx-auto rounded-0 border-0 "
                         max-width="99%"
@@ -900,9 +899,9 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         style="font-size: 16px;"
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
@@ -911,7 +910,7 @@
                                             :color="catT.color"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 35%;"
+                                            style="width: 60%;"
                                         >
                                             <v-icon left>
                                                 {{ catT.icon }}
@@ -919,16 +918,49 @@
                                             {{ catT.category }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col 
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                        <!-- <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                        >
+                                            Completado
+                                        </v-chip> -->
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
+                                        <v-btn
+                                            icon
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,catT,0)" 
+                                        >
+                                            <v-icon >mdi-package-variant</v-icon>
+                                        </v-btn>
+                                    </v-col>
                                 </v-row>
-                                <!-- <v-data-table
+                                <v-data-table
                                     v-model="selected"
-                                    :headers="headers"
-                                    :items="dataSuppT"
-                                    :page.sync="pageT"
-                                    :items-per-page="itemsPerPageT"
+                                    :headers="headersP"
+                                    :items="dataPackT"
+                                    :page.sync="pagePT"
+                                    :items-per-page="itemsPerPagePT"
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
-                                    @page-count="pageCountT = $event"
+                                    @page-count="pageCountPT = $event"
                                     :loading="loadingTable"
                                     :sort-desc="false"
                                 >
@@ -985,13 +1017,13 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageT" 
-                                        :length="pageCountT" 
-                                        total-visible="7"
+                                        v-model="pagePT" 
+                                        :length="pageCountPT" 
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
-                                </div> -->
+                                </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
                                 v-if="dataSuppT2.length > 0"
@@ -1025,16 +1057,16 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="3"
-                                        lg="3"
-                                        xl="3"
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
                                         style="font-size: 16px;"
                                     > 
                                         <v-chip
                                             class="ma-2"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 90%;"
                                         >
                                             <v-icon left>
                                                 mdi-scissors-cutting
@@ -1042,16 +1074,42 @@
                                             Recortes
                                         </v-chip>
                                     </v-col>
+                                    <v-col 
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                    </v-col>
+                                    <v-col 
+                                        md="4"
+                                        lg="4"
+                                        xl="4"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
+                                        <v-btn
+                                            icon
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,catT,1)" 
+                                        >
+                                            <v-icon >mdi-package-variant</v-icon>
+                                        </v-btn>
+                                    </v-col>
                                 </v-row>
-                                <!-- <v-data-table
+                                <v-data-table
                                     v-model="selected"
-                                    :headers="headers"
-                                    :items="dataSuppT2"
-                                    :page.sync="pageT2"
-                                    :items-per-page="itemsPerPageT2"
+                                    :headers="headersP"
+                                    :items="dataPackT2"
+                                    :page.sync="pagePT2"
+                                    :items-per-page="itemsPerPagePT2"
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
-                                    @page-count="pageCountT2 = $event"
+                                    @page-count="pageCountPT2 = $event"
                                     :loading="loadingTable"
                                     :sort-desc="false"
                                 >
@@ -1108,13 +1166,13 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageT2" 
-                                        :length="pageCountT2" 
-                                        total-visible="7"
+                                        v-model="pagePT2" 
+                                        :length="pageCountPT2" 
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
-                                </div> -->
+                                </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
                                 v-if="dataSuppC.length > 0"
@@ -1124,9 +1182,9 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         style="font-size: 16px;"
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
@@ -1135,7 +1193,7 @@
                                             :color="catC.color"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 35%;"
+                                            style="width: 60%;"
                                         >
                                             <v-icon left>
                                                 {{ catC.icon }}
@@ -1143,17 +1201,43 @@
                                             {{ catC.category }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col 
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
+                                        <v-btn
+                                            icon
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,catC,0)" 
+                                        >
+                                            <v-icon >mdi-package-variant</v-icon>
+                                        </v-btn>
+                                    </v-col>
                                 </v-row>
-                                <!-- <v-data-table
+                                <v-data-table
                                     v-model="selected"
-                                    :headers="headers2"
-                                    :items="dataSuppC"
-                                    :page.sync="pageC"
-                                    :items-per-page="itemsPerPageC"
+                                    :headers="headersP"
+                                    :items="dataPackC"
+                                    :page.sync="pagePC"
+                                    :items-per-page="itemsPerPagePC"
                                     :sort-desc="false"
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
-                                    @page-count="pageCountC = $event"
+                                    @page-count="pageCountPC = $event"
                                     :loading="loadingTable"
                                 >
                                     <v-progress-linear 
@@ -1212,13 +1296,13 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageC" 
-                                        :length="pageCountC" 
-                                        total-visible="7"
+                                        v-model="pagePC" 
+                                        :length="pageCountPC" 
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
-                                </div> -->
+                                </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
                                 v-if="dataSuppP.length > 0"
@@ -1228,9 +1312,9 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         style="font-size: 16px;"
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
@@ -1239,7 +1323,7 @@
                                             :color="catP.color"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 35%;"
+                                            style="width: 60%;"
                                         >
                                             <v-icon left>
                                                 {{ catP.icon }}
@@ -1247,16 +1331,42 @@
                                             {{ catP.category }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col 
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
+                                        <v-btn
+                                            icon
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,catP,0)" 
+                                        >
+                                            <v-icon >mdi-package-variant</v-icon>
+                                        </v-btn>
+                                    </v-col>
                                 </v-row>
-                                <!-- <v-data-table
+                                <v-data-table
                                     v-model="selected"
-                                    :headers="headers2"
-                                    :items="dataSuppP"
-                                    :page.sync="pageP"
-                                    :items-per-page="itemsPerPageP"
+                                    :headers="headersP"
+                                    :items="dataPackP"
+                                    :page.sync="pagePP"
+                                    :items-per-page="itemsPerPagePP"
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
-                                    @page-count="pageCountP = $event"
+                                    @page-count="pageCountPP = $event"
                                     :loading="loadingTable"
                                     loading-text="Cargando Articulos ..."
                                     :sort-desc="false"
@@ -1314,13 +1424,13 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageP" 
-                                        :length="pageCountP" 
-                                        total-visible="7"
+                                        v-model="pagePP" 
+                                        :length="pageCountPP" 
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
-                                </div> -->
+                                </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
                                 v-if="dataSuppM.length > 0"
@@ -1330,9 +1440,9 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         style="font-size: 16px;"
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
@@ -1341,7 +1451,7 @@
                                             :color="catM.color"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 35%;"
+                                            style="width: 60%;"
                                         >
                                             <v-icon left>
                                                 {{ catM.icon }}
@@ -1349,16 +1459,42 @@
                                             {{ catM.category }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col 
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
+                                        <v-btn
+                                            icon
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,catM,0)" 
+                                        >
+                                            <v-icon >mdi-package-variant</v-icon>
+                                        </v-btn>
+                                    </v-col>
                                 </v-row>
-                                <!-- <v-data-table
+                                <v-data-table
                                     v-model="selected"
-                                    :headers="headers2"
-                                    :items="dataSuppM"
-                                    :page.sync="pageM"
-                                    :items-per-page="itemsPerPageM"
+                                    :headers="headersP"
+                                    :items="dataPackM"
+                                    :page.sync="pagePM"
+                                    :items-per-page="itemsPerPagePM"
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
-                                    @page-count="pageCountM = $event"
+                                    @page-count="pageCountPM = $event"
                                     :loading="loadingTable"
                                     loading-text="Cargando Articulos ..."
                                     :sort-desc="false"
@@ -1416,13 +1552,13 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageM" 
-                                        :length="pageCountM" 
-                                        total-visible="7"
+                                        v-model="pagePM" 
+                                        :length="pageCountPM" 
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
-                                </div> -->
+                                </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
                                 v-if="dataSuppTol.length > 0"
@@ -1432,9 +1568,9 @@
                                         class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         style="font-size: 16px;"
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
@@ -1443,7 +1579,7 @@
                                             :color="catTol.color"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 35%;"
+                                            style="width: 60%;"
                                         >
                                             <v-icon left>
                                                 {{ catTol.icon }}
@@ -1451,16 +1587,42 @@
                                             {{ catTol.category }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col 
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
+                                        <v-btn
+                                            icon
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,catTol,0)" 
+                                        >
+                                            <v-icon >mdi-package-variant</v-icon>
+                                        </v-btn>
+                                    </v-col>
                                 </v-row>
-                                <!-- <v-data-table
+                                <v-data-table
                                     v-model="selected"
-                                    :headers="headers2"
-                                    :items="dataSuppTol"
-                                    :page.sync="pageTol"
-                                    :items-per-page="itemsPerPageTol"
+                                    :headers="headersP"
+                                    :items="dataPackTol"
+                                    :page.sync="pagePTol"
+                                    :items-per-page="itemsPerPagePTol"
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
-                                    @page-count="pageCountTol = $event"
+                                    @page-count="pageCountPTol = $event"
                                     :loading="loadingTable"
                                     :sort-desc="false"
                                 >
@@ -1517,13 +1679,13 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageTol" 
-                                        :length="pageCountTol" 
-                                        total-visible="7"
+                                        v-model="pagePTol" 
+                                        :length="pageCountPTol" 
+                                        total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
                                     ></v-pagination>
-                                </div> -->
+                                </div>
                             </v-container>
                         </v-card-subtitle>
                     </v-card>
@@ -1593,6 +1755,25 @@
                 pageTol: 1,
                 pageCountTol: 0,
                 itemsPerPageTol: 5,
+                // data table package
+                pagePT: 1,
+                pageCountPT: 0,
+                itemsPerPagePT: 5,
+                pagePT2: 1,
+                pageCountPT2: 0,
+                itemsPerPagePT2: 5,
+                pagePC: 1,
+                pageCountPC: 0,
+                itemsPerPagePC: 5,
+                pagePP: 1,
+                pageCountPP: 0,
+                itemsPerPagePP: 5,
+                pagePM: 1,
+                pageCountPM: 0,
+                itemsPerPagePM: 5,
+                pagePTol: 1,
+                pageCountPTol: 0,
+                itemsPerPagePTol: 5,
                 selected:[],
                 headers: [
                     { text: '#', width:'5%', value: 'num' },
@@ -1614,6 +1795,12 @@
                     { text: 'Surtido', width:'15%', value: 'surt' },
                     { text: 'Acciones', width:'15%',value: 'dord_id' },
                 ],
+                headersP: [
+                    { text: '#', width:'5%', value: 'package' },
+                    { text: 'Lote', width:'15%', value: 'lot' },
+                    { text: 'Cantidad', width:'5%', value: 'quantity' },
+                    { text: 'Ubicación', width:'5%', value: 'location' },
+                ],
                 pruba: [],
                 prub: ''
             }
@@ -1630,7 +1817,13 @@
                 dataSuppC: 'defree/getDataSuppC',
                 dataSuppP: 'defree/getDataSuppP',
                 dataSuppM: 'defree/getDataSuppM',
-                dataSuppTol: 'defree/getDataSuppTol'
+                dataSuppTol: 'defree/getDataSuppTol',
+                dataPackT: 'defree/getDataPackT',
+                dataPackT2: 'defree/getDataPackT2',
+                dataPackC: 'defree/getDataPackC',
+                dataPackP: 'defree/getDataPackP',
+                dataPackM: 'defree/getDataPackM',
+                dataPackTol: 'defree/getDataPackTol'
             }),        
         },
         methods: {
@@ -1685,6 +1878,23 @@
 
                 // }
             },
+            
+            async packModal(freeId,arrCat,rec){
+                let payload = {
+                    token: this.getUserApi.token,
+                    user: this.getUserApi.uid,
+                    freeId: freeId,
+                    arrCat: arrCat,
+                    rec: rec
+                }
+                await this.$store.dispatch('defree/gridsPackModal',payload)
+                let payloadM = {
+                    name_modal:  'supplyPack', // modal 
+                    state_modal: true,
+                }
+                await this.$store.dispatch('modals/IdentifyModal',payloadM);
+            },
+
             viewAllSupply() {
                 store.dispatch('modals/loaderfull',true)
                 this.$router.push('/almacen/surtir')

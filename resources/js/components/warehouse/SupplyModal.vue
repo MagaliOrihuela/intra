@@ -11,9 +11,9 @@
                     <v-col 
                         xs="12"
                         sm="12"
-                        md="6"
-                        lg="6"
-                        xl="6"
+                        md="3"
+                        lg="3"
+                        xl="3"
                         style="font-size: 16px;"
                     >
                         <v-tabs
@@ -26,17 +26,17 @@
                                 <v-icon left>mdi-barcode-scan</v-icon> Escaneo
                             </v-tab>
                             <!-- <v-tab v-on:click="freeDetail"> -->
-                            <v-tab>
+                            <!-- <v-tab>
                                 <v-icon left>mdi-package-variant-closed</v-icon> Detalle libera
-                            </v-tab>
+                            </v-tab> -->
                         </v-tabs>
                     </v-col>
                     <v-col 
                         xs="12"
                         sm="12"
-                        md="6"
-                        lg="6"
-                        xl="6"
+                        md="9"
+                        lg="9"
+                        xl="9"
                         style="font-size: 16px;"
                     >
                         <v-btn

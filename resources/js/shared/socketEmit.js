@@ -133,6 +133,13 @@ class socketEmit {
             return Promise.resolve(data)
         }
     }
+    async supplyPackEmit(payload){
+        const { data } = await axios.post('/almacen/surtir/supply/package', payload, { headers: { Authorization: "Bearer " + payload.token } })
+        if(data.success){
+            socket.emit('dsupply:package',data)
+            return Promise.resolve(data)
+        }
+    }
 
  
  }

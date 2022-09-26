@@ -148,6 +148,8 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'almacen'], function () 
    Route::post('surtir/supply/supplyD', [EFreeDController::class, 'supplyD']);
    Route::post('surtir/supply/supplyScan', [EFreeDController::class, 'supplyScan']);
    Route::post('surtir/supply/supplyModal', [EFreeDController::class, 'supplyModal']);
+   Route::post('surtir/supply/packModal', [EFreeDController::class, 'packModal']);
+   Route::post('surtir/supply/package', [EFreeDController::class, 'package']);
 
 });
 
@@ -162,3 +164,7 @@ Route::group(['prefix' => 'invoice'], function () {
 Route::get('/{any}', function () {
    return view('app');
 } )->where('any','.*');
+
+Route::get('prubas',function(){
+
+});

@@ -398,7 +398,7 @@
                if(res.flg == 1){
                   Swal.fire({
                      icon: 'error',
-                     title: 'Oops...',
+                     title: 'Ups...',
                      text: 'Cliente no dado de alta en la web.',
                   })
                } else{

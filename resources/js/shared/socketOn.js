@@ -94,6 +94,9 @@ class socketOn{
         socket.on('MODAL_DEL_SCAN', response => {
             store.dispatch('defree/modalDelScan',response);
         })
+        socket.on('MODAL_PACKAGE', response => {
+            store.dispatch('defree/modalPackage',response);
+        })
     }
 
 }
