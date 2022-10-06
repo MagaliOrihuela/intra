@@ -219,6 +219,14 @@ const defree = {
                 commit("DATA_PACKAGE_G",data)
             }
         },
+        async remGenerate({commit},payload){
+            const { data } = await axios.post('supply/remGenerate',payload )
+            return Promise.resolve(data)
+        },
+        async valida({commit},payload){
+            const { data } = await axios.post('/API/supply/valida',payload )
+            return Promise.resolve(data)
+        },
     },
     getters: {
         getDataSuppD: state => state.dataSuppD,

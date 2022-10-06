@@ -273,6 +273,22 @@
                                             {{ catT.category }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col
+                                        class="pa-0 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="8"
+                                        lg="8"
+                                        xl="8"
+                                        align="right">
+                                        <v-btn
+                                            icon
+                                            color="#9DBD32"
+                                            @click="txtGenerate(catT.id,0)"
+                                        >
+                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
+                                        </v-btn>
+                                    </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
@@ -313,13 +329,20 @@
                                                 xl="2"
                                                 class="pa-0 ma-0"
                                             >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
+                                                <v-tooltip bottom>
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <v-btn
+                                                            v-bind="attrs"
+                                                            v-on="on"
+                                                            icon
+                                                            color="#EAA20A"
+                                                            @click="scanModal(item.dord_id,item.num)" 
+                                                        >
+                                                            <v-icon>mdi-barcode-scan</v-icon>
+                                                        </v-btn>
+                                                    </template>
+                                                    Escanear
+                                                </v-tooltip>
                                             </v-col>
                                             <v-col 
                                                 md="2"
@@ -395,6 +418,22 @@
                                             </v-icon>
                                             Recortes
                                         </v-chip>
+                                    </v-col>
+                                    <v-col
+                                        class="pa-0 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="6"
+                                        lg="6"
+                                        xl="6"
+                                        align="right">
+                                        <v-btn
+                                            icon
+                                            color="#9DBD32"
+                                            @click="txtGenerate(catT.id,1)"
+                                        >
+                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
+                                        </v-btn>
                                     </v-col>
                                 </v-row>
                                 <v-data-table
@@ -496,6 +535,22 @@
                                             </v-icon>
                                             {{ catC.category }}
                                         </v-chip>
+                                    </v-col>
+                                    <v-col
+                                        class="pa-0 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="8"
+                                        lg="8"
+                                        xl="8"
+                                        align="right">
+                                        <v-btn
+                                            icon
+                                            color="#9DBD32"
+                                            @click="txtGenerate(catC.id,0)"
+                                        >
+                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
+                                        </v-btn>
                                     </v-col>
                                 </v-row>
                                 <v-data-table
@@ -601,6 +656,22 @@
                                             {{ catP.category }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col
+                                        class="pa-0 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="8"
+                                        lg="8"
+                                        xl="8"
+                                        align="right">
+                                        <v-btn
+                                            icon
+                                            color="#9DBD32"
+                                            @click="txtGenerate(catP.id,0)"
+                                        >
+                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
+                                        </v-btn>
+                                    </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
@@ -703,6 +774,22 @@
                                             {{ catM.category }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col
+                                        class="pa-0 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="8"
+                                        lg="8"
+                                        xl="8"
+                                        align="right">
+                                        <v-btn
+                                            icon
+                                            color="#9DBD32"
+                                            @click="txtGenerate(catM.id,0)"
+                                        >
+                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
+                                        </v-btn>
+                                    </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
@@ -804,6 +891,22 @@
                                             </v-icon>
                                             {{ catTol.category }}
                                         </v-chip>
+                                    </v-col>
+                                    <v-col
+                                        class="pa-0 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="8"
+                                        lg="8"
+                                        xl="8"
+                                        align="right">
+                                        <v-btn
+                                            icon
+                                            color="#9DBD32"
+                                            @click="txtGenerate(catTol.id,0)"
+                                        >
+                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
+                                        </v-btn>
                                     </v-col>
                                 </v-row>
                                 <v-data-table
@@ -1899,6 +2002,18 @@
                 store.dispatch('modals/loaderfull',true)
                 this.$router.push('/almacen/surtir')
             },
+
+            async txtGenerate(catId,rec){
+                var payload = {
+                    token: this.getUserApi.token,
+                    user_id: this.getUserApi.uid,
+                    freeId: this.dataSuppD.id,
+                    no_ped: this.dataSuppD.no_ped,
+                    catId: catId,
+                    rec: rec
+                }
+                const res = await this.$store.dispatch('defree/remGenerate',payload);
+            }
             
         },
         mounted(){

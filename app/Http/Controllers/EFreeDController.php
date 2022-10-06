@@ -344,6 +344,69 @@ class EFreeDController extends Controller
         ], 200);
     }
 
+    public function remGenerate(Request $request){
+        if($request->rec == 1){
+            $sqlPart = ' 1 and dor.unit_id = 2';
+            $pref = '_R';
+        } else if($request->catId == 1){
+            $sqlPart = ' 1 and dor.unit_id = 3';
+            $pref = '_T';
+        } else{
+            $sqlPart = $request->catId;
+            switch($sqlPart){
+                case 2: $pref = '_C';
+                    break;
+                case 3: $pref = '_P';
+                    break;
+                case 4: $pref = '_M';
+                    break;
+                case 5: $pref = '_Tol';
+                    break;
+            }
+        }
+        $sqlOrd = DB::select("SELECT dor.unit_id,dol.lot,dol.quantity,dol.standard,a.sai_id,a.category_id
+                                from d_orders dor
+                                inner join d_ord_lots dol on dol.dord_id = dor.id
+                                inner join c_articles a on a.id = dor.article_id
+                                    where dor.free_id = $request->freeId and dor.status_id = 2 and a.category_id = $sqlPart");
+        $dataOrd = collect($sqlOrd);
+        //  Genera el txt para subir a Sai
+        $archive = fopen('tmpRemission.txt','w');
+        foreach($dataOrd as $row){
+            $sai = strgLen($row->sai_id,40);
+            $unit = strgLen(unit($row->unit_id),7);
+            $ceros = '0.00000000  0.00000000';
+            $lot = strgLen($row->lot,30);
+            $mon = '1                  ';
+            // $qtyDot = qtyDot($row->quantity);
+            $round = round(($row->quantity / $row->standard),8);
+            $qtyDot = qtyDot(strval($round));
+            $qty = strgLen($qtyDot,20);
+            $price = '0.00000000                                                                                                                                                                                    ';
+            fwrite($archive,$sai);
+            fwrite($archive,$unit);
+            fwrite($archive,$ceros);
+            fwrite($archive,$lot);
+            fwrite($archive,$mon);
+            fwrite($archive,$qty);
+            fwrite($archive,$price);
+            fwrite($archive,"\n");
+        }
+        fclose($archive);
+        //  Copia y elimina el archivo temporal, lo deposita en la carpeta de Sai
+        $newFile = $request->no_ped.$pref;
+        $file = "C:/laragon/www/intra/public/tmpRemission.txt";
+        $newfile = "C:/VSAI/archivos/rem$newFile.txt";
+        $copy = false;
+        if (copy($file, $newfile)) {
+            $copy = true;
+        } 
+        return response()->json([
+            'success' =>  true,
+            'copy' => $copy
+        ], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -354,6 +417,7 @@ class EFreeDController extends Controller
         //
     }
 
+    
 
     /**
      * Store a newly created resource in storage.
@@ -361,6 +425,54 @@ class EFreeDController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+}
+
+function strgLen($var,$len){
+    $strgW = '                                        ';
+    $intVar = $len - strlen($var);
+    $strg = trim($var).substr($strgW,1,$intVar);
+
+    return $strg;
+}
+
+function qtyDot($var){
+    $ceros = '00000000';
+    if(strpos($var,".") !== false){
+        $x = 0;
+        $flag = false;
+        for($i = 0; $i < strlen($var); $i++){
+            $flag ? $x++ : 0;
+            if($var[$i] == '.'){
+                $flag = true;
+            }
+        }
+        $var .= substr($ceros,0,8 - $x);
+    } else{
+        $var .= '.'.$ceros;
+    }
+
+    return $var;
+}
+
+function unit($unitId){
+    switch($unitId){
+        case 1:
+            $unit = 'PIEZA';
+            break;
+        case 2:
+            $unit = 'METRO';
+            break;
+        case 3:
+            $unit = 'ROLLO';
+            break;
+        case 6:
+            $unit = 'CAJA';
+            break;
+        case 7:
+            $unit = 'PAQ';
+            break;
+    }
+    return $unit;
 }
 
 // call procedures

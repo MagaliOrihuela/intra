@@ -261,7 +261,7 @@
                                                     <v-btn
                                                         icon
                                                         color="#01C0D2"
-                                                        @click="packAll()"
+                                                        @click="returnPack(dataModal.id)"
                                                     >
                                                         <v-icon>mdi-tag-text-outline</v-icon>
                                                     </v-btn>
@@ -446,16 +446,15 @@
                      icon: 'error',
                      title: 'Ups...',
                      text: 'No se han seleccionado productos para empacar.',
-                  })
+                    })
                 } else{
+                    // const res = await this.$store.dispatch('defree/getFreeD',payload);
                     const data = await socketClientEmit.supplyPackEmit(payload);
-
                 }
             },
             returnPack(dordLId){
 
-            }
-            
+            },            
         },
         mounted(){
         },

@@ -123,6 +123,7 @@ Route::group(['prefix' => 'API'], function () {
    Route::post('/supply/supplyScan', [APIController::class, 'supplyScan']);
    Route::post('supply/gridsModal', [APIController::class, 'gridsModal']);
    Route::post('supply/supplyDelScan', [APIController::class, 'supplyDelScan']);
+   Route::post('supply/valida', [APIController::class, 'valida']);
 
 });
 
@@ -150,6 +151,7 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'almacen'], function () 
    Route::post('surtir/supply/supplyModal', [EFreeDController::class, 'supplyModal']);
    Route::post('surtir/supply/packModal', [EFreeDController::class, 'packModal']);
    Route::post('surtir/supply/package', [EFreeDController::class, 'package']);
+   Route::post('surtir/supply/remGenerate', [EFreeDController::class, 'remGenerate']);
 
 });
 

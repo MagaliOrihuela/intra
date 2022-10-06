@@ -157,7 +157,10 @@ class APIController extends Controller
                 'dord_id' => $request->dord_id,
                 'cat_id' => $request->cat_id,
                 'lot' => $request->lot,
-                'qty' => $request->qty
+                'qty' => $request->qty,
+                'pick' => $request->pick,
+                'locOld' => $request->locOld,
+                'locNew' => $request->locNew
             ]);
             return response()->json([
                 'success' => true,
@@ -196,11 +199,32 @@ class APIController extends Controller
                 'user_id' => $request->user_id,
                 'dord_id' => $request->dord_id,
                 'cat_id' => $request->cat_id,
-                'dordLot' => $request->dordLot
+                'dordLot' => $request->dordLot,
+                'locOld' => $request->locOld,
+                'locNew' => $request->locNew
             ]);
             return response()->json([
                 'success' => true,
                 'gridSupplyModal' => $gridSupplyModal->json()
+            ], 200);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'error' => "fails",
+            ], 200);
+        }
+    }
+    public function valida(Request $request)
+    {
+        try {
+            $valida = HTTP::asForm()->post(config('app.ApiUrl').'/API/shades/supply/valida.php' , [
+                'token' => $request->token,
+                'user_id' => $request->user_id,
+                'location' => $request->location
+            ]);
+            return response()->json([
+                'success' => true,
+                'valida' => $valida->json()
             ], 200);
         } catch (\Throwable $th) {
             return response()->json([
