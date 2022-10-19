@@ -219,20 +219,38 @@
                 centered
                 height="40px"
             >
+            <!-- @click="tabFree = 'tab1'" -->
+            <!-- disabled="true" -->
                 <v-tab
-                    @click="tabFree = 'tab1'"
+                    @click="gridSuppS(1)"
                 >
-                    Escaneo
+                    Surtido
                     <v-icon right>
-                        mdi-barcode-scan
+                        mdi-dolly
                     </v-icon>
                 </v-tab>
                 <v-tab
-                    @click="tabFree = 'tab2'"
+                    @click="gridSuppS(2)"                
+                >
+                    Valida
+                    <v-icon right>
+                        mdi-checkbox-multiple-marked-outline
+                    </v-icon>
+                </v-tab>
+                <v-tab
+                    @click="gridSuppS(3)"
                 >
                     Empaque
                     <v-icon right>
                         mdi-package-variant
+                    </v-icon>
+                </v-tab>
+                <v-tab
+                    @click="gridSuppS(4)"
+                >
+                    Valida
+                    <v-icon right>
+                        mdi-checkbox-multiple-marked-outline
                     </v-icon>
                 </v-tab>
             </v-tabs>
@@ -262,32 +280,16 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catT.color"
+                                            :color="dataCat.colorT"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catT.icon }}
+                                                {{ dataCat.iconT }}
                                             </v-icon>
-                                            {{ catT.category }}
+                                            {{ dataCat.catT }}
                                         </v-chip>
-                                    </v-col>
-                                    <v-col
-                                        class="pa-0 ma-0" 
-                                        xs="12"
-                                        sm="12"
-                                        md="8"
-                                        lg="8"
-                                        xl="8"
-                                        align="right">
-                                        <v-btn
-                                            icon
-                                            color="#9DBD32"
-                                            @click="txtGenerate(catT.id,0)"
-                                        >
-                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
-                                        </v-btn>
                                     </v-col>
                                 </v-row>
                                 <v-data-table
@@ -386,16 +388,16 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catT.color"
+                                            :color="dataCat.colorT"
                                             text-color="blue-grey darken-4"
                                             label
                                             right
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catT.icon }}
+                                                {{ dataCat.iconT }}
                                             </v-icon>
-                                            {{ catT.category }}
+                                            {{ dataCat.catT }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -419,22 +421,6 @@
                                             Recortes
                                         </v-chip>
                                     </v-col>
-                                    <v-col
-                                        class="pa-0 ma-0" 
-                                        xs="12"
-                                        sm="12"
-                                        md="6"
-                                        lg="6"
-                                        xl="6"
-                                        align="right">
-                                        <v-btn
-                                            icon
-                                            color="#9DBD32"
-                                            @click="txtGenerate(catT.id,1)"
-                                        >
-                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
-                                        </v-btn>
-                                    </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
@@ -445,6 +431,1432 @@
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
                                     @page-count="pageCountT2 = $event"
+                                    :loading="loadingTable"
+                                    :sort-desc="false"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.surt`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.surt == 2"
+                                            >
+                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                    <template #[`item.dord_id`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-tooltip bottom>
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <v-btn
+                                                            v-bind="attrs"
+                                                            v-on="on"
+                                                            icon
+                                                            color="#EAA20A"
+                                                            @click="scanModal(item.dord_id,item.num)" 
+                                                        >
+                                                            <v-icon>mdi-barcode-scan</v-icon>
+                                                        </v-btn>
+                                                    </template>
+                                                    Escanear
+                                                </v-tooltip>
+                                            </v-col>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-btn
+                                                    icon
+                                                    color="#007DD6"
+                                                >
+                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
+                                                </v-btn>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pageT2" 
+                                        :length="pageCountT2" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if="dataSuppC.length > 0"
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorC"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconC }}
+                                            </v-icon>
+                                            {{ dataCat.catC }}
+                                        </v-chip>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headers2"
+                                    :items="dataSuppC"
+                                    :page.sync="pageC"
+                                    :items-per-page="itemsPerPageC"
+                                    :sort-desc="false"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountC = $event"
+                                    :loading="loadingTable"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.metraje`]="{ item }">
+                                        
+                                    </template>
+                                    <template #[`item.surt`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.surt == 2"
+                                            >
+                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                    <template #[`item.dord_id`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-tooltip bottom>
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <v-btn
+                                                            v-bind="attrs"
+                                                            v-on="on"
+                                                            icon
+                                                            color="#EAA20A"
+                                                            @click="scanModal(item.dord_id,item.num)" 
+                                                        >
+                                                            <v-icon>mdi-barcode-scan</v-icon>
+                                                        </v-btn>
+                                                    </template>
+                                                    Escanear
+                                                </v-tooltip>
+                                            </v-col>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-btn
+                                                    icon
+                                                    color="#007DD6"
+                                                >
+                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
+                                                </v-btn>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pageC" 
+                                        :length="pageCountC" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if="dataSuppP.length > 0"
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorP"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconP }}
+                                            </v-icon>
+                                            {{dataCat.catP }}
+                                        </v-chip>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headers2"
+                                    :items="dataSuppP"
+                                    :page.sync="pageP"
+                                    :items-per-page="itemsPerPageP"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountP = $event"
+                                    :loading="loadingTable"
+                                    loading-text="Cargando Articulos ..."
+                                    :sort-desc="false"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.surt`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.surt == 2"
+                                            >
+                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                    <template #[`item.dord_id`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-tooltip bottom>
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <v-btn
+                                                            v-bind="attrs"
+                                                            v-on="on"
+                                                            icon
+                                                            color="#EAA20A"
+                                                            @click="scanModal(item.dord_id,item.num)" 
+                                                        >
+                                                            <v-icon>mdi-barcode-scan</v-icon>
+                                                        </v-btn>
+                                                    </template>
+                                                    Escanear
+                                                </v-tooltip>
+                                            </v-col>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-btn
+                                                    icon
+                                                    color="#007DD6"
+                                                >
+                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
+                                                </v-btn>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pageP" 
+                                        :length="pageCountP" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if="dataSuppM.length > 0"
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorP"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconP }}
+                                            </v-icon>
+                                            {{ dataCat.catP }}
+                                        </v-chip>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headers2"
+                                    :items="dataSuppM"
+                                    :page.sync="pageM"
+                                    :items-per-page="itemsPerPageM"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountM = $event"
+                                    :loading="loadingTable"
+                                    loading-text="Cargando Articulos ..."
+                                    :sort-desc="false"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.surt`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.surt == 2"
+                                            >
+                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                    <template #[`item.dord_id`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-tooltip bottom>
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <v-btn
+                                                            v-bind="attrs"
+                                                            v-on="on"
+                                                            icon
+                                                            color="#EAA20A"
+                                                            @click="scanModal(item.dord_id,item.num)" 
+                                                        >
+                                                            <v-icon>mdi-barcode-scan</v-icon>
+                                                        </v-btn>
+                                                    </template>
+                                                    Escanear
+                                                </v-tooltip>
+                                            </v-col>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-btn
+                                                    icon
+                                                    color="#007DD6"
+                                                >
+                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
+                                                </v-btn>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pageM" 
+                                        :length="pageCountM" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if="dataSuppTol.length > 0"
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorM"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconM }}
+                                            </v-icon>
+                                            {{ dataCat.catM }}
+                                        </v-chip>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headers2"
+                                    :items="dataSuppTol"
+                                    :page.sync="pageTol"
+                                    :items-per-page="itemsPerPageTol"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountTol = $event"
+                                    :loading="loadingTable"
+                                    :sort-desc="false"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.surt`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.surt == 2"
+                                            >
+                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                    <template #[`item.dord_id`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-tooltip bottom>
+                                                    <template v-slot:activator="{ on, attrs }">
+                                                        <v-btn
+                                                            v-bind="attrs"
+                                                            v-on="on"
+                                                            icon
+                                                            color="#EAA20A"
+                                                            @click="scanModal(item.dord_id,item.num)" 
+                                                        >
+                                                            <v-icon>mdi-barcode-scan</v-icon>
+                                                        </v-btn>
+                                                    </template>
+                                                    Escanear
+                                                </v-tooltip>
+                                            </v-col>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-btn
+                                                    icon
+                                                    color="#007DD6"
+                                                >
+                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
+                                                </v-btn>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pageTol" 
+                                        :length="pageCountTol" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                        </v-card-subtitle>
+                    </v-card>
+                </v-tab-item>
+                <v-tab-item
+                    value="tab2"
+                >
+                    <v-card
+                        class="mx-auto rounded-0 border-0 "
+                        max-width="99%"
+                        :elevation="0"
+                    >
+                        <v-card-subtitle  class="pa-2 ma-0 ">
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if="dataSuppT.length > 0"
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorT"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconT }}
+                                            </v-icon>
+                                            {{ dataCat.catT }}
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Validado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValT == 0"
+                                        >
+                                            Completado
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="1"
+                                        lg="1"
+                                        xl="1"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#007DD6"
+                                                    @click="valModal(dataSuppD.id,dataCat.catIdT,0)" 
+                                                >
+                                                    <v-icon>mdi-barcode-scan</v-icon>
+                                                </v-btn>
+                                            </template>
+                                            Validar
+                                        </v-tooltip>
+                                    </v-col>
+                                    <v-col 
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#9DBD32"
+                                                    @click="txtGenerate(dataCat.catIdT,0)" 
+                                                    style="width: 60%;"
+                                                    v-if="statusValT == 0"
+                                                >
+                                                <v-icon left>mdi-file-download-outline</v-icon>Remisión
+                                                </v-btn>
+                                            </template>
+                                            Descargar
+                                        </v-tooltip>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headersP"
+                                    :items="dataSuppT"
+                                    :page.sync="pagePT"
+                                    :items-per-page="itemsPerPagePT"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountPT = $event"
+                                    :loading="loadingTable"
+                                    :sort-desc="false"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.check`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.check == 1"
+                                            >
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pagePT" 
+                                        :length="pageCountPT" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if="dataSuppT2.length > 0"
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorT"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            right
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconT }}
+                                            </v-icon>
+                                            {{ dataCat.catT }}
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-chip
+                                            class="ma-2"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 90%;"
+                                        >
+                                            <v-icon left>
+                                                mdi-scissors-cutting
+                                            </v-icon>
+                                            Recortes
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Validado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValT2 == 0"
+                                        >
+                                            Completado
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="1"
+                                        lg="1"
+                                        xl="1"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#007DD6"
+                                                    @click="valModal(dataSuppD.id,dataCat.catIdT,1)" 
+                                                >
+                                                    <v-icon>mdi-barcode-scan</v-icon>
+                                                </v-btn>
+                                            </template>
+                                            Validar
+                                        </v-tooltip>
+                                    </v-col>
+                                    <v-col 
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#9DBD32"
+                                                    @click="txtGenerate(dataCat.catIdT,1)" 
+                                                    style="width: 60%;"
+                                                    v-if="statusValT2 == 0"
+                                                >
+                                                <v-icon left>mdi-file-download-outline</v-icon>Remisión
+                                                </v-btn>
+                                            </template>
+                                            Descargar
+                                        </v-tooltip>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headersP"
+                                    :items="dataSuppT2"
+                                    :page.sync="pagePT2"
+                                    :items-per-page="itemsPerPagePT2"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountPT2 = $event"
+                                    :loading="loadingTable"
+                                    :sort-desc="false"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.check`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.check == 1"
+                                            >
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pagePT2" 
+                                        :length="pageCountPT2" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if="dataSuppC.length > 0"
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorC"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconC }}
+                                            </v-icon>
+                                            {{ dataCat.catC }}
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Validado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValC == 0"
+                                        >
+                                            Completado
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="1"
+                                        lg="1"
+                                        xl="1"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#007DD6"
+                                                    @click="valModal(dataSuppD.id,dataCat.catIdC,0)" 
+                                                >
+                                                    <v-icon>mdi-barcode-scan</v-icon>
+                                                </v-btn>
+                                            </template>
+                                            Validar
+                                        </v-tooltip>
+                                    </v-col>
+                                    <v-col 
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#9DBD32"
+                                                    @click="txtGenerate(dataCat.catIdC,0)" 
+                                                    style="width: 60%;"
+                                                    v-if="statusValC == 0"
+                                                >
+                                                <v-icon left>mdi-file-download-outline</v-icon>Remisión
+                                                </v-btn>
+                                            </template>
+                                            Descargar
+                                        </v-tooltip>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headersP"
+                                    :items="dataSuppC"
+                                    :page.sync="pagePC"
+                                    :items-per-page="itemsPerPagePC"
+                                    :sort-desc="false"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountPC = $event"
+                                    :loading="loadingTable"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.metraje`]="{ item }">
+                                        
+                                    </template>
+                                    <template #[`item.check`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.check == 1"
+                                            >
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pagePC" 
+                                        :length="pageCountPC" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if="dataSuppP.length > 0"
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorP"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconP }}
+                                            </v-icon>
+                                            {{ dataCat.catP }}
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Validado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValP == 0"
+                                        >
+                                            Completado
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="1"
+                                        lg="1"
+                                        xl="1"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#007DD6"
+                                                    @click="valModal(dataSuppD.id,dataCat.catIdP,0)" 
+                                                >
+                                                    <v-icon>mdi-barcode-scan</v-icon>
+                                                </v-btn>
+                                            </template>
+                                            Validar
+                                        </v-tooltip>
+                                    </v-col>
+                                    <v-col 
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#9DBD32"
+                                                    @click="txtGenerate(dataCat.catIdP,0)" 
+                                                    style="width: 60%;"
+                                                    v-if="statusValP == 0"
+                                                >
+                                                <v-icon left>mdi-file-download-outline</v-icon>Remisión
+                                                </v-btn>
+                                            </template>
+                                            Descargar
+                                        </v-tooltip>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headersP"
+                                    :items="dataSuppP"
+                                    :page.sync="pagePP"
+                                    :items-per-page="itemsPerPagePP"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountPP = $event"
+                                    :loading="loadingTable"
+                                    loading-text="Cargando Articulos ..."
+                                    :sort-desc="false"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.check`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.check == 1"
+                                            >
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pagePP" 
+                                        :length="pageCountPP" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if="dataSuppM.length > 0"
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorP"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconP }}
+                                            </v-icon>
+                                            {{ dataCat.catP }}
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Validado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValM == 0"
+                                        >
+                                            Completado
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="1"
+                                        lg="1"
+                                        xl="1"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#007DD6"
+                                                    @click="valModal(dataSuppD.id,dataCat.catIdP,0)" 
+                                                >
+                                                    <v-icon>mdi-barcode-scan</v-icon>
+                                                </v-btn>
+                                            </template>
+                                            Validar
+                                        </v-tooltip>
+                                    </v-col>
+                                    <v-col 
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#9DBD32"
+                                                    @click="txtGenerate(dataCat.catIdP,0)" 
+                                                    style="width: 60%;"
+                                                    v-if="statusValM == 0"
+                                                >
+                                                <v-icon left>mdi-file-download-outline</v-icon>Remisión
+                                                </v-btn>
+                                            </template>
+                                            Descargar
+                                        </v-tooltip>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headersP"
+                                    :items="dataSuppM"
+                                    :page.sync="pagePM"
+                                    :items-per-page="itemsPerPagePM"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountPM = $event"
+                                    :loading="loadingTable"
+                                    loading-text="Cargando Articulos ..."
+                                    :sort-desc="false"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.check`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.check == 1"
+                                            >
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pagePM" 
+                                        :length="pageCountPM" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if="dataSuppTol.length > 0"
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorM"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconM }}
+                                            </v-icon>
+                                            {{ dataCat.catM }}
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Validado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValTol == 0"
+                                        >
+                                            Completado
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="1"
+                                        lg="1"
+                                        xl="1"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#007DD6"
+                                                    @click="valModal(dataSuppD.id,dataCat.catIdM,0)" 
+                                                >
+                                                    <v-icon>mdi-barcode-scan</v-icon>
+                                                </v-btn>
+                                            </template>
+                                            Validar
+                                        </v-tooltip>
+                                    </v-col>
+                                    <v-col 
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        class="pa-0 pt-4 ma-2"
+                                    >
+                                        <v-tooltip bottom>
+                                            <template v-slot:activator="{ on, attrs }">
+                                                <v-btn
+                                                    v-bind="attrs"
+                                                    v-on="on"
+                                                    icon
+                                                    color="#9DBD32"
+                                                    @click="txtGenerate(dataCat.catIdM,0)" 
+                                                    style="width: 60%;"
+                                                    v-if="statusValTol == 0"
+                                                >
+                                                <v-icon left>mdi-file-download-outline</v-icon>Remisión
+                                                </v-btn>
+                                            </template>
+                                            Descargar
+                                        </v-tooltip>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headersP"
+                                    :items="dataSuppTol"
+                                    :page.sync="pagePTol"
+                                    :items-per-page="itemsPerPagePTol"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountPTol = $event"
+                                    :loading="loadingTable"
+                                    :sort-desc="false"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.check`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.check == 1"
+                                            >
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pagePTol" 
+                                        :length="pageCountPTol" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                        </v-card-subtitle>
+                    </v-card>
+                </v-tab-item>
+                <v-tab-item
+                    value="tab3"
+                >
+                    <v-card
+                        class="mx-auto rounded-0 border-0 "
+                        max-width="99%"
+                        :elevation="0"
+                    >
+                        <v-card-subtitle  class="pa-2 ma-0 ">
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorT"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconT }}
+                                            </v-icon>
+                                            {{ dataCat.catT }}
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                        <!-- <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                        >
+                                            Completado
+                                        </v-chip> -->
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
+                                        <v-btn
+                                            icon
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,dataCat[0],0)" 
+                                        >
+                                            <v-icon >mdi-package-variant</v-icon>
+                                        </v-btn>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headersP"
+                                    :items="dataSuppT"
+                                    :page.sync="pagePT"
+                                    :items-per-page="itemsPerPagePT"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountPT = $event"
                                     :loading="loadingTable"
                                     :sort-desc="false"
                                 >
@@ -501,8 +1913,8 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageT2" 
-                                        :length="pageCountT2" 
+                                        v-model="pagePT" 
+                                        :length="pageCountPT" 
                                         total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
@@ -510,7 +1922,6 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
-                                v-if="dataSuppC.length > 0"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -525,44 +1936,202 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catC.color"
+                                            :color="dataCat.colorT"
                                             text-color="blue-grey darken-4"
                                             label
+                                            right
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catC.icon }}
+                                                {{ dataCat.iconT }}
                                             </v-icon>
-                                            {{ catC.category }}
+                                            {{ dataCat.catT }}
                                         </v-chip>
                                     </v-col>
-                                    <v-col
-                                        class="pa-0 ma-0" 
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
                                         xs="12"
                                         sm="12"
-                                        md="8"
-                                        lg="8"
-                                        xl="8"
-                                        align="right">
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-chip
+                                            class="ma-2"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 90%;"
+                                        >
+                                            <v-icon left>
+                                                mdi-scissors-cutting
+                                            </v-icon>
+                                            Recortes
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                    </v-col>
+                                    <v-col 
+                                        md="4"
+                                        lg="4"
+                                        xl="4"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
                                         <v-btn
                                             icon
-                                            color="#9DBD32"
-                                            @click="txtGenerate(catC.id,0)"
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,dataCat[0],1)" 
                                         >
-                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
+                                            <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headers2"
+                                    :headers="headersP"
+                                    :items="dataSuppT2"
+                                    :page.sync="pagePT2"
+                                    :items-per-page="itemsPerPagePT2"
+                                    hide-default-footer
+                                    class="elevation-0 overflow-y-auto"
+                                    @page-count="pageCountPT2 = $event"
+                                    :loading="loadingTable"
+                                    :sort-desc="false"
+                                >
+                                    <v-progress-linear 
+                                        v-show="loadingTable" 
+                                        slot="progress" 
+                                        color="red darken-4" 
+                                        indeterminate>
+                                    </v-progress-linear>
+                                    <template #[`item.surt`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                                v-if="item.surt == 2"
+                                            >
+                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                    <template #[`item.dord_id`]="{ item }">
+                                        <v-row>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-btn
+                                                    icon
+                                                    color="#EAA20A"
+                                                    @click="scanModal(item.dord_id,item.num)" 
+                                                >
+                                                    <v-icon>mdi-barcode-scan</v-icon>
+                                                </v-btn>
+                                            </v-col>
+                                            <v-col 
+                                                md="2"
+                                                lg="2"
+                                                xl="2"
+                                                class="pa-0 ma-0"
+                                            >
+                                                <v-btn
+                                                    icon
+                                                    color="#007DD6"
+                                                >
+                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
+                                                </v-btn>
+                                            </v-col>
+                                        </v-row>
+                                    </template>
+                                </v-data-table>
+                                <div class="text-center pt-2">
+                                    <v-pagination 
+                                        v-model="pagePT2" 
+                                        :length="pageCountPT2" 
+                                        total-visible="5"
+                                        circle 
+                                        color="blue-grey darken-3" 
+                                    ></v-pagination>
+                                </div>
+                            </v-container>
+                            <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                            >
+                                <v-row class="pa-0 ma-0">
+                                    <v-col 
+                                        class="pa-0 pt-4 ma-0" 
+                                        xs="12"
+                                        sm="12"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        style="font-size: 16px;"
+                                    > 
+                                        <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
+                                        <v-chip
+                                            class="ma-2"
+                                            :color="dataCat.colorC"
+                                            text-color="blue-grey darken-4"
+                                            label
+                                            style="width: 60%;"
+                                        >
+                                            <v-icon left>
+                                                {{ dataCat.iconC }}
+                                            </v-icon>
+                                            {{ dataCat.catC }}
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
+                                        <v-btn
+                                            icon
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,dataCat[1],0)" 
+                                        >
+                                            <v-icon >mdi-package-variant</v-icon>
+                                        </v-btn>
+                                    </v-col>
+                                </v-row>
+                                <v-data-table
+                                    v-model="selected"
+                                    :headers="headersP"
                                     :items="dataSuppC"
-                                    :page.sync="pageC"
-                                    :items-per-page="itemsPerPageC"
+                                    :page.sync="pagePC"
+                                    :items-per-page="itemsPerPagePC"
                                     :sort-desc="false"
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
-                                    @page-count="pageCountC = $event"
+                                    @page-count="pageCountPC = $event"
                                     :loading="loadingTable"
                                 >
                                     <v-progress-linear 
@@ -621,8 +2190,8 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageC" 
-                                        :length="pageCountC" 
+                                        v-model="pagePC" 
+                                        :length="pageCountPC" 
                                         total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
@@ -630,7 +2199,6 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
-                                v-if="dataSuppP.length > 0"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -645,43 +2213,53 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catP.color"
+                                            :color="dataCat.colorP"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catP.icon }}
+                                                {{ dataCat.iconP }}
                                             </v-icon>
-                                            {{ catP.category }}
+                                            {{ dataCat.catP }}
                                         </v-chip>
                                     </v-col>
-                                    <v-col
-                                        class="pa-0 ma-0" 
-                                        xs="12"
-                                        sm="12"
-                                        md="8"
-                                        lg="8"
-                                        xl="8"
-                                        align="right">
+                                    <v-col 
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
                                         <v-btn
                                             icon
-                                            color="#9DBD32"
-                                            @click="txtGenerate(catP.id,0)"
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,dataCat[2],0)" 
                                         >
-                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
+                                            <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headers2"
+                                    :headers="headersP"
                                     :items="dataSuppP"
-                                    :page.sync="pageP"
-                                    :items-per-page="itemsPerPageP"
+                                    :page.sync="pagePP"
+                                    :items-per-page="itemsPerPagePP"
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
-                                    @page-count="pageCountP = $event"
+                                    @page-count="pageCountPP = $event"
                                     :loading="loadingTable"
                                     loading-text="Cargando Articulos ..."
                                     :sort-desc="false"
@@ -739,8 +2317,8 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageP" 
-                                        :length="pageCountP" 
+                                        v-model="pagePP" 
+                                        :length="pageCountPP" 
                                         total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
@@ -748,7 +2326,6 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
-                                v-if="dataSuppM.length > 0"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -763,43 +2340,53 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catM.color"
+                                            :color="dataCat.colorP"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catM.icon }}
+                                                {{ dataCat.iconP }}
                                             </v-icon>
-                                            {{ catM.category }}
+                                            {{ dataCat.catP }}
                                         </v-chip>
                                     </v-col>
-                                    <v-col
-                                        class="pa-0 ma-0" 
-                                        xs="12"
-                                        sm="12"
-                                        md="8"
-                                        lg="8"
-                                        xl="8"
-                                        align="right">
+                                    <v-col 
+                                        md="2"
+                                        lg="2"
+                                        xl="2"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
                                         <v-btn
                                             icon
-                                            color="#9DBD32"
-                                            @click="txtGenerate(catM.id,0)"
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,dataCat[3],0)" 
                                         >
-                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
+                                            <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headers2"
+                                    :headers="headersP"
                                     :items="dataSuppM"
-                                    :page.sync="pageM"
-                                    :items-per-page="itemsPerPageM"
+                                    :page.sync="pagePM"
+                                    :items-per-page="itemsPerPagePM"
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
-                                    @page-count="pageCountM = $event"
+                                    @page-count="pageCountPM = $event"
                                     :loading="loadingTable"
                                     loading-text="Cargando Articulos ..."
                                     :sort-desc="false"
@@ -857,8 +2444,8 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageM" 
-                                        :length="pageCountM" 
+                                        v-model="pagePM" 
+                                        :length="pageCountPM" 
                                         total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
@@ -866,7 +2453,6 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
-                                v-if="dataSuppTol.length > 0"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -881,43 +2467,53 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catTol.color"
+                                            :color="dataCat.colorM"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catTol.icon }}
+                                                {{ dataCat.iconM }}
                                             </v-icon>
-                                            {{ catTol.category }}
+                                            {{ dataCat.catM }}
                                         </v-chip>
                                     </v-col>
-                                    <v-col
-                                        class="pa-0 ma-0" 
-                                        xs="12"
-                                        sm="12"
-                                        md="8"
-                                        lg="8"
-                                        xl="8"
-                                        align="right">
+                                    <v-col 
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-package-variant
+                                        </v-icon>
+                                        Empacado: 
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-0" 
+                                        align="right"
+                                    >
                                         <v-btn
                                             icon
-                                            color="#9DBD32"
-                                            @click="txtGenerate(catTol.id,0)"
+                                            color="#A3C334"
+                                            @click="packModal(dataSuppD.id,dataCat[4],0)" 
                                         >
-                                            <v-icon>mdi-file-download-outline</v-icon> Remisión
+                                            <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headers2"
+                                    :headers="headersP"
                                     :items="dataSuppTol"
-                                    :page.sync="pageTol"
-                                    :items-per-page="itemsPerPageTol"
+                                    :page.sync="pagePTol"
+                                    :items-per-page="itemsPerPagePTol"
                                     hide-default-footer
                                     class="elevation-0 overflow-y-auto"
-                                    @page-count="pageCountTol = $event"
+                                    @page-count="pageCountPTol = $event"
                                     :loading="loadingTable"
                                     :sort-desc="false"
                                 >
@@ -974,8 +2570,8 @@
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
-                                        v-model="pageTol" 
-                                        :length="pageCountTol" 
+                                        v-model="pagePTol" 
+                                        :length="pageCountPTol" 
                                         total-visible="5"
                                         circle 
                                         color="blue-grey darken-3" 
@@ -986,7 +2582,7 @@
                     </v-card>
                 </v-tab-item>
                 <v-tab-item
-                    value="tab2"
+                    value="tab4"
                 >
                     <v-card
                         class="mx-auto rounded-0 border-0 "
@@ -1010,15 +2606,15 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catT.color"
+                                            :color="dataCat.colorT"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catT.icon }}
+                                                {{ dataCat.iconT }}
                                             </v-icon>
-                                            {{ catT.category }}
+                                            {{ dataCat.catT }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1049,7 +2645,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,catT,0)" 
+                                            @click="packModal(dataSuppD.id,dataCat[0],0)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -1058,7 +2654,7 @@
                                 <v-data-table
                                     v-model="selected"
                                     :headers="headersP"
-                                    :items="dataPackT"
+                                    :items="dataSuppT"
                                     :page.sync="pagePT"
                                     :items-per-page="itemsPerPagePT"
                                     hide-default-footer
@@ -1144,16 +2740,16 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catT.color"
+                                            :color="dataCat.colorT"
                                             text-color="blue-grey darken-4"
                                             label
                                             right
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catT.icon }}
+                                                {{ dataCat.iconT }}
                                             </v-icon>
-                                            {{ catT.category }}
+                                            {{ dataCat.catT }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1198,7 +2794,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,catT,1)" 
+                                            @click="packModal(dataSuppD.id,dataCat[0],1)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -1207,7 +2803,7 @@
                                 <v-data-table
                                     v-model="selected"
                                     :headers="headersP"
-                                    :items="dataPackT2"
+                                    :items="dataSuppT2"
                                     :page.sync="pagePT2"
                                     :items-per-page="itemsPerPagePT2"
                                     hide-default-footer
@@ -1293,15 +2889,15 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catC.color"
+                                            :color="dataCat.colorC"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catC.icon }}
+                                                {{ dataCat.iconC }}
                                             </v-icon>
-                                            {{ catC.category }}
+                                            {{ dataCat.catC }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1325,7 +2921,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,catC,0)" 
+                                            @click="packModal(dataSuppD.id,dataCat[1],0)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -1334,7 +2930,7 @@
                                 <v-data-table
                                     v-model="selected"
                                     :headers="headersP"
-                                    :items="dataPackC"
+                                    :items="dataSuppC"
                                     :page.sync="pagePC"
                                     :items-per-page="itemsPerPagePC"
                                     :sort-desc="false"
@@ -1423,15 +3019,15 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catP.color"
+                                            :color="dataCat.colorP"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catP.icon }}
+                                                {{ dataCat.iconP }}
                                             </v-icon>
-                                            {{ catP.category }}
+                                            {{ dataCat.catP }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1455,7 +3051,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,catP,0)" 
+                                            @click="packModal(dataSuppD.id,dataCat[2],0)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -1464,7 +3060,7 @@
                                 <v-data-table
                                     v-model="selected"
                                     :headers="headersP"
-                                    :items="dataPackP"
+                                    :items="dataSuppP"
                                     :page.sync="pagePP"
                                     :items-per-page="itemsPerPagePP"
                                     hide-default-footer
@@ -1551,15 +3147,15 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catM.color"
+                                            :color="dataCat.colorP"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catM.icon }}
+                                                {{ dataCat.iconP }}
                                             </v-icon>
-                                            {{ catM.category }}
+                                            {{ dataCat.catP }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1583,7 +3179,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,catM,0)" 
+                                            @click="packModal(dataSuppD.id,dataCat[3],0)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -1592,7 +3188,7 @@
                                 <v-data-table
                                     v-model="selected"
                                     :headers="headersP"
-                                    :items="dataPackM"
+                                    :items="dataSuppM"
                                     :page.sync="pagePM"
                                     :items-per-page="itemsPerPagePM"
                                     hide-default-footer
@@ -1679,15 +3275,15 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="catTol.color"
+                                            :color="dataCat.colorM"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ catTol.icon }}
+                                                {{ dataCat.iconM }}
                                             </v-icon>
-                                            {{ catTol.category }}
+                                            {{ dataCat.catM }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1711,7 +3307,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,catTol,0)" 
+                                            @click="packModal(dataSuppD.id,dataCat[4],0)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -1720,7 +3316,7 @@
                                 <v-data-table
                                     v-model="selected"
                                     :headers="headersP"
-                                    :items="dataPackTol"
+                                    :items="dataSuppTol"
                                     :page.sync="pagePTol"
                                     :items-per-page="itemsPerPagePTol"
                                     hide-default-footer
@@ -1899,13 +3495,12 @@
                     { text: 'Acciones', width:'15%',value: 'dord_id' },
                 ],
                 headersP: [
-                    { text: '#', width:'5%', value: 'package' },
+                    { text: '#', width:'5%', value: 'num' },
                     { text: 'Lote', width:'15%', value: 'lot' },
+                    { text: 'Articulo', width:'15%', value: 'article' },
                     { text: 'Cantidad', width:'5%', value: 'quantity' },
-                    { text: 'Ubicación', width:'5%', value: 'location' },
-                ],
-                pruba: [],
-                prub: ''
+                    { text: 'Validado', width:'5%', value: 'check' },
+                ]
             }
         },
         mixins: [validationMixin],
@@ -1915,18 +3510,25 @@
             ...mapGetters({ 
                 getUserApi: 'auth/getUserApi',
                 dataSuppD: 'defree/getDataSuppD',
+                dataCat: 'defree/getDataCat',
                 dataSuppT: 'defree/getDataSuppT',
                 dataSuppT2: 'defree/getDataSuppT2',
                 dataSuppC: 'defree/getDataSuppC',
                 dataSuppP: 'defree/getDataSuppP',
                 dataSuppM: 'defree/getDataSuppM',
                 dataSuppTol: 'defree/getDataSuppTol',
-                dataPackT: 'defree/getDataPackT',
-                dataPackT2: 'defree/getDataPackT2',
-                dataPackC: 'defree/getDataPackC',
-                dataPackP: 'defree/getDataPackP',
-                dataPackM: 'defree/getDataPackM',
-                dataPackTol: 'defree/getDataPackTol'
+                statusValT: 'defree/getStatusValT',
+                statusValT2: 'defree/getStatusValT2',
+                statusValC: 'defree/getStatusValC',
+                statusValP: 'defree/getStatusValP',
+                statusValM: 'defree/getStatusValM',
+                statusValTol: 'defree/getStatusValTol',
+                // dataPackT: 'defree/getDataPackT',
+                // dataPackT2: 'defree/getDataPackT2',
+                // dataPackC: 'defree/getDataPackC',
+                // dataPackP: 'defree/getDataPackP',
+                // dataPackM: 'defree/getDataPackM',
+                // dataPackTol: 'defree/getDataPackTol'
             }),        
         },
         methods: {
@@ -1944,12 +3546,6 @@
                 }
                 const res = await this.$store.dispatch('defree/getFreeD',payload);
                 if(res.success) {
-                    this.arrCat = res.arrCat
-                    this.catT = res.arrCat[0]
-                    this.catC = res.arrCat[1]
-                    this.catP = res.arrCat[2]
-                    this.catM = res.arrCat[3]
-                    this.catTol = res.arrCat[4]
                     this.destiny = res.destiny
                     this.loadingTable = false
                 }
@@ -2013,7 +3609,66 @@
                     rec: rec
                 }
                 const res = await this.$store.dispatch('defree/remGenerate',payload);
-            }
+                if(res.success){
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Generado!',
+                        text: 'Se ha generado el archivo txt de la Remisión.',
+                    })
+                } else{
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ups...',
+                        text: 'Ocurrió un error al intentar generar el archivo txt de la Remisión',
+                    })
+                }
+            },
+
+            async gridSuppS(tab){
+                var payload = {
+                    token: this.getUserApi.token,
+                    user_id: this.getUserApi.uid,
+                    freeId: this.dataSuppD.id,
+                    tab: tab
+                }
+                await this.$store.dispatch('defree/getGridsG',payload)
+                switch(tab){
+                    case 1:
+                        this.tabFree = 'tab1'
+                        break;
+                    case 2:
+                        this.tabFree = 'tab2'
+                        break;
+                    case 3:
+                        this.tabFree = 'tab3'
+                        break;
+                    case 4:
+                        this.tabFree = 'tab4'
+                        break;
+                }
+
+            },
+
+            async valModal(freeId,catId,rec){
+                let payload = {
+                    token: this.getUserApi.token,
+                    user: this.getUserApi.uid,
+                    freeId: freeId,
+                    catId: catId,
+                    rec: rec,
+                    validate: 1
+                }
+                await this.$store.dispatch('defree/getValModal',payload)
+                
+                let payload2 = {
+                    token: this.getUserApi.token,
+                    user: this.getUserApi.uid,
+                    name_modal:  'supplyVal', // modal 
+                    state_modal: true,
+                }
+                await this.$store.dispatch('modals/IdentifyModal',payload2);
+            },
+
             
         },
         mounted(){

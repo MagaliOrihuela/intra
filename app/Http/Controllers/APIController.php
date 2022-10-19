@@ -160,7 +160,8 @@ class APIController extends Controller
                 'qty' => $request->qty,
                 'pick' => $request->pick,
                 'locOld' => $request->locOld,
-                'locNew' => $request->locNew
+                'locNew' => $request->locNew,
+                'flagTrash' => $request->flagTrash
             ]);
             return response()->json([
                 'success' => true,

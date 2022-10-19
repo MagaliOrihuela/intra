@@ -713,9 +713,31 @@
                     id: 0,
                     flagF: 1
                 }
+                this.cleanModalF()
                 await this.$store.dispatch('modals/IdentifyModal',payload);
-            },
 
+            },
+            cleanModalF(){
+                this.selParcial = ''
+                this.selectC = ''
+                this.selDelivery = ''
+                this.selDelivery = false
+                this.disDeli = false
+                this.disDeli2 = false
+                this.contact = ''
+                this.selDestiny = ''
+                this.street = ''
+                this.extNum = ''
+                this.intNum = ''
+                this.cp = ''
+                this.suburb = ''
+                this.city = ''
+                this.state = ''
+                this.phone = ''
+                this.selBoard = ''
+                this.selDeliCo = ''
+                this.coment = ''
+            },
             chgParcial(){
                 if(this.selParcial == 1){
                     this.disParcial = false
@@ -744,8 +766,8 @@
                         } else{
                             Swal.fire({
                                 icon: 'error',
-                                title: 'Oops...',
-                                text: 'Cliente no dado de alta en la web.',
+                                title: 'Ups...',
+                                text: 'El cliente no está dado de alta.',
                             })
                         }
                     }
@@ -808,13 +830,10 @@
                         user_id: this.getUserApi.uid,
                         no_ped: res.no_ped
                     }
-                    // cierra modal free
-                    // await this.$store.dispatch('modals/IdentifyModal',payload3);
-                    
+                    this.cleanModalF()
+
+                    // cierra modal free                    
                     const res2 = await socketClientEmit.valFreeOrderEmit(payload2)
-
-
-
                     this.loading = false
                     let iconToast = 'success'
                     let msjToast = '¡El pedido ha sido liberado!'

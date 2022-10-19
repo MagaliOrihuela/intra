@@ -72,6 +72,29 @@
                                 </v-chip>
                             </v-col>
                         </v-row>
+                        <v-row class="pl-5">
+                            <v-col 
+                                xs="12"
+                                sm="12"
+                                md="3"
+                                lg="3"
+                                xl="3"
+                                class="pa-1 ma-0"
+                                style="text-align: center;"
+                            >
+                                <v-chip
+                                    text-color="blue-grey darken-4"
+                                    label
+                                    style="width: 100%;justify-content: center;"
+                                    v-if="dataModal.rec == 1"
+                                >
+                                    <v-icon left>
+                                        mdi-scissors-cutting
+                                    </v-icon>
+                                    Recortes
+                                </v-chip>
+                            </v-col>
+                        </v-row>
                         <v-row>
                             <v-col 
                                 xs="12"
@@ -181,7 +204,7 @@
                                                     <v-btn
                                                         icon
                                                         color="red"
-                                                        @click="delPack()"
+                                                        @click="delGridPack()"
                                                     >
                                                         <v-icon>mdi-close-circle</v-icon>
                                                     </v-btn>
@@ -282,6 +305,24 @@
                                                     {{ item.package }}
                                                     <v-icon size="150%" color="#008000">mdi-package-variant-closed</v-icon>
                                                 </template>
+                                                <template #[`item.id`]="{ item }">
+                                                        <v-row>
+                                                            <v-col 
+                                                                md="2"
+                                                                lg="2"
+                                                                xl="2"
+                                                                class="pa-0 ma-0"
+                                                            >
+                                                                <v-btn
+                                                                    icon
+                                                                    color="red"
+                                                                    @click="delPack(item.id)"
+                                                                >
+                                                                    <v-icon>mdi-close-circle-outline</v-icon>
+                                                                </v-btn>
+                                                            </v-col>
+                                                        </v-row>
+                                                    </template>
                                             </v-data-table>
                                             <div class="text-center pt-2">
                                                 <v-pagination 
@@ -353,6 +394,7 @@
                     { text: 'Lote', value: 'lot' },
                     { text: 'Metraje', value: 'quantity' },
                     { text: 'Ubicación', value: 'location' },
+                    { text: '', value: 'id' },
                 ],
                 lot: '',
                 disLot: false,
@@ -410,7 +452,7 @@
                 row[0].num = m
                 this.arrPack.push(row[0])
             },
-            delPack(){
+            delGridPack(){
                 let row = []; 
                 let n = this.gridScan.length + 1
                 for(let i = 0; i < this.arrPack.length; i++){
@@ -443,18 +485,47 @@
                 }
                 if(this.arrPack.length === 0){
                     Swal.fire({
-                     icon: 'error',
-                     title: 'Ups...',
-                     text: 'No se han seleccionado productos para empacar.',
+                        icon: 'error',
+                        title: 'Ups...',
+                        text: 'No se han seleccionado productos para empacar.',
                     })
                 } else{
                     // const res = await this.$store.dispatch('defree/getFreeD',payload);
                     const data = await socketClientEmit.supplyPackEmit(payload);
+                    if(data.success){
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Agregado!',
+                            text: 'El empaque fue generado.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
                 }
             },
             returnPack(dordLId){
 
-            },            
+            },   
+            async delPack(doLId){
+                var payload = {
+                    token: this.getUserApi.token,
+                    user_id: this.getUserApi.uid,
+                    catId: this.dataModal.id,
+                    rec: this.dataModal.rec,
+                    freeId: this.dataSuppD.id,
+                    doLId: doLId
+                }
+                const data = await socketClientEmit.supplyDelPackEmit(payload);
+                if(data.success){
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Eliminado!',
+                        text: 'El empaque fue eliminado.',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+            }         
         },
         mounted(){
         },

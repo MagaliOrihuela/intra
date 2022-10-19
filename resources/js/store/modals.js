@@ -11,6 +11,7 @@ const modals = {
       packModal: false,
       editCotId:0,
       loaderFull: false, 
+      valModal:false
    },
    mutations: {
       MODAL_NEW_COTIZACION(state,stateModal){ 
@@ -34,6 +35,9 @@ const modals = {
       },
       PACK_MODAL(state,data){ 
          state.packModal = data 
+      },
+      VAL_MODAL(state,data){ 
+         state.valModal = data 
       },
    },
    actions: {
@@ -59,6 +63,9 @@ const modals = {
             case 'supplyPack':
                commit('PACK_MODAL',payload.state_modal)
             break;
+            case 'supplyVal':
+               commit('VAL_MODAL',payload.state_modal)
+            break;
          }
       },
       loaderfull({commit},payload) {
@@ -74,6 +81,7 @@ const modals = {
       getOrderFreeModal: state => state.orderFreeModal,
       getSupplyModal: state => state.supplyModal,
       getPackModal: state => state.packModal,
+      getValModal: state => state.valModal,
    }
 }
 

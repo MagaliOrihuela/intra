@@ -10,7 +10,6 @@ class socketOn{
 
     dataNewsOn() {
         socket.on('CREATE_NEWS', response => {
-            console.log('maga-->e');
             store.dispatch('news/createNews',response);
         })
         socket.on('DELETE_NEWS', response => {
@@ -96,6 +95,12 @@ class socketOn{
         })
         socket.on('MODAL_PACKAGE', response => {
             store.dispatch('defree/modalPackage',response);
+        })
+        socket.on('MODAL_DELPACKAGE', response => {
+            store.dispatch('defree/modalDelPackage',response);
+        })
+        socket.on('MODAL_VALSUPP', response => {
+            store.dispatch('defree/modalValSupp',response);
         })
     }
 

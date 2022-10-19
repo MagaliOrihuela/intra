@@ -11,10 +11,8 @@ class socketEmit {
 
     async createNewsEmit(payload) {
         let headers = { 'Authorization': payload.token }
-        console.log('maga-->b');
         const { data } = await axios.post('/news/create', payload, headers)
         if(data.success) {
-            console.log('maga-->c');
             socket.emit('news:create',data.dNew)
             return Promise.resolve(data) 
         }
@@ -139,6 +137,20 @@ class socketEmit {
         const { data } = await axios.post('/almacen/surtir/supply/package', payload, { headers: { Authorization: "Bearer " + payload.token } })
         if(data.success){
             socket.emit('dsupply:package',data)
+            return Promise.resolve(data)
+        }
+    }
+    async supplyDelPackEmit(payload){
+        const { data } = await axios.post('/almacen/surtir/supply/delPackage', payload, { headers: { Authorization: "Bearer " + payload.token } })
+        if(data.success){
+            socket.emit('dsupply:delPackage',data)
+            return Promise.resolve(data)
+        }
+    }
+    async supplyValEmit(payload){
+        const { data } = await axios.post('/almacen/surtir/supply/valSupp', payload, { headers: { Authorization: "Bearer " + payload.token } })
+        if(data.success){
+            socket.emit('dsupply:valSupp',data)
             return Promise.resolve(data)
         }
     }

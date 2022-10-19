@@ -20,7 +20,7 @@
             <v-tab
                @click="tabOrder = 'tab1'"
             >
-               Por liberar
+               Por liberar    <!-- Por surtir (Sai)-->
                <v-icon right>
                   mdi-clipboard-alert-outline
                </v-icon>
@@ -28,7 +28,7 @@
             <v-tab
                @click="tabOrder = 'tab2'"
             >
-               Por surtir
+               Por surtir     <!-- Por surtir (interno) -->
                <v-icon right>
                   mdi-clipboard-clock-outline
                </v-icon>
@@ -36,7 +36,7 @@
             <v-tab
                @click="tabOrder = 'tab3'"
             >
-               Surtidos
+               Remisionados   <!-- Surtido interno -->
                <v-icon right>
                   mdi-clipboard-check-outline
                </v-icon>
@@ -44,7 +44,15 @@
             <v-tab
                @click="tabOrder = 'tab4'"
             >
-               Facturados
+               Facturados     <!-- Surtido (Sai) -->
+               <v-icon right>
+                  mdi-clipboard-file-outline
+               </v-icon>
+            </v-tab>
+            <v-tab
+               @click="tabOrder = 'tab4'"
+            >
+               Por liquidar   <!-- Parcial  (Sai) -->
                <v-icon right>
                   mdi-clipboard-file-outline
                </v-icon>
@@ -52,7 +60,7 @@
             <v-tab
                @click="tabOrder = 'tab5'"
             >
-               Cancelados
+               Cancelados     <!-- Cancelados  (Sai) -->
                <v-icon right>
                   mdi-clipboard-remove-outline
                </v-icon>

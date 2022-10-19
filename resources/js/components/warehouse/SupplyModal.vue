@@ -104,9 +104,19 @@
                                     lg="3"
                                     xl="3"
                                     class="pa-1 ma-0"
-                                    style="font-size: 20px; text-align: center;"
+                                    style="text-align: center;"
                                 >
-                                    #<b class="info-free"> 1 </b>
+                                    <v-chip
+                                        text-color="blue-grey darken-4"
+                                        label
+                                        style="width: 100%;justify-content: center;"
+                                        v-if="supplyModal.unit_id == 2"
+                                    >
+                                        <v-icon left>
+                                            mdi-scissors-cutting
+                                        </v-icon>
+                                        Recortes
+                                    </v-chip>
                                 </v-col>
                                 <v-col 
                                     xs="12"
@@ -136,7 +146,7 @@
                                     xl="3"
                                     class="pa-1 ma-0"
                                 >
-                                    Metraje:<b class="info-free"> {{ supplyModal.pzas }} </b>
+                                    Contenido:<b class="info-free"> {{ supplyModal.pzas }} </b>
                                 </v-col>
                             </v-row>
                             <v-row class="pl-5">
@@ -191,7 +201,7 @@
                                                         xl="2"
                                                         class="pa-1 ma-0"
                                                         style="text-align: center;"
-                                                        v-if="supplyModal.unit_id == 1"
+                                                        v-if="supplyModal.unit_id == 1 || supplyModal.unit_id == 5 || supplyModal.unit_id == 7"
                                                     >
                                                         <v-text-field
                                                             v-model="qty"
@@ -234,7 +244,19 @@
                                                         lg="4"
                                                         xl="4"
                                                         style="text-align: center; font-size: 16px; color:red"
-                                                        
+                                                        v-if="supplyModal.unit_id == 1 || supplyModal.unit_id == 5 || supplyModal.unit_id == 6 || supplyModal.unit_id == 7"
+                                                    >
+                                                        Faltan:<b > {{ foulPack+' '+supplyModal.unit+'s /'+ foul }} </b>
+                                                    </v-col>
+                                                    <v-col 
+                                                        class="pa-0 pt-4 ma-0" 
+                                                        xs="12"
+                                                        sm="12"
+                                                        md="4"
+                                                        lg="4"
+                                                        xl="4"
+                                                        style="text-align: center; font-size: 16px; color:red"
+                                                        v-else
                                                     >
                                                         Faltan:<b > {{ foul }} </b>
                                                     </v-col>
@@ -382,12 +404,19 @@
                         ref="locOld"
                         v-on:keyup.enter="valida(locOld,1)"
                     ></v-text-field>
-                    <!-- @blur="valida(locOld,1)" -->
-                    <!-- v-on:keyup.enter="$refs.lotComp.focus()" -->
+                    <v-btn
+                        color="#EAA20A"
+                        text
+                        @click="trashRec()"
+                        v-if="supplyModal.unit_id == 2"
+                        :disabled="disTrash"
+                    >
+                        Desperdicio
+                    </v-btn>
                 </v-card-text>
                 <v-divider class="divider-w mt-1 mb-1"></v-divider>
-                <v-card-title>
-                    Depositar lote 
+                <v-card-title :style="{color:colorTrash}"> 
+                    Depositar lote
                 </v-card-title>
                 <v-card-text>
                         <v-text-field
@@ -412,13 +441,12 @@
                             ref="locNew"
                             v-on:keyup.enter="valida(locNew,2)"
                         ></v-text-field>
-                        <!-- v-on:keyup.enter="scanSave()" -->
                 </v-card-text>
                 <v-card-actions>
                     <v-btn
-                    color="red"
-                    text
-                    @click="closeMoveLot"
+                        color="red"
+                        text
+                        @click="closeMoveLot"
                     >
                     Cancelar
                     </v-btn>
@@ -455,13 +483,13 @@
                         value: 'num',
                     },
                     { text: 'Lote', value: 'lot' },
-                    { text: 'Metraje', value: 'quantity' },
+                    { text: 'Contenido', value: 'quantity' },
                     { text: 'Ubicación', value: 'location' },
                     { text: '', value: 'id' },
                 ],
                 headers2: [
                     { text: 'Lote', value: 'lote' },
-                    { text: 'Metraje', value: 'existencia' },
+                    { text: 'Contenido', value: 'existencia' },
                     { text: 'Ubicación', value: 'location' },
                 ],
                 lot: '',
@@ -475,7 +503,10 @@
                 lotComp: '',
                 saveDel: 0,
                 dordLot: 0,
-                valLot: false
+                valLot: false,
+                colorTrash: '#000000',
+                flagTrash: 1,
+                disTrash: false
             }
         },
         computed: {
@@ -485,6 +516,7 @@
                 supplyModal: 'defree/getDataSuppModal',
                 gridScan: 'defree/getGridScanModal',
                 gridSug: 'defree/getGridSugModal',
+                foulPack: 'defree/getFoulPack',
                 foul: 'defree/getFoul',
             }),
         },
@@ -502,6 +534,7 @@
                 await this.$store.dispatch('modals/IdentifyModal',payload);
             },
             async scan(){
+                this.disTrash = false
                 this.saveDel = 0
                 this.dordLot = 0
                 var payload = {
@@ -533,6 +566,7 @@
                 this.dordLot = id
                 this.lot = lot
                 this.movLot = true
+                this.disTrash = true
                 // var payload = {
                 //     token: this.getUserApi.token,
                 //     user_id: this.getUserApi.uid,
@@ -552,6 +586,9 @@
                 this.locOld = ''
                 this.locNew = ''
                 this.movLot = false
+                this.flagTrash = 1
+                this.colorTrash = '#000000'
+                this.disTrash = false
             },
             compareLot(){
                 this.lotComp = this.lotComp.toUpperCase() 
@@ -584,7 +621,8 @@
                             qty: this.qty,
                             pick: 0,
                             locOld: this.locOld,
-                            locNew: this.locNew
+                            locNew: this.locNew,
+                            flagTrash: this.flagTrash
                         }
                         const res = await socketClientEmit.supplyScanEmit(payload)
                         if(res.success){
@@ -594,11 +632,11 @@
                                 Swal.fire({
                                     icon: 'success',
                                     title: '¡Agregado!',
-                                    text: 'El lote fue agregado',
+                                    text: res.dataSuppScan[0].comment,
                                     showConfirmButton: false,
                                     timer: 1500
                                 })
-                                
+                                this.qty = 1
                             } else{
                                 Swal.fire({
                                     icon: 'error',
@@ -679,6 +717,15 @@
                             this.locNew = ''
                         }
                     }
+                }
+            },
+            trashRec(){
+                if(this.flagTrash == 1){
+                    this.colorTrash = '#EAA20A'
+                    this.flagTrash = 2
+                } else{
+                    this.colorTrash = '#000000'
+                    this.flagTrash = 1
                 }
             }
         },

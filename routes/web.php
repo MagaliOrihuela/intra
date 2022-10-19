@@ -147,11 +147,15 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'almacen'], function () 
    Route::post('/supply/supplyChk', [EFreeController::class, 'freeOrdersChk']);
    //EFreeD
    Route::post('surtir/supply/supplyD', [EFreeDController::class, 'supplyD']);
+   Route::post('surtir/supply/supplyGrids', [EFreeDController::class, 'supplyGrids']);
    Route::post('surtir/supply/supplyScan', [EFreeDController::class, 'supplyScan']);
    Route::post('surtir/supply/supplyModal', [EFreeDController::class, 'supplyModal']);
    Route::post('surtir/supply/packModal', [EFreeDController::class, 'packModal']);
    Route::post('surtir/supply/package', [EFreeDController::class, 'package']);
+   Route::post('surtir/supply/delPackage', [EFreeDController::class, 'delPackage']);
    Route::post('surtir/supply/remGenerate', [EFreeDController::class, 'remGenerate']);
+   Route::post('surtir/supply/valGridSupply', [EFreeDController::class, 'valGridSupply']);
+   Route::post('surtir/supply/valSupp', [EFreeDController::class, 'valSupp']);
 
 });
 

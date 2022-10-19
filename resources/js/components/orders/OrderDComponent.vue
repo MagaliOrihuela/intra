@@ -45,19 +45,6 @@
                      lg="3"
                      xl="3"
                      style="font-size: 16px;"
-                  > <!--  Cliente  -->
-                     <v-icon left> mdi-briefcase-account-outline </v-icon> Cliente: <b class="font-weight-regular"> {{ detOrder.nom_cte }} </b>
-                  </v-col>
-               </v-row>
-               <v-row class="pa-0 ma-0" >
-                  <v-col 
-                     class="pa-0 pt-4 ma-0" 
-                     xs="12"
-                     sm="12"
-                     md="3"
-                     lg="3"
-                     xl="3"
-                     style="font-size: 16px;"
                   > 
                      <v-icon left>mdi-chart-timeline-variant</v-icon>Estatus: &nbsp;
                      <v-chip
@@ -72,9 +59,9 @@
                      class="pa-0 pt-4 ma-0" 
                      xs="12"
                      sm="12"
-                     md="6"
-                     lg="6"
-                     xl="6"
+                     md="3"
+                     lg="3"
+                     xl="3"
                      style="font-size: 16px;"
                   > 
                      <v-icon left>mdi-lock-open-outline</v-icon>Liberado: 
@@ -91,6 +78,31 @@
                            {{ detOrder.statusF }}
                      </v-chip>
                   </v-col> 
+                  
+               </v-row>
+               <v-row class="pa-0 ma-0" >
+                  <v-col 
+                     class="pa-0 pt-4 ma-0"
+                     xs="12"
+                     sm="12"
+                     md="3"
+                     lg="3"
+                     xl="3" 
+                     style="font-size: 16px;"
+                  > 
+                     <v-icon left> mdi-briefcase-account-outline </v-icon> No Cliente: <b class="font-weight-regular"> {{ detOrder.cve_cte }} </b>
+                  </v-col>
+                  <v-col 
+                     class="pa-0 pt-4 ma-0" 
+                     xs="12"
+                     sm="12"
+                     md="6"
+                     lg="6"
+                     xl="6"
+                     style="font-size: 16px;"
+                  > <!--  Cliente  -->
+                     <v-icon left> mdi-briefcase-account-outline </v-icon> Cliente: <b class="font-weight-regular"> {{ detOrder.nom_cte }} </b>
+                  </v-col>
                   <v-col
                      xs="12"
                      sm="12"
@@ -399,7 +411,7 @@
                   Swal.fire({
                      icon: 'error',
                      title: 'Ups...',
-                     text: 'Cliente no dado de alta en la web.',
+                     text: 'El cliente no está dado de alta.',
                   })
                } else{
                   await this.$store.dispatch('modals/IdentifyModal',payload);
