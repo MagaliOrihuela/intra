@@ -16,19 +16,12 @@ const defree = {
         dataModal:[],
         gridScan:[],
         gridSug:[],
-        statusValT: 1,
-        statusValT2: 1,
-        statusValC: 1,
-        statusValP: 1,
-        statusValM: 1,
-        statusValTol: 1,
-        dataPackT:[],
-        dataPackT2:[],
-        dataPackC:[],
-        dataPackP:[],
-        dataPackM:[],
-        dataPackTol:[],
-        // packScan:[],
+        statusValT: false,
+        statusValT2: false,
+        statusValC: false,
+        statusValP: false,
+        statusValM: false,
+        statusValTol: false,
         gridPack:[],
         foulPack:0,
         foul:0,
@@ -49,6 +42,12 @@ const defree = {
             state.dataSuppP = data.gridP
             state.dataSuppM = data.gridM
             state.dataSuppTol = data.gridTol
+            state.statusValT = data.statusT
+            state.statusValT2 = data.statusT2
+            state.statusValC = data.statusC
+            state.statusValP = data.statusP
+            state.statusValM = data.statusM
+            state.statusValTol = data.statusTol
         },
         DATA_STATUS(state,data){
             state.statusValT = data.statusT
@@ -83,6 +82,7 @@ const defree = {
             if(data.row){
                 state.gridScan.push(data.row)
                 state.foul = data.foul
+                state.foulPack = data.foulPack
                 state.dataModal.status = data.surt
             }
             state.gridSug = data.gridSug
@@ -101,6 +101,7 @@ const defree = {
                 case 5: dataScan = store.getters['defree/getDataSuppTol']
                     break;
             }
+            // checar cambio de método, buscar directo en el array y no reccorrer todo*
             for(let i = 0; i < dataScan.length; i++){
                 if(Number.parseInt(dataScan[i].dord_id) === Number.parseInt(data.dord_id)){
                     switch(Number.parseInt(data.catId)){
@@ -139,9 +140,12 @@ const defree = {
             }
             state.gridSug = data.gridSug
             state.foul = data.foul
+            state.foulPack = data.foulPack
+            state.dataModal.status = data.surt
         },
         DATA_VAL_SCAN(state,data){
             let dataScan = store.getters['defree/getGridScanModal']
+            // checar cambio de método, buscar directo en el array y no reccorrer todo*
             for(let i = 0; i < dataScan.length; i++){
                 if(dataScan[i].id === data.dordLot){
                     state.gridScan[i].status_val1 = 1
@@ -241,7 +245,7 @@ const defree = {
                 case 3: 
                     dataPack = store.getters['defree/getDataPackP']
                     index = dataPack.findIndex(({id}) => id === data.arrPack.id)
-                    state.dataPackC.splice(index,1)
+                    state.dataPackP.splice(index,1)
                     break;
                 case 4:
                     dataPack = store.getters['defree/getDataPackM']
@@ -252,6 +256,49 @@ const defree = {
                     dataPack = store.getters['defree/getDataPackTol']
                     index = dataPack.findIndex(({id}) => id === data.arrPack.id)
                     state.dataPackTol.splice(index,1)
+                    break;
+            }
+        },
+        DATA_VAL_GEN(state,data){
+            var dataScan = []
+            let index = 0
+            switch(Number.parseInt(data.catId)){
+                case 1: 
+                    dataScan = data.unitId == 2 ? store.getters['defree/getDataSuppT2'] : store.getters['defree/getDataSuppT']
+                    if(data.unitId == 2){
+                        dataScan = store.getters['defree/getDataSuppT2']
+                        index = dataScan.findIndex(({id}) => id === data.dordLot)
+                        state.dataSuppT2[index].check = 1
+                        state.statusValT2 = data.wait == 0 ? true : false  
+                    } else{
+                        dataScan = store.getters['defree/getDataSuppT']
+                        index = dataScan.findIndex(({id}) => id === data.dordLot)
+                        state.dataSuppT[index].check = 1
+                        state.statusValT = data.wait == 0 ? true : false  
+                    }
+                    break;
+                case 2: 
+                    dataScan = store.getters['defree/getDataSuppC']
+                    index = dataScan.findIndex(({id}) => id === data.dordLot)
+                    state.dataSuppC[index].check = 1
+                    state.statusValC = data.wait == 0 ? true : false  
+                    break;
+                case 3: 
+                    dataScan = store.getters['defree/getDataSuppP']
+                    index = dataScan.findIndex(({id}) => id === data.dordLot)
+                    state.dataSuppP[index].check = 1
+                    state.statusValP = data.wait == 0 ? true : false  
+                    break;
+                case 4: dataScan = store.getters['defree/getDataSuppM']
+                    index = dataScan.findIndex(({id}) => id === data.dordLot)
+                    state.dataSuppM[index].check = 1
+                    state.statusValM = data.wait == 0 ? true : false  
+                    break;
+                case 5: 
+                    dataScan = store.getters['defree/getDataSuppTol']
+                    index = dataScan.findIndex(({id}) => id === data.dordLot)
+                    state.dataSuppC[index].check = 1
+                    state.statusValTol = data.wait == 0 ? true : false  
                     break;
             }
         },
@@ -292,14 +339,18 @@ const defree = {
             if(data.dord_id == dataModal.id){
                 commit("DATA_SCAN",data)
             }
-            if(data.freeId == dataSuppD.id){
+            if(Number.parseInt(data.freeId) == Number.parseInt(dataSuppD.id)){
                 commit("DATA_SCAN_GEN",data)
             }
         },
         async modalDelScan({commit},data) {
             let dataModal = store.getters['defree/getDataSuppModal']
+            let dataSuppD = store.getters['defree/getDataSuppD']
             if(data.dord_id == dataModal.id){
                 commit("DATA_DEL_SCAN",data)
+            }
+            if(Number.parseInt(data.freeId) == Number.parseInt(dataSuppD.id)){
+                commit("DATA_SCAN_GEN",data)
             }
         },
         async modalPackage({commit},data) {
@@ -330,7 +381,9 @@ const defree = {
                 if(data.catId == dataModal.id && data.rec == dataModal.rec){
                     commit("DATA_VAL_SCAN",data)
                 }
-                // commit("DATA_DELPACKAGE_G",data)
+                if(dataSD.id == data.freeId && dataPhase == data.phase){
+                    commit("DATA_VAL_GEN",data)
+                }
             }
         },
         async remGenerate({commit},payload){

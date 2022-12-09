@@ -168,7 +168,7 @@
                                     class="pa-1 ma-0"
                                 >
                                     Surtido:
-                                    <v-icon color="#008000" v-if="supplyModal.status == 2">mdi-archive-arrow-up-outline</v-icon>
+                                    <v-icon color="#008000" v-if="(supplyModal.status > 1)">mdi-archive-arrow-up-outline</v-icon>
                                 </v-col>
                             </v-row>
                             <v-row>
@@ -246,7 +246,7 @@
                                                         style="text-align: center; font-size: 16px; color:red"
                                                         v-if="supplyModal.unit_id == 1 || supplyModal.unit_id == 5 || supplyModal.unit_id == 6 || supplyModal.unit_id == 7"
                                                     >
-                                                        Faltan:<b > {{ foulPack+' '+supplyModal.unit+'s /'+ foul }} </b>
+                                                        Faltan: {{ foulPack+' '+supplyModal.unit+'s('+ foul + 'pzs)' }}
                                                     </v-col>
                                                     <v-col 
                                                         class="pa-0 pt-4 ma-0" 
@@ -456,15 +456,12 @@
     </v-row>
 </template>
 <script>
-
     import { mapActions, mapGetters } from 'vuex'
     import { jsPDF } from 'jspdf';
     import html2canvas from 'html2canvas';//
     import socketClientEmit from '../../shared/socketEmit';
     import SAToasts from '../../services/SweetAlertToast'
     // import store from '../store/store'
-
-
     export default {
         data () {
             return {
@@ -745,5 +742,9 @@
     }
     .lot{
         color: #9DBD32;
+    }
+    .foul_qty{
+        color:#307E85;
+        font-size:15px
     }
 </style>

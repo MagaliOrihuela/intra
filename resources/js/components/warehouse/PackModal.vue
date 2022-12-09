@@ -284,8 +284,9 @@
                                                     <v-btn
                                                         icon
                                                         color="#01C0D2"
-                                                        @click="returnPack(dataModal.id)"
+                                                        @click="createPDF()"
                                                     >
+                                                    <!-- @click="returnPack(dataModal.id)" -->
                                                         <v-icon>mdi-tag-text-outline</v-icon>
                                                     </v-btn>
                                                 </v-col>
@@ -525,7 +526,42 @@
                         timer: 1500
                     })
                 }
-            }         
+            },
+            createPDF () {
+                let pdfName = 'testPdf'; 
+                var doc = new jsPDF('L','mm',[103,153]);
+                doc.setTextColor(0)
+                doc.text(10,10,"Esta es la pruba")
+
+                doc.setTextColor("#42d254")
+                doc.setDrawColor(150,150,150)
+                doc.cell(40,40,50,20,"prub")
+
+
+
+
+
+
+
+
+
+
+                doc.output('pdfobjectnewwindow');
+                // doc.text("Aló esta es una pruba", 10, 10);
+                // let header = ["id","name"];
+                // let headerConfig = header.map(key=>({ 
+                //     'name': key,
+                //     'prompt': key,
+                //     'width':50,
+                //     'align':'center',
+                //     'padding':0}));
+                // let tbl1 = [{id: 1, name: "Prubas"},
+                //             {id: 2, name: "Otra"},
+                //             {id: 3, name: "De nuv"}
+                // ]
+                // doc.table(20,30,tbl1,headerConfig);
+                // doc.save(pdfName + '.pdf');
+            }     
         },
         mounted(){
         },

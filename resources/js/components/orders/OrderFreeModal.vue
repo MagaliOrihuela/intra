@@ -793,6 +793,10 @@
             },
 
             async libera(){
+                var tmp = []
+                this.selectC.forEach(cat => 
+                    tmp.push(this.selCate.find(el => el == cat))
+                )
                 let payload = {
                     token: this.getUserApi.token,
                     user_id: this.getUserApi.uid,
@@ -803,7 +807,7 @@
                     subtot: this.subOrd,
                     iva: this.ivaOrd,
                     gridDO: this.dataOrder,
-                    selectC: this.selectC,
+                    selectC: tmp,
                     selDelivery: this.selDelivery,
                     selDestiny: this.selDestiny,
                     selBoard: this.selBoard,
@@ -821,6 +825,7 @@
                     name_modal:  'orderFree', // modal 
                     state_modal: false
                 }
+
                 this.loading = true
                 // libera las categorias seleccionadas
                 const res = await socketClientEmit.freeOrderEmit(payload)
@@ -831,7 +836,6 @@
                         no_ped: res.no_ped
                     }
                     this.cleanModalF()
-
                     // cierra modal free                    
                     const res2 = await socketClientEmit.valFreeOrderEmit(payload2)
                     this.loading = false

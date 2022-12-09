@@ -150,7 +150,9 @@ class socketEmit {
     async supplyValEmit(payload){
         const { data } = await axios.post('/almacen/surtir/supply/valSupp', payload, { headers: { Authorization: "Bearer " + payload.token } })
         if(data.success){
-            socket.emit('dsupply:valSupp',data)
+            if(data.error !== 2){
+                socket.emit('dsupply:valSupp',data)
+            }
             return Promise.resolve(data)
         }
     }

@@ -291,6 +291,25 @@
                                             {{ dataCat.catT }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Surtido: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValT"
+                                        >
+                                            Completado
+                                        </v-chip>
+                                    </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
@@ -317,7 +336,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="(item.surt > 1)"
                                             >
                                                 <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
                                             </v-col>
@@ -421,6 +440,25 @@
                                             Recortes
                                         </v-chip>
                                     </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Surtido: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValT2"
+                                        >
+                                            Completado
+                                        </v-chip>
+                                    </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
@@ -447,7 +485,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="(item.surt > 1)"
                                             >
                                                 <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
                                             </v-col>
@@ -529,6 +567,25 @@
                                             {{ dataCat.catC }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Surtido: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValC"
+                                        >
+                                            Completado
+                                        </v-chip>
+                                    </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
@@ -558,7 +615,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="(item.surt > 1)"
                                             >
                                                 <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
                                             </v-col>
@@ -640,6 +697,25 @@
                                             {{dataCat.catP }}
                                         </v-chip>
                                     </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Surtido: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValP"
+                                        >
+                                            Completado
+                                        </v-chip>
+                                    </v-col>
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
@@ -667,7 +743,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="(item.surt > 1)"
                                             >
                                                 <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
                                             </v-col>
@@ -738,15 +814,34 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="dataCat.colorP"
+                                            :color="dataCat.colorM"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ dataCat.iconP }}
+                                                {{ dataCat.iconM }}
                                             </v-icon>
-                                            {{ dataCat.catP }}
+                                            {{ dataCat.catM }}
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Surtido: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValM"
+                                        >
+                                            Completado
                                         </v-chip>
                                     </v-col>
                                 </v-row>
@@ -776,7 +871,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="(item.surt > 1)"
                                             >
                                                 <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
                                             </v-col>
@@ -847,15 +942,34 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="dataCat.colorM"
+                                            :color="dataCat.colorTol"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ dataCat.iconM }}
+                                                {{ dataCat.iconTol }}
                                             </v-icon>
-                                            {{ dataCat.catM }}
+                                            {{ dataCat.catTol }}
+                                        </v-chip>
+                                    </v-col>
+                                    <v-col 
+                                        md="5"
+                                        lg="5"
+                                        xl="5"
+                                        class="pa-0 pt-4 ma-2" 
+                                    >
+                                        <v-icon left>
+                                            mdi-checkbox-multiple-blank-outline
+                                        </v-icon>
+                                        Surtido: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValTol"
+                                        >
+                                            Completado
                                         </v-chip>
                                     </v-col>
                                 </v-row>
@@ -884,7 +998,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="item.surt > 1"
                                             >
                                                 <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
                                             </v-col>
@@ -987,14 +1101,14 @@
                                         <v-icon left>
                                             mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Validado: 
+                                        Validación: 
                                         <v-chip
                                             close-icon="mdi-close-outline"
                                             color = "#008000"
                                             outlined
-                                            v-if="statusValT == 0"
+                                            v-if="statusValT"
                                         >
-                                            Completado
+                                            Completada
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1033,7 +1147,7 @@
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdT,0)" 
                                                     style="width: 60%;"
-                                                    v-if="statusValT == 0"
+                                                    :disabled = !statusValT
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
                                                 </v-btn>
@@ -1142,14 +1256,14 @@
                                         <v-icon left>
                                             mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Validado: 
+                                        Validación: 
                                         <v-chip
                                             close-icon="mdi-close-outline"
                                             color = "#008000"
                                             outlined
-                                            v-if="statusValT2 == 0"
+                                            v-if="statusValT2"
                                         >
-                                            Completado
+                                            Completada
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1188,7 +1302,7 @@
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdT,1)" 
                                                     style="width: 60%;"
-                                                    v-if="statusValT2 == 0"
+                                                    :disabled = !statusValT2
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
                                                 </v-btn>
@@ -1275,14 +1389,14 @@
                                         <v-icon left>
                                             mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Validado: 
+                                        Validación: 
                                         <v-chip
                                             close-icon="mdi-close-outline"
                                             color = "#008000"
                                             outlined
-                                            v-if="statusValC == 0"
+                                            v-if="statusValC"
                                         >
-                                            Completado
+                                            Completada
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1321,7 +1435,7 @@
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdC,0)" 
                                                     style="width: 60%;"
-                                                    v-if="statusValC == 0"
+                                                    :disabled = !statusValC 
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
                                                 </v-btn>
@@ -1411,14 +1525,14 @@
                                         <v-icon left>
                                             mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Validado: 
+                                        Validación: 
                                         <v-chip
                                             close-icon="mdi-close-outline"
                                             color = "#008000"
                                             outlined
-                                            v-if="statusValP == 0"
+                                            v-if="statusValP"
                                         >
-                                            Completado
+                                            Completada
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1457,7 +1571,7 @@
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdP,0)" 
                                                     style="width: 60%;"
-                                                    v-if="statusValP == 0"
+                                                    :disabled = !statusValP
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
                                                 </v-btn>
@@ -1545,14 +1659,14 @@
                                         <v-icon left>
                                             mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Validado: 
+                                        Validación: 
                                         <v-chip
                                             close-icon="mdi-close-outline"
                                             color = "#008000"
                                             outlined
-                                            v-if="statusValM == 0"
+                                            v-if="statusValM"
                                         >
-                                            Completado
+                                            Completada
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1591,7 +1705,7 @@
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdP,0)" 
                                                     style="width: 60%;"
-                                                    v-if="statusValM == 0"
+                                                    :disabled = !statusValM
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
                                                 </v-btn>
@@ -1679,14 +1793,14 @@
                                         <v-icon left>
                                             mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Validado: 
+                                        Validación: 
                                         <v-chip
                                             close-icon="mdi-close-outline"
                                             color = "#008000"
                                             outlined
-                                            v-if="statusValTol == 0"
+                                            v-if="statusValTol"
                                         >
-                                            Completado
+                                            Completada
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -1725,7 +1839,7 @@
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdM,0)" 
                                                     style="width: 60%;"
-                                                    v-if="statusValTol == 0"
+                                                    :disabled = !statusValTol
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
                                                 </v-btn>
@@ -1842,7 +1956,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[0],0)" 
+                                            @click="packModal(dataSuppD.id,dataCat.catIdT,0)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -1990,7 +2104,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[0],1)" 
+                                            @click="packModal(dataSuppD.id,dataCat.catIdT,1)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -2116,7 +2230,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[1],0)" 
+                                            @click="packModal(dataSuppD.id,dataCat.catIdC,0)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -2245,7 +2359,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[2],0)" 
+                                            @click="packModal(dataSuppD.id,dataCat.catIdP,0)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -2340,21 +2454,21 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="dataCat.colorP"
+                                            :color="dataCat.colorM"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ dataCat.iconP }}
+                                                {{ dataCat.iconM }}
                                             </v-icon>
-                                            {{ dataCat.catP }}
+                                            {{ dataCat.catM }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="2"
-                                        lg="2"
-                                        xl="2"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
@@ -2372,7 +2486,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[3],0)" 
+                                            @click="packModal(dataSuppD.id,dataCat.catIdM,0)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -2467,15 +2581,15 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="dataCat.colorM"
+                                            :color="dataCat.colorTol"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ dataCat.iconM }}
+                                                {{ dataCat.iconTol }}
                                             </v-icon>
-                                            {{ dataCat.catM }}
+                                            {{ dataCat.catTol }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -2499,7 +2613,7 @@
                                         <v-btn
                                             icon
                                             color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[4],0)" 
+                                            @click="packModal(dataSuppD.id,dataCat.catIdTol,0)" 
                                         >
                                             <v-icon >mdi-package-variant</v-icon>
                                         </v-btn>
@@ -3578,12 +3692,12 @@
                 // }
             },
             
-            async packModal(freeId,arrCat,rec){
+            async packModal(freeId,catId,rec){
                 let payload = {
                     token: this.getUserApi.token,
                     user: this.getUserApi.uid,
                     freeId: freeId,
-                    arrCat: arrCat,
+                    catId: catId,
                     rec: rec
                 }
                 await this.$store.dispatch('defree/gridsPackModal',payload)

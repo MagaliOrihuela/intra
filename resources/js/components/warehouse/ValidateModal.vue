@@ -308,6 +308,7 @@
                 const res = await socketClientEmit.supplyValEmit(payload)
                 if(res.success){
                     this.loadingTable = false
+                    this.lot = ''
                     if(res.error == 1){
                         Swal.fire({
                             icon: 'success',
