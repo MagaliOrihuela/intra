@@ -6,6 +6,7 @@ import Cotizaciones from './views/Cotizaciones.vue'
 import Cotizacion from './views/Cotizacion.vue'
 import Orders from './views/Orders.vue'
 import Order from './views/Order.vue'
+import pdf from './views/pdf.vue'
 import Supply from './views/Supply.vue'
 import supplyD from './views/supplyD.vue'
 import Configuracion from './views/Configuracion.vue'
@@ -86,6 +87,22 @@ const routes = [
                title: 'Pedido | Shades de México',
             },
             beforeEnter: checkClientCot ,
+         },
+      ],
+   },
+   {
+      path:'/pedidopdf',
+      component: () => import("./views/ViewAll.vue"),
+      children: [
+         {
+            path: "",
+            name:'pedidopdf',
+            component: pdf,
+            meta: { 
+               Auth: true,
+               title: 'PedidoPDF | Shades de México',
+            },
+            beforeEnter: checkToken , 
          },
       ],
    },

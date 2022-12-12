@@ -8,6 +8,7 @@ use App\Models\DOrdLots;
 use App\Models\CAllows;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Codedge\Fpdf\Fpdf\Fpdf;
 
 class EFreeDController extends Controller
 {
@@ -918,6 +919,22 @@ class EFreeDController extends Controller
         ], 200);
     }
 
+    public function index(Request $request) 
+    {
+        $this->fpdf = new Fpdf;
+        $this->fpdf->SetFont('Arial', 'B', 15);
+        $this->fpdf->AddPage("L", ['100', '100']);
+        $this->fpdf->Text(10, 10, "Hello World!");       
+
+        $this->fpdf->Output();
+
+        exit;
+        // return response()->json([
+        //     'success' =>  true,
+        //     'prubas' => "Aló esta es una pruba",
+        // ], 200);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -980,6 +997,8 @@ function unit($unitId){
     }
     return $unit;
 }
+
+    
 
 // call procedures
 // $eFree = DB::select('call ps_pruba()');

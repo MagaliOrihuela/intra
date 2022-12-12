@@ -3516,6 +3516,9 @@
     import { mapActions, mapState, mapGetters } from 'vuex'
     import store from '../../store/store'
     import socketClientEmit from '../../shared/socketEmit'
+    import { jsPDF } from 'jspdf';
+    import "jspdf-barcode";
+
     
     export default {
         data () {
@@ -3614,7 +3617,7 @@
                     { text: 'Articulo', width:'15%', value: 'article' },
                     { text: 'Cantidad', width:'5%', value: 'quantity' },
                     { text: 'Validado', width:'5%', value: 'check' },
-                ]
+                ],
             }
         },
         mixins: [validationMixin],
@@ -3781,9 +3784,7 @@
                     state_modal: true,
                 }
                 await this.$store.dispatch('modals/IdentifyModal',payload2);
-            },
-
-            
+            },            
         },
         mounted(){
             this.getFreeD();

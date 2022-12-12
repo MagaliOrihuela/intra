@@ -227,7 +227,7 @@
 
     import { mapActions, mapGetters } from 'vuex'
     import { jsPDF } from 'jspdf';
-    import html2canvas from 'html2canvas';//
+    // import html2canvas from 'html2canvas';//
     import socketClientEmit from '../../shared/socketEmit';
     import SAToasts from '../../services/SweetAlertToast'
     // import store from '../store/store'

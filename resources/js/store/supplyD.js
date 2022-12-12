@@ -399,6 +399,15 @@ const defree = {
             commit("DATA_VGRIDS_MODAL",data)
             return Promise.resolve(data)
         },
+        async getValModal({commit},payload){
+            const { data } = await axios.post('supply/valGridSupply',payload )
+            commit("DATA_VGRIDS_MODAL",data)
+            return Promise.resolve(data)
+        },
+        async getPdf({commit},payload){
+            const { data } = await axios.post('supply/pdfPrub',payload, {responseType: 'arraybuffer'})
+            return Promise.resolve(data)
+        },
     },
     getters: {
         getDataSuppD: state => state.dataSuppD,

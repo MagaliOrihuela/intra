@@ -17,6 +17,8 @@ use App\Http\Controllers\EOrdersController;
 use App\Http\Controllers\DOrdersController;
 use App\Http\Controllers\EFreeController;
 use App\Http\Controllers\EFreeDController;
+use App\Http\Controllers\PdfController;
+
 
 Route::get('csrf', function () {
    return csrf_token();
@@ -156,6 +158,7 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'almacen'], function () 
    Route::post('surtir/supply/remGenerate', [EFreeDController::class, 'remGenerate']);
    Route::post('surtir/supply/valGridSupply', [EFreeDController::class, 'valGridSupply']);
    Route::post('surtir/supply/valSupp', [EFreeDController::class, 'valSupp']);
+   Route::post('surtir/supply/pdfPrub', [PdfController::class, 'index']);
 
 });
 
@@ -171,6 +174,11 @@ Route::get('/{any}', function () {
    return view('app');
 } )->where('any','.*');
 
-Route::get('prubas',function(){
+Route::get('pedidopdf',function (Codedge\Fpdf\Fpdf\Fpdf $fpdf) {
+   $fpdf->AddPage();
+   $fpdf->SetFont('Courier', 'B', 18);
+   $fpdf->Cell(50, 25, 'Hello World!');
+   $fpdf->Output();
+   exit;
 
 });
