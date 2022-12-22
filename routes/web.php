@@ -157,7 +157,9 @@ Route::group(['middleware' => ['jwt.auth'], 'prefix' => 'almacen'], function () 
    Route::post('surtir/supply/delPackage', [EFreeDController::class, 'delPackage']);
    Route::post('surtir/supply/remGenerate', [EFreeDController::class, 'remGenerate']);
    Route::post('surtir/supply/valGridSupply', [EFreeDController::class, 'valGridSupply']);
+   Route::post('surtir/supply/val2GridSupply', [EFreeDController::class, 'val2GridSupply']);
    Route::post('surtir/supply/valSupp', [EFreeDController::class, 'valSupp']);
+   Route::post('surtir/supply/val2Supp', [EFreeDController::class, 'val2Supp']);
    Route::post('surtir/supply/pdfPrub', [PdfController::class, 'index']);
 
 });

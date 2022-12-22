@@ -22,12 +22,19 @@ const defree = {
         statusValP: false,
         statusValM: false,
         statusValTol: false,
+        packT: false,
+        packT2: false,
+        packC: false,
+        packP: false,
+        packM: false,
+        packTol: false,
         gridPack:[],
         foulPack:0,
         foul:0,
         surt:1,
         scanPack: 0,     //  Pendiente, reciclar variables para no saturar el storage
-        phaseSupp: 1
+        phaseSupp: 1,
+        validate: 0
     },
     mutations: {
         DATA_SUPPD (state,data) {
@@ -56,6 +63,12 @@ const defree = {
             state.statusValP = data.statusP
             state.statusValM = data.statusM
             state.statusValTol = data.statusTol
+            state.packT = data.packT
+            state.packT2 = data.packT2
+            state.packC = data.packC
+            state.packP = data.packP
+            state.packM = data.packM
+            state.packTol = data.packTol
         },
         DATA_MODAL(state,data){
             state.dataModal = data.detModal
@@ -70,6 +83,7 @@ const defree = {
         DATA_VGRIDS_MODAL(state,data){
             state.gridScan = data.arrVal
             state.dataModal = data.dataModal
+            state.validate = data.validate
         },
         DATA_PACK_MODAL(state,data){
             state.gridScan = data.gridScan
@@ -106,15 +120,29 @@ const defree = {
                 if(Number.parseInt(dataScan[i].dord_id) === Number.parseInt(data.dord_id)){
                     switch(Number.parseInt(data.catId)){
                         case 1: 
-                            data.unitId == 2 ? state.dataSuppT2[i].surt = data.surt : state.dataSuppT[i].surt = data.surt
+                            if(data.unitId == 2){
+                                state.dataSuppT2[i].surt = data.surt
+                                state.statusValT2 = data.status
+                            } else{
+                                state.dataSuppT[i].surt = data.surt
+                                state.statusValT = data.status
+                            }
                             break;
-                        case 2: state.dataSuppC[i].surt = data.surt
+                        case 2: 
+                            state.dataSuppC[i].surt = data.surt
+                            state.statusValC = data.status
                             break;
-                        case 3: state.dataSuppP[i].surt = data.surt
+                        case 3: 
+                            state.dataSuppP[i].surt = data.surt
+                            state.statusValP = data.status
                             break;
-                        case 4: state.dataSuppM[i].surt = data.surt2
+                        case 4: 
+                            state.dataSuppM[i].surt = data.surt
+                            state.statusValM = data.status
                             break;
-                        case 5: state.dataSuppTol[i].surt = data.surt
+                        case 5: 
+                            state.dataSuppTol[i].surt = data.surt
+                            state.statusValTol = data.status
                             break;
                     }
                     break;                   
@@ -145,34 +173,48 @@ const defree = {
         },
         DATA_VAL_SCAN(state,data){
             let dataScan = store.getters['defree/getGridScanModal']
-            // checar cambio de método, buscar directo en el array y no reccorrer todo*
-            for(let i = 0; i < dataScan.length; i++){
-                if(dataScan[i].id === data.dordLot){
-                    state.gridScan[i].status_val1 = 1
-                    state.dataModal.wait = data.wait
-                    switch(data.catId){
-                        case 1: 
-                        data.rec == 1 ? state.statusValT = data.wait : state.statusValT2 = data.wait
-                        break;
-                    case 2: state.statusValC = data.wait
-                        break;
-                    case 3: state.statusValP = data.wait
-                        break;
-                    case 4: state.statusValM = data.wait
-                        break;
-                    case 5: state.statusValTol = data.wait
-                        break;
+            let stat = data.phase == 4 ? 3 : 1
+            let flag = false
+            state.dataModal.wait = data.wait
+            if(data.phase == 4){
+                for(let j = 0; j < dataScan.length; j++){
+                    if(dataScan[j].num == data.package){
+                        state.gridScan[j].status_val1 = stat
+                        flag = true
+                    } else if(flag){
+                        break
                     }
                 }
+            } else{
+                let i = dataScan.findIndex(({id}) => id === data.dordLot)
+                state.gridScan[i].status_val1 = stat
+            } 
+            switch(Number.parseInt(data.catId)){
+                case 1:
+                    if(Number.parseInt(data.rec) == 1){
+                        state.statusValT2 = data.status
+                    } else{
+                        state.statusValT = data.status
+                    }
+                    break;
+                case 2: 
+                    state.statusValC = data.status
+                    break;
+                case 3: 
+                    state.statusValP = data.status
+                    break;
+                case 4:
+                    state.statusValM = data.status
+                    break;
+                case 5: 
+                    state.statusValTol = data.status
+                    break;
             }
         },
         DATA_PACKAGE(state,data){
             for(let i = 0; i < data.arrPack.length; i++){
                 state.gridPack.push(data.arrPack[i])
             }
-            // let gridPack = store.getters['defree/getDataGridPack']
-            // let arrPack = gridPack.concat(data.arrPack)
-            // state.gridPack = arrPack
             state.gridSug = []
             state.gridScan = data.arrScan
         },
@@ -191,34 +233,40 @@ const defree = {
             switch(Number.parseInt(data.catId)){
                 case 1:
                     if(Number.parseInt(data.rec) == 1){
-                        dataPack = store.getters['defree/getDataPackT2']
+                        dataPack = store.getters['defree/getDataSuppT2']
                         arrPack = dataPack.concat(data.arrPack)
-                        state.dataPackT2 = arrPack
+                        state.dataSuppT2 = arrPack
+                        state.statusValT2 = data.status
                     } else{
-                        dataPack = store.getters['defree/getDataPackT']
+                        dataPack = store.getters['defree/getDataSuppT']
                         arrPack = dataPack.concat(data.arrPack)
-                        state.dataPackT = arrPack
+                        state.dataSuppT = arrPack
+                        state.statusValT = data.status
                     }
                     break;
                 case 2: 
-                    dataPack = store.getters['defree/getDataPackC']
+                    dataPack = store.getters['defree/getDataSuppC']
                     arrPack = dataPack.concat(data.arrPack)
-                    state.dataPackC = arrPack
+                    state.dataSuppC = arrPack
+                    state.statusValC = data.status
                     break;
                 case 3: 
-                    dataPack = store.getters['defree/getDataPackP']
+                    dataPack = store.getters['defree/getDataSuppP']
                     arrPack = dataPack.concat(data.arrPack)
-                    state.dataPackP = arrPack
+                    state.dataSuppP = arrPack
+                    state.statusValP = data.status
                     break;
                 case 4:
-                    dataPack = store.getters['defree/getDataPackM']
+                    dataPack = store.getters['defree/getDataSuppM']
                     arrPack = dataPack.concat(data.arrPack)
-                    state.dataPackM = arrPack
+                    state.dataSuppM = arrPack
+                    state.statusValM = data.status
                     break;
                 case 5: 
-                    dataPack = store.getters['defree/getDataPackTol']
+                    dataPack = store.getters['defree/getDataSuppTol']
                     arrPack = dataPack.concat(data.arrPack)
-                    state.dataPackTol = arrPack
+                    state.dataSuppTol = arrPack
+                    state.statusValTol = data.status
                     break;
             }
         },
@@ -228,78 +276,166 @@ const defree = {
             switch(Number.parseInt(data.catId)){
                 case 1:
                     if(Number.parseInt(data.rec) == 1){
-                        dataPack = store.getters['defree/getDataPackT2']
+                        dataPack = store.getters['defree/getDataSuppT2']
                         index = dataPack.findIndex(({id}) => id === data.arrPack.id)
-                        state.dataPackT2.splice(index,1)
+                        state.dataSuppT2.splice(index,1)
+                        state.statusValT2 = data.status
                     } else{
-                        dataPack = store.getters['defree/getDataPackT']
+                        dataPack = store.getters['defree/getDataSuppT']
                         index = dataPack.findIndex(({id}) => id === data.arrPack.id)
-                        state.dataPackT.splice(index,1)
+                        state.dataSuppT.splice(index,1)
+                        state.statusValT = data.status
                     }
                     break;
                 case 2: 
-                    dataPack = store.getters['defree/getDataPackC']
+                    dataPack = store.getters['defree/getDataSuppC']
                     index = dataPack.findIndex(({id}) => id === data.arrPack.id)
-                    state.dataPackC.splice(index,1)
+                    state.dataSuppC.splice(index,1)
+                    state.statusValC = data.status
                     break;
                 case 3: 
-                    dataPack = store.getters['defree/getDataPackP']
+                    dataPack = store.getters['defree/getDataSuppP']
                     index = dataPack.findIndex(({id}) => id === data.arrPack.id)
-                    state.dataPackP.splice(index,1)
+                    state.dataSuppP.splice(index,1)
+                    state.statusValP = data.status
                     break;
                 case 4:
-                    dataPack = store.getters['defree/getDataPackM']
+                    dataPack = store.getters['defree/getDataSuppM']
                     index = dataPack.findIndex(({id}) => id === data.arrPack.id)
-                    state.dataPackM.splice(index,1)
+                    state.dataSuppM.splice(index,1)
+                    state.statusValM = data.status
                     break;
                 case 5: 
-                    dataPack = store.getters['defree/getDataPackTol']
+                    dataPack = store.getters['defree/getDataSuppTol']
                     index = dataPack.findIndex(({id}) => id === data.arrPack.id)
-                    state.dataPackTol.splice(index,1)
+                    state.dataSuppTol.splice(index,1)
+                    state.statusValTol = data.status
                     break;
             }
         },
         DATA_VAL_GEN(state,data){
             var dataScan = []
             let index = 0
-            switch(Number.parseInt(data.catId)){
-                case 1: 
-                    dataScan = data.unitId == 2 ? store.getters['defree/getDataSuppT2'] : store.getters['defree/getDataSuppT']
-                    if(data.unitId == 2){
-                        dataScan = store.getters['defree/getDataSuppT2']
+            let stat;
+            let flag = false
+            if(data.phase == 4){
+                stat = 3;
+                switch(Number.parseInt(data.catId)){
+                    case 1: 
+                        if(data.rec == 1){
+                            dataScan = store.getters['defree/getDataSuppT2']
+                            for(let j = 0; j < dataScan.length; j++){
+                                if(dataScan[j].num == data.package){
+                                    state.dataSuppT2[j].check = stat
+                                    flag = true
+                                } else if(flag){
+                                    break
+                                }
+                            }
+                            state.statusValT2 = data.status  
+                        } else{
+                            dataScan = store.getters['defree/getDataSuppT']
+                            for(let j = 0; j < dataScan.length; j++){
+                                if(dataScan[j].num == data.package){
+                                    state.dataSuppT[j].check = stat
+                                    flag = true
+                                } else if(flag){
+                                    break
+                                }
+                            }
+                            state.statusValT = data.status 
+                        }
+                        break;
+                    case 2: 
+                        dataScan = store.getters['defree/getDataSuppC']
+                        for(let j = 0; j < dataScan.length; j++){
+                            if(dataScan[j].num == data.package){
+                                state.dataSuppC[j].check = stat
+                                flag = true
+                            } else if(flag){
+                                break
+                            }
+                        }
+                        state.statusValC = data.status 
+                        break;
+                    case 3: 
+                        dataScan = store.getters['defree/getDataSuppP']
+                        for(let j = 0; j < dataScan.length; j++){
+                            if(dataScan[j].num == data.package){
+                                state.dataSuppP[j].check = stat
+                                flag = true
+                            } else if(flag){
+                                break
+                            }
+                        }
+                        state.statusValP = data.status 
+                        break;
+                    case 4: 
+                        dataScan = store.getters['defree/getDataSuppM']
+                        for(let j = 0; j < dataScan.length; j++){
+                            if(dataScan[j].num == data.package){
+                                state.dataSuppM[j].check = stat
+                                flag = true
+                            } else if(flag){
+                                break
+                            }
+                        }
+                        state.statusValM = data.status  
+                        break;
+                    case 5: 
+                        dataScan = store.getters['defree/getDataSuppTol']
+                        for(let j = 0; j < dataScan.length; j++){
+                            if(dataScan[j].num == data.package){
+                                state.dataSuppTol[j].check = stat
+                                flag = true
+                            } else if(flag){
+                                break
+                            }
+                        }
+                        state.statusValTol = data.status  
+                        break;
+                }
+            } else{
+                stat = 1;
+                switch(Number.parseInt(data.catId)){
+                    case 1: 
+                        if(data.rec == 1){
+                            dataScan = store.getters['defree/getDataSuppT2']
+                            index = dataScan.findIndex(({id}) => id === data.dordLot)
+                            state.dataSuppT2[index].check = stat
+                            state.statusValT2 = data.status  
+                        } else{
+                            dataScan = store.getters['defree/getDataSuppT']
+                            index = dataScan.findIndex(({id}) => id === data.dordLot)
+                            state.dataSuppT[index].check = stat
+                            state.statusValT = data.status
+                        }
+                        break;
+                    case 2: 
+                        dataScan = store.getters['defree/getDataSuppC']
                         index = dataScan.findIndex(({id}) => id === data.dordLot)
-                        state.dataSuppT2[index].check = 1
-                        state.statusValT2 = data.wait == 0 ? true : false  
-                    } else{
-                        dataScan = store.getters['defree/getDataSuppT']
+                        state.dataSuppC[index].check = stat
+                        state.statusValC = data.status  
+                        break;
+                    case 3: 
+                        dataScan = store.getters['defree/getDataSuppP']
                         index = dataScan.findIndex(({id}) => id === data.dordLot)
-                        state.dataSuppT[index].check = 1
-                        state.statusValT = data.wait == 0 ? true : false  
-                    }
-                    break;
-                case 2: 
-                    dataScan = store.getters['defree/getDataSuppC']
-                    index = dataScan.findIndex(({id}) => id === data.dordLot)
-                    state.dataSuppC[index].check = 1
-                    state.statusValC = data.wait == 0 ? true : false  
-                    break;
-                case 3: 
-                    dataScan = store.getters['defree/getDataSuppP']
-                    index = dataScan.findIndex(({id}) => id === data.dordLot)
-                    state.dataSuppP[index].check = 1
-                    state.statusValP = data.wait == 0 ? true : false  
-                    break;
-                case 4: dataScan = store.getters['defree/getDataSuppM']
-                    index = dataScan.findIndex(({id}) => id === data.dordLot)
-                    state.dataSuppM[index].check = 1
-                    state.statusValM = data.wait == 0 ? true : false  
-                    break;
-                case 5: 
-                    dataScan = store.getters['defree/getDataSuppTol']
-                    index = dataScan.findIndex(({id}) => id === data.dordLot)
-                    state.dataSuppC[index].check = 1
-                    state.statusValTol = data.wait == 0 ? true : false  
-                    break;
+                        state.dataSuppP[index].check = stat
+                        state.statusValP = data.status 
+                        break;
+                    case 4: 
+                        dataScan = store.getters['defree/getDataSuppM']
+                        index = dataScan.findIndex(({id}) => id === data.dordLot)
+                        state.dataSuppM[index].check = stat
+                        state.statusValM = data.status 
+                        break;
+                    case 5: 
+                        dataScan = store.getters['defree/getDataSuppTol']
+                        index = dataScan.findIndex(({id}) => id === data.dordLot)
+                        state.dataSuppTol[index].check = stat
+                        state.statusValTol = data.status  
+                        break;
+                }
             }
         },
     },
@@ -356,17 +492,19 @@ const defree = {
         async modalPackage({commit},data) {
             let dataSD = store.getters['defree/getDataSuppD']
             let dataModal = store.getters['defree/getDataSuppModal']
-            if(data.freeId == dataSD.id){
-                if(data.catId == dataModal.id && data.rec == dataModal.rec){
+            let dataPhase = store.getters['defree/getPhaseSupp']
+            if(data.freeId == dataSD.id && data.phase == dataPhase){
+                if(data.catId == dataModal.id && data.rec == dataModal.rec ){
                     commit("DATA_PACKAGE",data)
-                }
+                } 
                 commit("DATA_PACKAGE_G",data)
             }
         },
         async modalDelPackage({commit},data) {
             let dataSD = store.getters['defree/getDataSuppD']
             let dataModal = store.getters['defree/getDataSuppModal']
-            if(data.freeId == dataSD.id){
+            let dataPhase = store.getters['defree/getPhaseSupp']
+            if(data.freeId == dataSD.id && data.phase == dataPhase){
                 if(data.catId == dataModal.id && data.rec == dataModal.rec){
                     commit("DATA_DELPACKAGE",data)
                 }
@@ -378,7 +516,7 @@ const defree = {
             let dataModal = store.getters['defree/getDataSuppModal']
             let dataPhase = store.getters['defree/getPhaseSupp']
             if(data.freeId == dataSD.id){
-                if(data.catId == dataModal.id && data.rec == dataModal.rec){
+                if(data.catId == dataModal.id && data.rec == dataModal.rec && dataPhase == data.phase){
                     commit("DATA_VAL_SCAN",data)
                 }
                 if(dataSD.id == data.freeId && dataPhase == data.phase){
@@ -399,8 +537,8 @@ const defree = {
             commit("DATA_VGRIDS_MODAL",data)
             return Promise.resolve(data)
         },
-        async getValModal({commit},payload){
-            const { data } = await axios.post('supply/valGridSupply',payload )
+        async getVal2Modal({commit},payload){
+            const { data } = await axios.post('supply/val2GridSupply',payload )
             commit("DATA_VGRIDS_MODAL",data)
             return Promise.resolve(data)
         },
@@ -430,15 +568,16 @@ const defree = {
         getStatusValM: state => state.statusValM,
         getStatusValTol: state => state.statusValTol,
         getScanPack: state => state.scanPack,
-        getDataPackT: state => state.dataPackT,
-        getDataPackT2: state => state.dataPackT2,
-        getDataPackC: state => state.dataPackC,
-        getDataPackP: state => state.dataPackP,
-        getDataPackM: state => state.dataPackM,
-        getDataPackTol: state => state.dataPackTol,
+        getPackT: state => state.packT,
+        getPackT2: state => state.packT2,
+        getPackC: state => state.packC,
+        getPackP: state => state.packP,
+        getPackM: state => state.packM,
+        getPackTol: state => state.packTol,
         // getDataPackScan: state => state.packScan,
         getDataGridPack: state => state.gridPack,
         getPhaseSupp: state => state.phaseSupp,
+        getValidate: state => state.validate,
 
     }
 }

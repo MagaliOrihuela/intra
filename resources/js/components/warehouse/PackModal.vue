@@ -130,6 +130,13 @@
                                                         color="#008000"
                                                         @click="packAll()"
                                                     >
+                                                        <v-icon>mdi-cube-send</v-icon>
+                                                    </v-btn>
+                                                    <v-btn
+                                                        icon
+                                                        color="#008000"
+                                                        @click="muveAll()"
+                                                    >
                                                         <v-icon>mdi-chevron-triple-right</v-icon>
                                                     </v-btn>
                                                 </v-col>
@@ -206,14 +213,14 @@
                                                         color="red"
                                                         @click="delGridPack()"
                                                     >
-                                                        <v-icon>mdi-close-circle</v-icon>
+                                                        <v-icon>mdi-close-circle-outline</v-icon>
                                                     </v-btn>
                                                     <v-btn
                                                         icon
                                                         color="#008000"
                                                         @click="packing()"
                                                     >
-                                                        <v-icon>mdi-check-circle</v-icon>
+                                                        <v-icon>mdi-check-circle-outline</v-icon>
                                                     </v-btn>
                                                 </v-col>
                                             </v-row>
@@ -383,7 +390,7 @@
                         value: 'num',
                     },
                     { text: 'Lote', value: 'lot' },
-                    { text: 'Metraje', value: 'quantity' },
+                    { text: 'Contenido', value: 'quantity' },
                     { text: 'Ubicación', value: 'location' },
                     { text: 'Empaque', align:'center' ,value: 'package' },
                 ],
@@ -391,10 +398,10 @@
                     {
                         text: '#',
                         align: 'start',
-                        value: 'package',
+                        value: 'num',
                     },
                     { text: 'Lote', value: 'lot' },
-                    { text: 'Metraje', value: 'quantity' },
+                    { text: 'Contenido', value: 'quantity' },
                     { text: 'Ubicación', value: 'location' },
                     { text: '', value: 'id' },
                 ],
@@ -465,7 +472,7 @@
                 }
                 this.arrPack.splice(0,this.arrPack.length)
             },
-            packAll(){
+            muveAll(){
                 let row = []; 
                 let n = this.arrPack.length + 1
                 for(let i = 0; i < this.gridScan.length; i++){
@@ -505,9 +512,35 @@
                     }
                 }
             },
-            returnPack(dordLId){
-
-            },   
+            async packAll(){
+                // var payload = {
+                //     token: this.getUserApi.token,
+                //     user_id: this.getUserApi.uid,
+                //     catId: this.dataModal.id,
+                //     rec: this.dataModal.rec,
+                //     freeId: this.dataSuppD.id,
+                //     arrPack: this.arrPack
+                // }
+                // if(this.arrPack.length === 0){
+                //     Swal.fire({
+                //         icon: 'error',
+                //         title: 'Ups...',
+                //         text: 'No se han seleccionado productos para empacar.',
+                //     })
+                // } else{
+                //     // const res = await this.$store.dispatch('defree/getFreeD',payload);
+                //     const data = await socketClientEmit.supplyPackEmit(payload);
+                //     if(data.success){
+                //         Swal.fire({
+                //             icon: 'success',
+                //             title: '¡Agregado!',
+                //             text: 'El empaque fue generado.',
+                //             showConfirmButton: false,
+                //             timer: 1500
+                //         })
+                //     }
+                // }
+            },
             async delPack(doLId){
                 var payload = {
                     token: this.getUserApi.token,
@@ -534,7 +567,8 @@
                     user: this.getUserApi.uid,
                     orderId: this.dataSuppD.order_id,
                     freeId: this.dataSuppD.id,
-                    catId: this.dataModal.id
+                    catId: this.dataModal.id,
+                    rec: this.dataModal.rec
                 }
                 let flag = await this.$store.dispatch('defree/getPdf',payload)
                 var blob = new Blob([flag], { type: 'application/pdf' })

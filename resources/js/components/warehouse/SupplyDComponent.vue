@@ -356,7 +356,7 @@
                                                             v-bind="attrs"
                                                             v-on="on"
                                                             icon
-                                                            color="#EAA20A"
+                                                            color="#007DD6"
                                                             @click="scanModal(item.dord_id,item.num)" 
                                                         >
                                                             <v-icon>mdi-barcode-scan</v-icon>
@@ -365,7 +365,7 @@
                                                     Escanear
                                                 </v-tooltip>
                                             </v-col>
-                                            <v-col 
+                                            <!-- <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
@@ -377,7 +377,7 @@
                                                 >
                                                     <v-icon>mdi-clipboard-text-search-outline</v-icon>
                                                 </v-btn>
-                                            </v-col>
+                                            </v-col> -->
                                         </v-row>
                                     </template>
                                 </v-data-table>
@@ -505,7 +505,7 @@
                                                             v-bind="attrs"
                                                             v-on="on"
                                                             icon
-                                                            color="#EAA20A"
+                                                            color="#007DD6"
                                                             @click="scanModal(item.dord_id,item.num)" 
                                                         >
                                                             <v-icon>mdi-barcode-scan</v-icon>
@@ -514,7 +514,7 @@
                                                     Escanear
                                                 </v-tooltip>
                                             </v-col>
-                                            <v-col 
+                                            <!-- <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
@@ -526,7 +526,7 @@
                                                 >
                                                     <v-icon>mdi-clipboard-text-search-outline</v-icon>
                                                 </v-btn>
-                                            </v-col>
+                                            </v-col> -->
                                         </v-row>
                                     </template>
                                 </v-data-table>
@@ -635,7 +635,7 @@
                                                             v-bind="attrs"
                                                             v-on="on"
                                                             icon
-                                                            color="#EAA20A"
+                                                            color="#007DD6"
                                                             @click="scanModal(item.dord_id,item.num)" 
                                                         >
                                                             <v-icon>mdi-barcode-scan</v-icon>
@@ -644,7 +644,7 @@
                                                     Escanear
                                                 </v-tooltip>
                                             </v-col>
-                                            <v-col 
+                                            <!-- <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
@@ -656,7 +656,7 @@
                                                 >
                                                     <v-icon>mdi-clipboard-text-search-outline</v-icon>
                                                 </v-btn>
-                                            </v-col>
+                                            </v-col> -->
                                         </v-row>
                                     </template>
                                 </v-data-table>
@@ -763,7 +763,7 @@
                                                             v-bind="attrs"
                                                             v-on="on"
                                                             icon
-                                                            color="#EAA20A"
+                                                            color="#007DD6"
                                                             @click="scanModal(item.dord_id,item.num)" 
                                                         >
                                                             <v-icon>mdi-barcode-scan</v-icon>
@@ -772,7 +772,7 @@
                                                     Escanear
                                                 </v-tooltip>
                                             </v-col>
-                                            <v-col 
+                                            <!-- <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
@@ -784,7 +784,7 @@
                                                 >
                                                     <v-icon>mdi-clipboard-text-search-outline</v-icon>
                                                 </v-btn>
-                                            </v-col>
+                                            </v-col> -->
                                         </v-row>
                                     </template>
                                 </v-data-table>
@@ -891,7 +891,7 @@
                                                             v-bind="attrs"
                                                             v-on="on"
                                                             icon
-                                                            color="#EAA20A"
+                                                            color="#007DD6"
                                                             @click="scanModal(item.dord_id,item.num)" 
                                                         >
                                                             <v-icon>mdi-barcode-scan</v-icon>
@@ -900,7 +900,7 @@
                                                     Escanear
                                                 </v-tooltip>
                                             </v-col>
-                                            <v-col 
+                                            <!-- <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
@@ -912,7 +912,7 @@
                                                 >
                                                     <v-icon>mdi-clipboard-text-search-outline</v-icon>
                                                 </v-btn>
-                                            </v-col>
+                                            </v-col> -->
                                         </v-row>
                                     </template>
                                 </v-data-table>
@@ -1018,7 +1018,7 @@
                                                             v-bind="attrs"
                                                             v-on="on"
                                                             icon
-                                                            color="#EAA20A"
+                                                            color="#007DD6"
                                                             @click="scanModal(item.dord_id,item.num)" 
                                                         >
                                                             <v-icon>mdi-barcode-scan</v-icon>
@@ -1027,7 +1027,7 @@
                                                     Escanear
                                                 </v-tooltip>
                                             </v-col>
-                                            <v-col 
+                                            <!-- <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
@@ -1039,7 +1039,7 @@
                                                 >
                                                     <v-icon>mdi-clipboard-text-search-outline</v-icon>
                                                 </v-btn>
-                                            </v-col>
+                                            </v-col> -->
                                         </v-row>
                                     </template>
                                 </v-data-table>
@@ -1181,7 +1181,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check == 1"
+                                                v-if="item.check > 0"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -1336,7 +1336,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check == 1"
+                                                v-if="item.check > 0"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -1472,7 +1472,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check == 1"
+                                                v-if="item.check > 0"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -1606,7 +1606,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check == 1"
+                                                v-if="item.check > 0"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -1740,7 +1740,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check == 1"
+                                                v-if="item.check > 0"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -1873,7 +1873,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check == 1"
+                                                v-if="item.check > 0"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -1903,6 +1903,7 @@
                     >
                         <v-card-subtitle  class="pa-2 ma-0 ">
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                            v-if = "packT"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -1938,13 +1939,14 @@
                                             mdi-package-variant
                                         </v-icon>
                                         Empacado: 
-                                        <!-- <v-chip
+                                        <v-chip
                                             close-icon="mdi-close-outline"
                                             color = "#008000"
                                             outlined
+                                            v-if = "statusValT"
                                         >
                                             Completado
-                                        </v-chip> -->
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="5"
@@ -1993,37 +1995,6 @@
                                             </v-col>
                                         </v-row>
                                     </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
@@ -2036,6 +2007,7 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if = "packT2"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -2084,20 +2056,28 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="2"
-                                        lg="2"
-                                        xl="2"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
                                             mdi-package-variant
                                         </v-icon>
                                         Empacado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if = "statusValT2"
+                                        >
+                                            Completado
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="4"
-                                        lg="4"
-                                        xl="4"
+                                        md="3"
+                                        lg="3"
+                                        xl="3"
                                         class="pa-0 pt-4 ma-0" 
                                         align="right"
                                     >
@@ -2141,37 +2121,6 @@
                                             </v-col>
                                         </v-row>
                                     </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
@@ -2184,6 +2133,7 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if = "packC"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -2219,6 +2169,14 @@
                                             mdi-package-variant
                                         </v-icon>
                                         Empacado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if = "statusValC"
+                                        >
+                                            Completado
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="5"
@@ -2270,37 +2228,6 @@
                                             </v-col>
                                         </v-row>
                                     </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
@@ -2313,6 +2240,7 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if = "packP"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -2348,6 +2276,14 @@
                                             mdi-package-variant
                                         </v-icon>
                                         Empacado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if = "statusValP"
+                                        >
+                                            Completado
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="5"
@@ -2397,37 +2333,6 @@
                                             </v-col>
                                         </v-row>
                                     </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
@@ -2440,6 +2345,7 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if = "packM"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -2475,6 +2381,14 @@
                                             mdi-package-variant
                                         </v-icon>
                                         Empacado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if = "statusValM"
+                                        >
+                                            Completado
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="5"
@@ -2524,37 +2438,6 @@
                                             </v-col>
                                         </v-row>
                                     </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
                                 </v-data-table>
                                 <div class="text-center pt-2">
                                     <v-pagination 
@@ -2567,6 +2450,7 @@
                                 </div>
                             </v-container>
                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" 
+                                v-if = "packTol"
                             >
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
@@ -2602,6 +2486,14 @@
                                             mdi-package-variant
                                         </v-icon>
                                         Empacado: 
+                                        <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if = "statusValTol"
+                                        >
+                                            Completado
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="5"
@@ -2647,37 +2539,6 @@
                                                 v-if="item.surt == 2"
                                             >
                                                 <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
                                             </v-col>
                                         </v-row>
                                     </template>
@@ -2740,14 +2601,15 @@
                                         <v-icon left>
                                             mdi-package-variant
                                         </v-icon>
-                                        Empacado: 
-                                        <!-- <v-chip
+                                         Validación:
+                                         <v-chip
                                             close-icon="mdi-close-outline"
                                             color = "#008000"
                                             outlined
+                                            v-if="statusValT"
                                         >
-                                            Completado
-                                        </v-chip> -->
+                                            Completada
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="5"
@@ -2758,10 +2620,10 @@
                                     >
                                         <v-btn
                                             icon
-                                            color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[0],0)" 
+                                            color="#007DD6"
+                                            @click="val2Modal(dataSuppD.id,dataCat.catIdT,0)" 
                                         >
-                                            <v-icon >mdi-package-variant</v-icon>
+                                            <v-icon >mdi-barcode-scan</v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
@@ -2783,47 +2645,16 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
-                                    <template #[`item.surt`]="{ item }">
+                                    <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="item.check >= 3"
                                             >
-                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
                                         </v-row>
                                     </template>
@@ -2894,9 +2725,17 @@
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
-                                            mdi-package-variant
+                                            mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Empacado: 
+                                         Validación:
+                                         <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValT2"
+                                        >
+                                            Completada
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="4"
@@ -2907,10 +2746,10 @@
                                     >
                                         <v-btn
                                             icon
-                                            color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[0],1)" 
+                                            color="#007DD6"
+                                            @click="val2Modal(dataSuppD.id,dataCat.catIdT,1)" 
                                         >
-                                            <v-icon >mdi-package-variant</v-icon>
+                                            <v-icon >mdi-barcode-scan</v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
@@ -2932,47 +2771,16 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
-                                    <template #[`item.surt`]="{ item }">
+                                    <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="item.check >= 3"
                                             >
-                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
                                         </v-row>
                                     </template>
@@ -3021,9 +2829,17 @@
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
-                                            mdi-package-variant
+                                            mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Empacado: 
+                                         Validación:
+                                         <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValC"
+                                        >
+                                            Completada
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="5"
@@ -3034,10 +2850,10 @@
                                     >
                                         <v-btn
                                             icon
-                                            color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[1],0)" 
+                                            color="#007DD6"
+                                            @click="val2Modal(dataSuppD.id,dataCat.catIdC,0)" 
                                         >
-                                            <v-icon >mdi-package-variant</v-icon>
+                                            <v-icon >mdi-barcode-scan</v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
@@ -3059,50 +2875,16 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
-                                    <template #[`item.metraje`]="{ item }">
-                                        
-                                    </template>
-                                    <template #[`item.surt`]="{ item }">
+                                    <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="item.check >= 3"
                                             >
-                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
                                         </v-row>
                                     </template>
@@ -3151,9 +2933,17 @@
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
-                                            mdi-package-variant
+                                            mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Empacado: 
+                                         Validación:
+                                         <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValP"
+                                        >
+                                            Completada
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="5"
@@ -3164,10 +2954,10 @@
                                     >
                                         <v-btn
                                             icon
-                                            color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[2],0)" 
+                                            color="#007DD6"
+                                            @click="val2Modal(dataSuppD.id,dataCat.catIdP,0)" 
                                         >
-                                            <v-icon >mdi-package-variant</v-icon>
+                                            <v-icon >mdi-barcode-scan</v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
@@ -3190,47 +2980,16 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
-                                    <template #[`item.surt`]="{ item }">
+                                    <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="item.check >= 3"
                                             >
-                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
                                         </v-row>
                                     </template>
@@ -3261,15 +3020,15 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="dataCat.colorP"
+                                            :color="dataCat.colorM"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ dataCat.iconP }}
+                                                {{ dataCat.iconM }}
                                             </v-icon>
-                                            {{ dataCat.catP }}
+                                            {{ dataCat.catM }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -3279,9 +3038,17 @@
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
-                                            mdi-package-variant
+                                            mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Empacado: 
+                                         Validación:
+                                         <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValM"
+                                        >
+                                            Completada
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="5"
@@ -3292,10 +3059,10 @@
                                     >
                                         <v-btn
                                             icon
-                                            color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[3],0)" 
+                                            color="#007DD6"
+                                            @click="val2Modal(dataSuppD.id,dataCat.catIdM,0)" 
                                         >
-                                            <v-icon >mdi-package-variant</v-icon>
+                                            <v-icon >mdi-barcode-scan</v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
@@ -3318,47 +3085,16 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
-                                    <template #[`item.surt`]="{ item }">
+                                    <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="item.check >= 3"
                                             >
-                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
                                         </v-row>
                                     </template>
@@ -3389,15 +3125,15 @@
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
                                             class="ma-2"
-                                            :color="dataCat.colorM"
+                                            :color="dataCat.colorTol"
                                             text-color="blue-grey darken-4"
                                             label
                                             style="width: 60%;"
                                         >
                                             <v-icon left>
-                                                {{ dataCat.iconM }}
+                                                {{ dataCat.iconTol }}
                                             </v-icon>
-                                            {{ dataCat.catM }}
+                                            {{ dataCat.catTol }}
                                         </v-chip>
                                     </v-col>
                                     <v-col 
@@ -3407,9 +3143,17 @@
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
-                                            mdi-package-variant
+                                            mdi-checkbox-multiple-blank-outline
                                         </v-icon>
-                                        Empacado: 
+                                         Validación:
+                                         <v-chip
+                                            close-icon="mdi-close-outline"
+                                            color = "#008000"
+                                            outlined
+                                            v-if="statusValTol"
+                                        >
+                                            Completada
+                                        </v-chip>
                                     </v-col>
                                     <v-col 
                                         md="5"
@@ -3420,10 +3164,10 @@
                                     >
                                         <v-btn
                                             icon
-                                            color="#A3C334"
-                                            @click="packModal(dataSuppD.id,dataCat[4],0)" 
+                                            color="#007DD6"
+                                            @click="val2Modal(dataSuppD.id,dataCat.catIdTol,0)" 
                                         >
-                                            <v-icon >mdi-package-variant</v-icon>
+                                            <v-icon >mdi-barcode-scan</v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
@@ -3445,47 +3189,16 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
-                                    <template #[`item.surt`]="{ item }">
+                                    <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
                                                 md="2"
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.surt == 2"
+                                                v-if="item.check >= 3"
                                             >
-                                                <v-icon color="#008000">mdi-archive-arrow-up-outline</v-icon>
-                                            </v-col>
-                                        </v-row>
-                                    </template>
-                                    <template #[`item.dord_id`]="{ item }">
-                                        <v-row>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#EAA20A"
-                                                    @click="scanModal(item.dord_id,item.num)" 
-                                                >
-                                                    <v-icon>mdi-barcode-scan</v-icon>
-                                                </v-btn>
-                                            </v-col>
-                                            <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
+                                                <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
                                         </v-row>
                                     </template>
@@ -3515,8 +3228,6 @@
     import SAToasts from '../../services/SweetAlertToast'
     import { mapActions, mapState, mapGetters } from 'vuex'
     import store from '../../store/store'
-    import socketClientEmit from '../../shared/socketEmit'
-    import { jsPDF } from 'jspdf';
     import "jspdf-barcode";
 
     
@@ -3640,12 +3351,12 @@
                 statusValP: 'defree/getStatusValP',
                 statusValM: 'defree/getStatusValM',
                 statusValTol: 'defree/getStatusValTol',
-                // dataPackT: 'defree/getDataPackT',
-                // dataPackT2: 'defree/getDataPackT2',
-                // dataPackC: 'defree/getDataPackC',
-                // dataPackP: 'defree/getDataPackP',
-                // dataPackM: 'defree/getDataPackM',
-                // dataPackTol: 'defree/getDataPackTol'
+                packT: 'defree/getPackT',
+                packT2: 'defree/getPackT2',
+                packC: 'defree/getPackC',
+                packP: 'defree/getPackP',
+                packM: 'defree/getPackM',
+                packTol: 'defree/getPackTol'
             }),        
         },
         methods: {
@@ -3772,11 +3483,28 @@
                     user: this.getUserApi.uid,
                     freeId: freeId,
                     catId: catId,
-                    rec: rec,
-                    validate: 1
+                    rec: rec
                 }
                 await this.$store.dispatch('defree/getValModal',payload)
                 
+                let payload2 = {
+                    token: this.getUserApi.token,
+                    user: this.getUserApi.uid,
+                    name_modal:  'supplyVal', // modal 
+                    state_modal: true,
+                }
+                await this.$store.dispatch('modals/IdentifyModal',payload2);
+            },          
+
+            async val2Modal(freeId,catId,rec){
+                let payload = {
+                    token: this.getUserApi.token,
+                    user: this.getUserApi.uid,
+                    freeId: freeId,
+                    catId: catId,
+                    rec: rec
+                }
+                await this.$store.dispatch('defree/getVal2Modal',payload)
                 let payload2 = {
                     token: this.getUserApi.token,
                     user: this.getUserApi.uid,

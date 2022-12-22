@@ -6,6 +6,8 @@ use App\Models\CCategory;
 use App\Models\DOrders;
 use App\Models\DOrdLots;
 use App\Models\CAllows;
+use App\Models\CArticles;
+use App\Models\DPackfols;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Codedge\Fpdf\Fpdf\Fpdf;
@@ -142,7 +144,7 @@ class EFreeDController extends Controller
                 $sqlDOrd = DB::select("SELECT count(*) as supp
                                         from d_orders dor
                                         inner join c_articles a on a.id = dor.article_id
-                                            where dor.order_id = 148 and a.category_id = $sqlPart and status_id = 3
+                                            where dor.free_id = $freeId and a.category_id = $sqlPart and status_id = 3
                                                 Order by a.category_id,dor.unit_id");
                 $eDord = collect($sqlDOrd);
                 $arrDOrd = $eDord[0];
@@ -153,7 +155,7 @@ class EFreeDController extends Controller
                 $sqlDOrd = DB::select("SELECT count(*) as supp
                                         from d_orders dor
                                         inner join c_articles a on a.id = dor.article_id
-                                            where dor.order_id = 148 and a.category_id = 1 and dor.unit_id = $unit and status_id = 3
+                                            where dor.free_id = $freeId and a.category_id = 1 and dor.unit_id = $unit and status_id = 3
                                                 Order by a.category_id,dor.unit_id");
                 $eDord = collect($sqlDOrd);
                 $arrDOrd = $eDord[0];
@@ -228,10 +230,8 @@ class EFreeDController extends Controller
             'statusM' => $statusM,
             'statusTol' => $statusTol,
         );
-
         return $arrG;
     }
-
     public function gridsPackage($freeId){     // Genera las grids de empaque
         $gridT = [];
         $gridT2 = [];
@@ -239,23 +239,85 @@ class EFreeDController extends Controller
         $gridP = [];
         $gridM = [];
         $gridTol = [];
-        $statusT = 1;
-        $statusT2 = 1;
-        $statusC = 1;
-        $statusP = 1;
-        $statusM = 1;
-        $statusTol = 1;
-        $arrCat = CCategory::where('id','<>',6)
-                            ->where('id','<>',0)
-                                ->get();
+        $statusT = false;
+        $statusT2 = false;
+        $statusC = false;
+        $statusP = false;
+        $statusM = false;
+        $statusTol = false;
+        $existT = false;
+        $existT2 = false;
+        $existC = false;
+        $existP = false;
+        $existM = false;
+        $existTol = false;
+        $arrCat = DB::select("SELECT a.category_id
+                                from d_orders dor
+                                inner join d_ord_lots dol on dol.dord_id = dor.id
+                                inner join c_articles a on a.id = dor.article_id
+                                        where dor.free_id = $freeId and dol.status_val1 >= 2
+                                            Group by 1");
         foreach($arrCat as $cat){
+            if($cat->category_id <> 1){
+                $statusCat = DB::select("SELECT count(*) as packNull
+                                            from d_orders dor
+                                            inner join d_ord_lots dol on dol.dord_id = dor.id
+                                            inner join c_articles a on a.id = dor.article_id
+                                                where dor.free_id = $freeId and dol.status_val1 >= 2 
+                                                    and a.category_id = $cat->category_id and dol.package is null");
+                $status = collect($statusCat);
+            }             
+            switch($cat->category_id){
+                case 1:
+                    $catego1 = DB::select("SELECT dor.unit_id,count(dor.unit_id) as tot
+                                            from d_orders dor
+                                            inner join d_ord_lots dol on dol.dord_id = dor.id
+                                            inner join c_articles a on a.id = dor.article_id
+                                                where dor.free_id = $freeId and dol.status_val1 >= 2 and a.category_id = $cat->category_id
+                                                    Group by 1");
+                    foreach($catego1 as $cat1){
+                        $statusCat = DB::select("SELECT count(*) as packNull
+                                                    from d_orders dor
+                                                    inner join d_ord_lots dol on dol.dord_id = dor.id
+                                                    inner join c_articles a on a.id = dor.article_id
+                                                        where dor.free_id = $freeId and dol.status_val1 >= 2 
+                                                            and a.category_id = $cat->category_id and dor.unit_id = $cat1->unit_id 
+                                                            and dol.package is null");
+                        $status = collect($statusCat);
+                        if($cat1->unit_id == 2){
+                            $existT2 = true;
+                            $statusT2 = $status[0]->packNull > 0 ? false : true;
+                        } else{
+                            $existT = true;
+                            $statusT = $status[0]->packNull > 0 ? false : true;
+                        }
+                    }
+                    break;
+                case 2:
+                    $statusC = $status[0]->packNull > 0 ? false : true;
+                    $existC = true;
+                    break;
+                case 3:
+                    $statusP = $status[0]->packNull > 0 ? false : true;
+                    $existP = true;
+                    break;
+                case 4:
+                    $statusM = $status[0]->packNull > 0 ? false : true;
+                    $existM = true;
+                    break;
+                case 5:
+                    $statusTol = $status[0]->packNull > 0 ? false : true;
+                    $existTol = true;
+                    break;
+
+            }
             $sqlDLC = DB::select("SELECT dor.id as dord,dor.unit_id,dol.*,a.article,a.category_id
                                     from d_orders dor
                                     inner join d_ord_lots dol on dol.dord_id = dor.id
                                     inner join c_articles a on a.id = dor.article_id
                                         where dor.free_id = $freeId and dol.package is not null 
-                                            and a.category_id = $cat->id
-                                                Order by dol.package asc ");     
+                                            and a.category_id = $cat->category_id
+                                                Order by dol.package asc");     
             $sqldordL = collect($sqlDLC);
             foreach($sqldordL as $dordL){
                 $tmp = array(
@@ -263,39 +325,29 @@ class EFreeDController extends Controller
                     "location" => $dordL->location,
                     "quantity" => $dordL->quantity,
                     "lot" => $dordL->lot,
-                    "package" => $dordL->package
+                    "article" => $dordL->article,
+                    "num" => $dordL->package
                 );
                 switch($dordL->category_id){
                     case 1:
                         if($dordL->unit_id == 3){
                             array_push($gridT,$tmp);
-                            $statusT = 0;
                         } else{
                             array_push($gridT2,$tmp);
-                            $statusT2 = 0;
                         }
                         break;
-                    case 2: 
-                        array_push($gridC,$tmp);
-                        $statusC= 0;
+                    case 2: array_push($gridC,$tmp);
                         break;
-                    case 3: 
-                        array_push($gridP,$tmp);
-                        $statusP = 0;
+                    case 3: array_push($gridP,$tmp);
                         break;
-                    case 4: 
-                        array_push($gridM,$tmp);
-                        $statusM = 0;
+                    case 4: array_push($gridM,$tmp);
                         break;
-                    case 5: 
-                        array_push($gridTol,$tmp);
-                        $statusTol = 0;
+                    case 5: array_push($gridTol,$tmp);
                         break;
                 }
             }
         }
         $arrG = array(
-            // 'arrCat' => $arrCat,
             'gridT' => $gridT,
             'gridT2' => $gridT2,
             'gridC' => $gridC,
@@ -308,8 +360,13 @@ class EFreeDController extends Controller
             'statusP' => $statusP,
             'statusM' => $statusM,
             'statusTol' => $statusTol,
+            'existT' => $existT,
+            'existT2' => $existT2,
+            'existC' => $existC,
+            'existP' => $existP,
+            'existM' => $existM,
+            'existTol' => $existTol,
         );
-
         return $arrG;
     }
     public function gridsValS($freeId,$userId){     // Genera las grids de validaScaner
@@ -331,8 +388,8 @@ class EFreeDController extends Controller
                                 from d_orders dor
                                 inner join d_ord_lots dol on dol.dord_id = dor.id
                                 inner join c_articles a on a.id = dor.article_id
-                                    where dor.free_id = $freeId and dor.status_id = 3
-                                        Order by category_id,unit_id ");     
+                                    where dor.free_id = $freeId and dor.status_id >= 3
+                                        Order by category_id,unit_id,dor.id,dol.id");     
         $sqldordL = collect($sqlDLC);
         $sqlAllow = CAllows::where('user_id',$userId)
                                 ->get();
@@ -363,10 +420,12 @@ class EFreeDController extends Controller
             } else if($dordL->category_id == 1 and $unit <> $dordL->unit_id){
                 $unit = $dordL->unit_id;
                 $x = 1;
-                $sqlWait = DB::select("SELECT count(*) as wait
+                $sqlWait = DB::select("SELECT count(*) wait 
                                         from d_orders dor
+                                        inner join d_ord_lots dol on dol.dord_id = dor.id
                                         inner join c_articles a on a.id = dor.article_id
-                                            where free_id = $freeId and a.category_id = 1 and dor.unit_id = $unit and status_id = 1"); 
+                                            where dor.free_id = $freeId
+                                                and a.category_id = $dordL->category_id and dor.unit_id = $unit and dol.status_val1 = 0"); 
                 $wait = collect($sqlWait);
                 $statusV = $wait[0]->wait > 0 ? false : true;
                 $suppFlg = true;
@@ -434,23 +493,81 @@ class EFreeDController extends Controller
 
         return $arrG;
     }
-    public function gridsValP($freeId){     // Genera las grids de empaque
+    public function gridsValP($freeId){     // Genera las grids de val2
         $gridT = [];
         $gridT2 = [];
         $gridC = [];
         $gridP = [];
         $gridM = [];
         $gridTol = [];
-        $arrCat = CCategory::where('id','<>',6)
-                            ->where('id','<>',0)
-                                ->get();
+        $statusT = false;
+        $statusT2 = false;
+        $statusC = false;
+        $statusP = false;
+        $statusM = false;
+        $statusTol = false;
+        $existT = false;
+        $existT2 = false;
+        $existC = false;
+        $existP = false;
+        $existM = false;
+        $existTol = false;
+        $arrCat = DB::select("SELECT a.category_id,
+                                sum(case when dol.package is null then 1 else 0 end) as pack,
+                                sum(case when dol.status_val1 = 2 then 1 else 0 end) as stat_val
+                                from d_orders dor
+                                inner join d_ord_lots dol on dol.dord_id = dor.id
+                                inner join c_articles a on a.id = dor.article_id
+                                    where dor.free_id = $freeId and dol.status_val1 >= 2
+                                        Group by 1");
         foreach($arrCat as $cat){
+            if($cat->pack > 0 && $cat->category_id <> 1){
+                continue;
+            } else if($cat->category_id == 1){
+                $category1 = DB::select("SELECT dor.unit_id,
+                                            sum(case when dol.package is null then 1 else 0 end) as pack
+                                                from d_orders dor
+                                                inner join d_ord_lots dol on dol.dord_id = dor.id
+                                                inner join c_articles a on a.id = dor.article_id
+                                                    where dor.free_id = $freeId and dol.status_val1 >= 2 and a.category_id = $cat->category_id
+                                                        Group by 1");
+                foreach($category1 as $cat1){
+                    if($cat1->unit_id == 2 && $cat1->pack == 0){
+                        $existT2 = true;
+                        // $statusT2 = $cat->stat_val == 0 ? true : false;
+                    } else if($cat1->unit_id == 3 && $cat1->pack == 0){
+                        $existT = true;
+                        // $statusT = $cat->stat_val == 0 ? true : false;
+                    }
+                }
+                if($existT2 == false && $existT == false){
+                    continue;
+                }
+            } else{
+                switch($cat->category_id){
+                    case 2:
+                        $statusC = $cat->stat_val == 0 ? true : false;
+                        break;
+                    case 3:
+                        $statusP = $cat->stat_val == 0 ? true : false;
+                        break;
+                    case 4:
+                        $statusM = $cat->stat_val == 0 ? true : false;
+                        break;
+                    case 5:
+                        $statusTol = $cat->stat_val == 0 ? true : false;
+                        break;
+
+                }
+            }
+
+
             $sqlDLC = DB::select("SELECT dor.id as dord,dor.unit_id,dol.*,a.article,a.category_id
                                     from d_orders dor
                                     inner join d_ord_lots dol on dol.dord_id = dor.id
                                     inner join c_articles a on a.id = dor.article_id
                                         where dor.free_id = $freeId and dol.package is not null 
-                                            and a.category_id = $cat->id
+                                            and a.category_id = $cat->category_id
                                                 Order by dol.package asc ");     
             $sqldordL = collect($sqlDLC);
             foreach($sqldordL as $dordL){
@@ -459,7 +576,9 @@ class EFreeDController extends Controller
                     "location" => $dordL->location,
                     "quantity" => $dordL->quantity,
                     "lot" => $dordL->lot,
-                    "package" => $dordL->package
+                    "article" => $dordL->article,
+                    "num" => $dordL->package,
+                    "check" => $dordL->status_val1
                 );
                 switch($dordL->category_id){
                     case 1:
@@ -469,13 +588,21 @@ class EFreeDController extends Controller
                             array_push($gridT2,$tmp);
                         }
                         break;
-                    case 2: array_push($gridC,$tmp);
+                    case 2: 
+                        array_push($gridC,$tmp);
+                        $existC = true;
                         break;
-                    case 3: array_push($gridP,$tmp);
+                    case 3: 
+                        array_push($gridP,$tmp);
+                        $existP = true;
                         break;
-                    case 4: array_push($gridM,$tmp);
+                    case 4: 
+                        array_push($gridM,$tmp);
+                        $existM = true;
                         break;
-                    case 5: array_push($gridTol,$tmp);
+                    case 5: 
+                        array_push($gridTol,$tmp);
+                        $existTol = true;
                         break;
                 }
             }
@@ -488,6 +615,18 @@ class EFreeDController extends Controller
             'gridP' => $gridP,
             'gridM' => $gridM,
             'gridTol' => $gridTol,
+            'statusT' => $statusT,
+            'statusT2' => $statusT2,
+            'statusC' => $statusC,
+            'statusP' => $statusP,
+            'statusM' => $statusM,
+            'statusTol' => $statusTol,
+            'existT' => $existT,
+            'existT2' => $existT2,
+            'existC' => $existC,
+            'existP' => $existP,
+            'existM' => $existM,
+            'existTol' => $existTol,
         );
 
         return $arrG;
@@ -501,6 +640,12 @@ class EFreeDController extends Controller
         $statusP = false;
         $statusM = false;
         $statusTol = false;
+        $packT = false;
+        $packT2 = false;
+        $packC = false;
+        $packP = false;
+        $packM = false;
+        $packTol = false;
         switch($request->tab){
             case 1:
                 $arrG = $this->gridsScan($request->freeId,$request->user_id); 
@@ -510,9 +655,21 @@ class EFreeDController extends Controller
                 break;
             case 3:
                 $arrG = $this->gridsPackage($request->freeId); 
+                $packT = $arrG['existT'];
+                $packT2 = $arrG['existT2'];
+                $packC = $arrG['existC'];
+                $packP = $arrG['existP'];
+                $packM = $arrG['existM'];
+                $packTol = $arrG['existTol'];
                 break;
             case 4:
                 $arrG = $this->gridsValP($request->freeId); 
+                $packT = $arrG['existT'];
+                $packT2 = $arrG['existT2'];
+                $packC = $arrG['existC'];
+                $packP = $arrG['existP'];
+                $packM = $arrG['existM'];
+                $packTol = $arrG['existTol'];
                 break;
         }
         $statusT = $arrG['statusT'];
@@ -537,6 +694,12 @@ class EFreeDController extends Controller
             'statusP' => $statusP,
             'statusM' => $statusM,
             'statusTol' => $statusTol,
+            'packT' => $packT,
+            'packT2' => $packT2,
+            'packC' => $packC,
+            'packP' => $packP,
+            'packM' => $packM,
+            'packTol' => $packTol,
         ], 200);
     }
 
@@ -630,7 +793,7 @@ class EFreeDController extends Controller
                 "quantity" => $ordLot->quantity,
                 "lot" => $ordLot->lot,
                 "package" => $ordLot->package,
-                "num" => $x
+                "num" => $x,
             );
             array_push($arrScan,$tmp); 
         }
@@ -649,11 +812,10 @@ class EFreeDController extends Controller
                 "location" => $ordLotP->location,
                 "quantity" => $ordLotP->quantity,
                 "lot" => $ordLotP->lot,
-                "package" => $ordLotP->package,
+                "num" => $ordLotP->package,
             );
             array_push($arrPack,$tmp); 
         }
-        
         return response()->json([
             'success' =>  true,
             'gridScan' => $arrScan,
@@ -662,13 +824,26 @@ class EFreeDController extends Controller
             'scanPack' => 2,
         ], 200);
     }
+
     public function package(Request $request){
         if($request->rec == 1){
             $sqlPart = ' 1 and dor.unit_id = 2';
+            $let = 'R';
         } else if($request->catId == 1){
             $sqlPart = ' 1 and dor.unit_id = 3';
+            $let = 'T';
         } else{
             $sqlPart = $request->catId;
+            switch($request->catId){
+                case 2:$let = 'C';
+                    break;
+                case 3:$let = 'P';
+                    break;
+                case 4:$let = 'M';
+                    break;
+                case 5:$let = 'Tol';
+                    break;
+            }
         }
         $sqlQty = DB::select("SELECT max(dol.package) as qty
                                 from d_orders dor
@@ -678,16 +853,35 @@ class EFreeDController extends Controller
         $qtySql = collect($sqlQty);
         $qty = $qtySql[0]->qty + 1;
         $arrPack = [];
+        $sqlPed = DB::select("SELECT no_ped
+                                from e_orders o
+                                inner join d_orders dor on dor.order_id = o.id
+                                    where dor.free_id = $request->freeId
+                                        Group by 1 ");
+        $ped = collect($sqlPed);
+        $noPed = $ped[0]->no_ped;
+        $dpackf = new DPackfols;
+        $dpackf->user = $request->user_id;
+        $dpackf->save();
+        $packfol = trim($noPed.$dpackf->id.$let);
+        $dPackFol = DPackfols::find($dpackf->id);
+        $dPackFol->packfol = $packfol;
+        $dPackFol->save();
         foreach($request->arrPack as $pack){
             $dordL = DOrdLots::find($pack['id']);
             $dordL->package = $qty;
+            $dordL->packfol_id = $dpackf->id;
             $dordL->save();
+            $cArt = DOrders::with('article')
+                            ->where('id',$dordL->dord_id)
+                                ->get();
             $tmp = array(
                 "id" => $dordL->id,
                 "location" => $dordL->location,
                 "quantity" => $dordL->quantity,
                 "lot" => $dordL->lot,
-                "package" => $dordL->package
+                "article" => $cArt[0]->article->article,
+                "num" => $dordL->package
             );
             array_push($arrPack,$tmp);
             if($request->catId == 1 && $request->rec <> 1){
@@ -713,21 +907,24 @@ class EFreeDController extends Controller
                 "num" => $x
             );
             array_push($arrScan,$tmp); 
-        }
-
-        
+        }       
+        $status = empty($arrScan) ? true : false;
         return response()->json([
             'success' =>  true,
             'freeId' => $request->freeId,
             'arrPack' => $arrPack,
             'arrScan' => $arrScan,
             'catId' => $request->catId,
-            'rec' => $request->rec
+            'rec' => $request->rec,
+            'status' => $status,
+            'phase' => 3,
         ], 200);
     }
+
     public function delPackage(Request $request){
         $dordL = DOrdLots::find($request->doLId);
         $dordL->package = null;
+        $dordL->packfol_id = null;
         $dordL->save();
         $arr = array(
             "id" => $dordL->id,
@@ -746,9 +943,12 @@ class EFreeDController extends Controller
             'catId' => $dorFree[0]->article->category_id,
             'freeId' => $dorFree[0]->free_id,
             'rec' =>  $request->rec,
-            'arrPack' =>  $arr
+            'arrPack' =>  $arr,
+            'status' =>  false,
+            'phase' => 3
         ], 200);
     }
+
     public function remGenerate(Request $request){
         if($request->rec == 1){
             $sqlPart = ' 1 and dor.unit_id = 2';
@@ -779,7 +979,7 @@ class EFreeDController extends Controller
                                 from d_orders dor
                                 inner join d_ord_lots dol on dol.dord_id = dor.id
                                 inner join c_articles a on a.id = dor.article_id
-                                    where dor.free_id = $request->freeId and dor.status_id = 2 and a.category_id = $sqlPart");
+                                    where dor.free_id = $request->freeId and dor.status_id = 3 and a.category_id = $sqlPart");
         $dataOrd = collect($sqlOrd);
         //  Genera el txt para subir a Sai
         $archive = fopen('tmpRemission.txt','w');
@@ -829,7 +1029,8 @@ class EFreeDController extends Controller
                                 from d_orders dor
                                 inner join d_ord_lots dol on dol.dord_id = dor.id
                                 inner join c_articles a on a.id = dor.article_id
-                                    where dor.free_id = $request->freeId and a.category_id = $sqlPart");
+                                    where dor.free_id = $request->freeId and a.category_id = $sqlPart
+                                        Order by dor.unit_id,dor.id,dol.id");
         $dataOrd = collect($sqlOrd);
         $x = 0;
         $y = 0;
@@ -863,7 +1064,58 @@ class EFreeDController extends Controller
             'success' =>  true,
             'arrVal' =>  $arrScan,
             "freeId" => $request->freeId,
-            "dataModal" => $dataModal
+            "dataModal" => $dataModal,
+            "validate" => 1
+        ], 200);
+    }
+    public function val2GridSupply(Request $request){
+        if($request->rec == 1){
+            $sqlPart = ' 1 and dor.unit_id = 2';
+        } else if($request->catId == 1){
+            $sqlPart = ' 1 and dor.unit_id = 3';
+        } else{
+            $sqlPart = $request->catId;
+        }
+        $sqlOrd = DB::select("SELECT dor.id as dord,dol.*,a.article,a.category_id
+                                from d_orders dor
+                                inner join d_ord_lots dol on dol.dord_id = dor.id
+                                inner join c_articles a on a.id = dor.article_id
+                                    where dor.free_id = $request->freeId and a.category_id = $sqlPart
+                                        Order by dol.package");
+        $dataOrd = collect($sqlOrd);
+        $x = 0;
+        $y = 0;
+        $arrScan = [];
+        foreach($dataOrd as $ordLot){
+            $x++;
+            if($ordLot->status_val1 == 2){
+                $y++;
+            }
+            $tmp = array(
+                "id" => $ordLot->id,
+                "article" => $ordLot->article,
+                "quantity" => $ordLot->quantity,
+                "lot" => $ordLot->lot,
+                "status_val1" => $ordLot->status_val1,
+                "num" => $ordLot->package
+            );
+            array_push($arrScan,$tmp); 
+        }
+        $arrCat = CCategory::find($request->catId);
+        $dataModal = array(
+            "id" => $arrCat->id,
+            "category" => $arrCat->category,
+            "icon" => $arrCat->icon,
+            "color" => $arrCat->color,
+            "rec" => $request->rec,
+            "wait" => $y
+        );
+        return response()->json([
+            'success' =>  true,
+            'arrVal' =>  $arrScan,
+            "freeId" => $request->freeId,
+            "dataModal" => $dataModal,
+            "validate" => 2,
         ], 200);
     }
     public function valSupp(Request $request){
@@ -885,6 +1137,7 @@ class EFreeDController extends Controller
         $dordLot = 0;
         $wait = 0;
         $unitId = 0;
+        $status = false;
         if(!empty($dataOrd[0])){
             $dordL = DOrdLots::find($dataOrd[0]->id);
             $dordL->status_val1 = 1;
@@ -899,12 +1152,23 @@ class EFreeDController extends Controller
                                         where dor.free_id = $request->freeId 
                                             and a.category_id = $sqlPart and dol.status_val1 = 0");
             $dataOrds = collect($sqlOrd);
+            if($dataOrds[0]->wait == 0){
+                $status = true;
+                DB::update("UPDATE d_ord_lots set status_val1 = 2 
+                                where id in (Select id from (Select dol.id
+                                                from d_orders dor
+                                                inner join d_ord_lots dol on dol.dord_id = dor.id
+                                                inner join c_articles a on a.id = dor.article_id
+                                                        where dor.free_id = $request->freeId 
+                                                                and a.category_id = $sqlPart and dol.status_val1 = 1
+                                                ) as dols
+                            )");
+            }
             $wait = $dataOrds[0]->wait;
         } else{
             $error = 2;
             $comment = 'No pertenece a este surtido.';
         }
-
         return response()->json([
             'success' =>  true,
             'freeId' =>  $request->freeId,
@@ -914,6 +1178,59 @@ class EFreeDController extends Controller
             'phase' =>  2,
             'dordLot' => $dordLot,
             'wait' => $wait,
+            'status' => $status,
+            'error' =>  $error,
+            "comment" => $comment
+        ], 200);
+    }
+    public function val2Supp(Request $request){
+        if($request->rec == 1){
+            $sqlPart = ' 1 and dor.unit_id = 2';
+        } else if($request->catId == 1){
+            $sqlPart = ' 1 and dor.unit_id = 3';
+        } else{
+            $sqlPart = $request->catId;
+        }
+        $sqlOrd = DB::select("SELECT dor.id as dord,dor.unit_id,dol.*,a.article,a.category_id,p.id as packfolId
+                                from d_orders dor
+                                inner join d_ord_lots dol on dol.dord_id = dor.id
+                                inner join c_articles a on a.id = dor.article_id
+                                inner join d_packfols p on p.id = dol.packfol_id
+                                    where dor.free_id = $request->freeId and p.packfol = '$request->lot' 
+                                        and a.category_id = $sqlPart and dol.status_val1 = 2");
+        $dataOrd = collect($sqlOrd);
+        $comment = '';
+        $wait = 0;
+        $status = false;
+        $package = 0;
+        if(!empty($dataOrd[0])){
+            DB::update("UPDATE d_ord_lots set status_val1 = 3 where packfol_id = '".$dataOrd[0]->packfolId."'");
+            $error = 1;
+            $sqlOrd = DB::select("SELECT count(*) wait
+                                    from d_orders dor
+                                    inner join d_ord_lots dol on dol.dord_id = dor.id
+                                    inner join c_articles a on a.id = dor.article_id
+                                        where dor.free_id = $request->freeId 
+                                            and a.category_id = $sqlPart and dol.status_val1 = 2");
+            $dataOrds = collect($sqlOrd);
+            if($dataOrds[0]->wait == 0){
+                $status = true;
+            }
+            $wait = $dataOrds[0]->wait;
+            $package = $dataOrd[0]->package;
+        } else{
+            $error = 2;
+            $comment = 'No pertenece a este surtido.';
+        }
+        return response()->json([
+            'success' =>  true,
+            'freeId' =>  $request->freeId,
+            'catId' =>  $request->catId,
+            'rec' =>  $request->rec,
+            'phase' =>  4,
+            'package' => $package,
+            'wait' => $wait,
+            'status' => $status,
             'error' =>  $error,
             "comment" => $comment
         ], 200);

@@ -22,8 +22,11 @@
                                 color="basil"
                                 grow
                             >
-                                <v-tab>
+                                <v-tab v-if = "validate == 1">
                                     <v-icon left>mdi-checkbox-multiple-marked-outline</v-icon> Validar Escaneo
+                                </v-tab>
+                                <v-tab v-else-if = "validate == 2">
+                                    <v-icon left>mdi-checkbox-multiple-marked-outline</v-icon> Validar Empaque
                                 </v-tab>
                             </v-tabs>
                         </v-col>
@@ -149,7 +152,7 @@
                                                             outlined
                                                             :disabled="disLot"
                                                             v-on:keyup="upperCase(lot)"
-                                                            v-on:keyup.enter="scan(supplyModal.rec)"
+                                                            v-on:keyup.enter="scan(supplyModal.rec,validate)"
                                                         ></v-text-field>
                                                     </v-col>
                                                     <v-col 
@@ -194,7 +197,7 @@
                                                                 <v-btn
                                                                     icon
                                                                     color="#008000"
-                                                                    v-if="item.status_val1 == 1"
+                                                                    v-if="(item.status_val1 > 0 && validate == 1) || (item.status_val1 > 2 && validate == 2)"
                                                                 >
                                                                     <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
                                                                 </v-btn>
@@ -224,15 +227,10 @@
     </v-row>
 </template>
 <script>
-
     import { mapActions, mapGetters } from 'vuex'
     import { jsPDF } from 'jspdf';
-    // import html2canvas from 'html2canvas';//
     import socketClientEmit from '../../shared/socketEmit';
     import SAToasts from '../../services/SweetAlertToast'
-    // import store from '../store/store'
-
-
     export default {
         data () {
             return {
@@ -279,6 +277,7 @@
                 dataSuppD: 'defree/getDataSuppD',
                 supplyModal: 'defree/getDataSuppModal',
                 gridScan: 'defree/getGridScanModal',
+                validate: 'defree/getValidate',
             }),
         },
         // beforeCreate(){
@@ -294,35 +293,57 @@
                 }
                 await this.$store.dispatch('modals/IdentifyModal',payload);
             },
-            async scan(rec){
+            async scan(rec,validate){
                 var payload = {
                     token: this.getUserApi.token,
                     user_id: this.getUserApi.uid,
                     freeId: this.dataSuppD.id,
                     catId: this.supplyModal.id,
                     lot: this.lot,
-                    rec: rec,
-                    val: 1
+                    rec: rec
                 }
                 this.loadingTable = true
-                const res = await socketClientEmit.supplyValEmit(payload)
-                if(res.success){
-                    this.loadingTable = false
-                    this.lot = ''
-                    if(res.error == 1){
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Validado!',
-                            text: 'Lote validado correctamente.',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                    } else{
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Ups...',
-                            text: res.comment,
-                        })
+                if(validate == 1){
+                    const res = await socketClientEmit.supplyValEmit(payload)
+                    if(res.success){
+                        this.loadingTable = false
+                        this.lot = ''
+                        if(res.error == 1){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Validado!',
+                                text: 'Lote validado correctamente.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        } else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ups...',
+                                text: res.comment,
+                            })
+                        }
+                    }
+                } else{
+                    const res = await socketClientEmit.supplyVal2Emit(payload)
+                    if(res.success){
+                        this.loadingTable = false
+                        this.lot = ''
+                        if(res.error == 1){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Validado!',
+                                text: 'Lote validado correctamente.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            })
+                        } else{
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Ups...',
+                                text: res.comment,
+                            })
+                        }
                     }
                 }
             },

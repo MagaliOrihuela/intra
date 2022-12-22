@@ -8,7 +8,7 @@
             <v-card-title style="position:relative">
                 <div>
                     <v-icon color="red">mdi-clipboard-alert-outline</v-icon>
-                    Pedidos por surtir o parciales
+                    Pedidos por surtir
                 </div>
                 <div class="float-right" style="position:absolute;right:50px">
                     <v-text-field
@@ -47,8 +47,7 @@
                     <template #[`item.total_ord`]="{ item }" >
                         <div style="display:flex;"> <v-icon  color="green" size="18px"> mdi-currency-usd </v-icon> <div class="total-cotizacion">{{ item.total_ord }} </div> </div>
                     </template>
-                    <template #[`item.status`]="{ item }" >
-                        <!-- <div style="display:flex;"><div class="status-cotizacion">{{ item.status }} </div></div> -->
+                    <!-- <template #[`item.status`]="{ item }" >
                         <v-chip
                             close-icon="mdi-close-outline"
                             :color = "item.color"
@@ -56,7 +55,7 @@
                         >
                             {{ item.status }}
                         </v-chip>
-                    </template>
+                    </template> -->
                     <template #[`item.options`]="{ item }">
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
@@ -205,7 +204,7 @@
                     { text: 'Agente', value: 'name_agent' },
                     { text: 'Creación', value: 'register' },
                     { text: 'Total', value: 'total_ord' },
-                    { text: 'Status', align: 'center', value: 'status' },
+                    // { text: 'Status', align: 'center', value: 'status' },
                     { 
                         text: 'Acciones', 
                         sortable: false,
