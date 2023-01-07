@@ -4,22 +4,61 @@
             max-width="100%"
             class="mb-10"
             elevation="0"
-        >
-            <v-card-title style="position:relative">
-                <div>
-                    <v-icon color="red">mdi-clipboard-clock-outline</v-icon>
-                    Pedidos por surtir
-                </div>
-                <div class="float-right" style="position:absolute;right:50px">
-                    <v-text-field
-                        v-model="search"
-                        append-icon="mdi-magnify"
-                        label="Search"
-                        single-line
-                        hide-details
-                    ></v-text-field>
-                </div>
-            </v-card-title>
+        >   
+            <v-container 
+               fluid
+               class="mr-2 pa-2 "
+               style="max-width: 100%;"
+            >
+                <v-row class="ma-0">
+                    <v-col 
+                        lg="9"
+                        md="9"
+                        sm="12"
+                        cols="12"
+                        class="ma-0 pa-0 pt-2"
+                    >
+                        <v-card-text class="pt-1 pb-1 ">
+                            Estatus por color: 
+                            <v-chip text-color="#878787" >
+                                <v-avatar color="#FE0303"></v-avatar>
+                                &nbsp;Escaneo
+                            </v-chip>
+                            <v-chip text-color="#878787">
+                                <v-avatar color="#FE8803"></v-avatar>
+                                &nbsp;Validación escaneo
+                            </v-chip>
+                            <v-chip text-color="#878787">
+                                <v-avatar color="#E8E800"></v-avatar>
+                                &nbsp;Empaque
+                            </v-chip>
+                            <v-chip text-color="#878787">
+                                <v-avatar color="#6BB2A4"></v-avatar>
+                                &nbsp;Validación empaque
+                            </v-chip>
+                            <v-chip text-color="#878787">
+                                <v-avatar color="#75D40A"></v-avatar>
+                                &nbsp;Terminado
+                            </v-chip>
+                        </v-card-text>
+                    </v-col>
+                    <v-col 
+                        lg="2"
+                        md="2"
+                        sm="12"
+                        cols="12"
+                        class="ma-0 pa-0 pb-2 "
+                    >
+                        <v-text-field
+                            v-model="search"
+                            append-icon="mdi-magnify"
+                            label="Search"
+                            single-line
+                            hide-details
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
+            </v-container>
             <v-card-actions class="px-12">
                 <v-progress-linear
                     :active="loading"
@@ -50,21 +89,146 @@
                         {{ formatDate(item.created_at) }}
                     </template>
                     <template #[`item.status_id`]="{ item }" >
-                        <v-chip
-                            close-icon="mdi-close-outline"
-                            :color = "item.color"
-                            outlined
-                        >
-                            {{ item.name }}
-                        </v-chip>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }"
+                                v-if="item.tela > 0">
+                                <v-btn 
+                                    :color="item.telaC" 
+                                    :to=item.view
+                                    fab 
+                                    dark
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    :elevation="3"
+                                    max-width="25px"
+                                    max-height="25px"
+                                >
+                                    <v-icon size="15px">mdi-view-parallel-outline</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Telas</span>
+                        </v-tooltip>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }"
+                                v-if="item.telaR > 0">
+                                <v-btn 
+                                    :color="item.telaRC"
+                                    :to=item.view
+                                    fab 
+                                    dark
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    :elevation="3"
+                                    max-width="25px"
+                                    max-height="25px"
+                                >
+                                    <v-icon size="15px">mdi-scissors-cutting</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Recortes</span>
+                        </v-tooltip>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }"
+                                v-if="item.comp > 0">
+                                <v-btn 
+                                    :color="item.compC" 
+                                    :to=item.view
+                                    fab 
+                                    dark
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    :elevation="3"
+                                    max-width="25px"
+                                    max-height="25px"
+                                >
+                                    <v-icon size="15px">mdi-chart-donut</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Componentes</span>
+                        </v-tooltip>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }"
+                                v-if="item.perf > 0">
+                                <v-btn 
+                                    :color="item.perfC" 
+                                    :to=item.view
+                                    fab 
+                                    dark
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    :elevation="3"
+                                    max-width="25px"
+                                    max-height="25px"
+                                >
+                                    <v-icon size="15px">mdi-cube-outline</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Perfiles</span>
+                        </v-tooltip>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }"
+                                v-if="item.mot > 0">
+                                <v-btn 
+                                    :color="item.motC" 
+                                    :to=item.view
+                                    fab 
+                                    dark
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    :elevation="3"
+                                    max-width="25px"
+                                    max-height="25px"
+                                >
+                                    <v-icon size="15px">mdi-remote</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Motores</span>
+                        </v-tooltip>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }"
+                                v-if="item.told > 0">
+                                <v-btn 
+                                    :color="item.toldC" 
+                                    :to=item.view
+                                    fab 
+                                    dark
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    :elevation="3"
+                                    max-width="25px"
+                                    max-height="25px"
+                                >
+                                    <v-icon size="15px">mdi-remote</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Motores</span>
+                        </v-tooltip>
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }"
+                                v-if="item.told > 0">
+                                <v-btn 
+                                    :color="item.toldC" 
+                                    :to=item.view
+                                    fab 
+                                    dark
+                                    v-bind="attrs"
+                                    v-on="on"
+                                    :elevation="3"
+                                    max-width="25px"
+                                    max-height="25px"
+                                >
+                                    <v-icon size="15px">mdi-remote</v-icon>
+                                </v-btn>
+                            </template>
+                            <span>Motores</span>
+                        </v-tooltip>
                     </template>
                     <template #[`item.options`]="{ item }">
-                        <v-tooltip bottom>
+                        <!-- <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn 
                                     color="blue-grey darken-3" 
                                     :to=item.view
-                                    @click="detailCotizacion(item.id)"
                                     fab 
                                     dark
                                     v-bind="attrs"
@@ -77,7 +241,7 @@
                                 </v-btn>
                             </template>
                             <span>Revisar pedido</span>
-                        </v-tooltip>
+                        </v-tooltip> -->
                         <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn 
@@ -97,7 +261,7 @@
                             </template>
                             <span>Editar pedido</span>
                         </v-tooltip>
-                        <v-tooltip bottom>
+                        <!-- <v-tooltip bottom>
                             <template v-slot:activator="{ on, attrs }">
                                 <v-btn 
                                     color="blue-grey darken-3"
@@ -114,7 +278,7 @@
                                 </v-btn>
                             </template>
                             <span>Cancelar pedido</span>
-                        </v-tooltip>
+                        </v-tooltip> -->
                     </template>
                 </v-data-table>
             </v-card-actions>
@@ -186,26 +350,19 @@
                 left: 0
                 },
                 headers: [
-                    {
-                        text: 'Libera',
-                        align: 'start',
-                        value: 'id',
-                    },
-                    { text: 'Pedido', align: 'center', value: 'no_ped'},
-                    { text: 'Cliente', align: 'center', value: 'client_id' },
-                    { text: 'Nombre cliente', value: 'short_name' },
-                    { text: 'Agente', value: 'agent' },
-                    { text: 'Usuario', value: 'user_name' },
-                    { text: 'Entrega', value: 'delivery_type' },
-                    { text: 'Embarque', value: 'boarding_type' },
-                    { text: 'Fletera', value: 'companie' },
-                    { text: 'Creación', value: 'created_at' },
-                    { text: 'Status', align: 'center', value: 'status_id' },
-                    { 
-                        text: 'Acciones', 
-                        sortable: false,
-                        value: 'options',
-                    },
+                    { text: 'Libera', width:'5%', align: 'start', value: 'id', },
+                    { text: 'Pedido', width:'5%',align: 'center', value: 'no_ped'},
+                    { text: 'Cliente', width:'5%',align: 'center',align: 'center', value: 'client_id' },
+                    { text: 'Nombre cliente', width:'18%',align: 'center', value: 'short_name' },
+                    // { text: 'Agente', value: 'agent' },
+                    // { text: 'Usuario', value: 'user_name' },
+                    { text: 'Entrega', width:'8%',align: 'center', value: 'delivery_type' },
+                    { text: 'Embarque', width:'8%',align: 'center', value: 'boarding_type' },
+                    { text: 'Fletera', width:'8%',align: 'center', value: 'companie' },
+                    { text: 'Creación', width:'8%',align: 'center', value: 'created_at' },
+                    // { text: 'Avance', width:'12%',align: 'center', align: 'center', value: 'porc' },
+                    { text: 'Status', width:'15%',align: 'center', align: 'center', value: 'status_id' },
+                    { text: 'Acciones', width:'8%', sortable: false, value: 'options' },
                 ],
 
                 dialogcancel:false,
@@ -235,8 +392,12 @@
 
             },
             formatDate(date){
-                let dateComp = date.substring(0,10) + ' ' + date.substring(11,19);
-                return dateComp
+                let yy = date.substring(2,4)
+                let mm = date.substring(5,7)
+                let dd = date.substring(8,10)
+                let time = date.substring(11,16)
+                let cDate = dd + '/' + mm + '/' + yy + ' ' + time
+                return cDate
             },
             viewFree(id){
                 this.loading=true

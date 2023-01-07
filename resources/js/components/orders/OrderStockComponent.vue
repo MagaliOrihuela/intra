@@ -5,21 +5,37 @@
             class="mb-10"
             elevation="0"
         >
-            <v-card-title style="position:relative">
-                <div>
-                    <v-icon color="red">mdi-clipboard-alert-outline</v-icon>
-                    Pedidos por surtir
-                </div>
-                <div class="float-right" style="position:absolute;right:50px">
-                    <v-text-field
-                        v-model="search"
-                        append-icon="mdi-magnify"
-                        label="Search"
-                        single-line
-                        hide-details
-                    ></v-text-field>
-                </div>
-            </v-card-title>
+            <v-container 
+                fluid
+                class="mr-2 pa-2 "
+                style="max-width: 100%;"
+            >
+                <v-row class="ma-0">
+                    <v-col 
+                        lg="9"
+                        md="9"
+                        sm="12"
+                        cols="12"
+                        class="ma-0 pa-0"
+                    >
+                    </v-col>
+                    <v-col 
+                        lg="2"
+                        md="2"
+                        sm="12"
+                        cols="12"
+                        class="ma-0 pa-0"
+                    >
+                        <v-text-field
+                            v-model="search"
+                            append-icon="mdi-magnify"
+                            label="Search"
+                            single-line
+                            hide-details
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
+            </v-container>  
             <v-card-actions class="px-12">
                 <v-progress-linear
                     :active="loading"

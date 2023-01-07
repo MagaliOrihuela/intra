@@ -18,8 +18,8 @@
                     <v-row class="pa-0 ma-0" >
                         <v-col 
                             class="pa-0 pt-4 ma-0"
-                            xs="12"
-                            sm="12"
+                            cols="6"
+                            sm="6"
                             md="3"
                             lg="3"
                             xl="3"
@@ -29,8 +29,8 @@
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0"
-                            xs="12"
-                            sm="12"
+                            cols="6"
+                            sm="6"
                             md="3"
                             lg="3"
                             xl="3"
@@ -40,7 +40,7 @@
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0"
-                            xs="12"
+                            cols="12"
                             sm="12"
                             md="3"
                             lg="3"
@@ -51,7 +51,7 @@
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0" 
-                            xs="12"
+                            cols="12"
                             sm="12"
                             md="3"
                             lg="3"
@@ -64,8 +64,8 @@
                     <v-row class="pa-0 ma-0" >
                         <v-col 
                             class="pa-0 pt-4 ma-0" 
-                            xs="12"
-                            sm="12"
+                            cols="6"
+                            sm="6"
                             md="3"
                             lg="3"
                             xl="3"
@@ -82,19 +82,19 @@
                         </v-col>
                         <v-col
                             class="pa-0 pt-4 ma-0" 
-                            xs="12"
-                            sm="12"
+                            cols="6"
+                            sm="6"
                             md="3"
                             lg="3"
                             xl="3"
                             style="font-size: 16px;"
                         > 
-                            <v-icon left>mdi-calendar-month-outline</v-icon>Liberada: <b class="font-weight-regular"> {{ dataSuppD.created_at }} </b>
+                            <v-icon left>mdi-calendar-month-outline</v-icon>Liberada: <b class="font-weight-regular"> {{ formatDate(dataSuppD.created_at) }} </b>
                         </v-col> 
                         <v-col
                             class="pa-0 pt-4 ma-0" 
-                            xs="12"
-                            sm="12"
+                            cols="6"
+                            sm="6"
                             md="3"
                             lg="3"
                             xl="3"
@@ -103,8 +103,8 @@
                             <v-icon left>mdi-account-circle-outline</v-icon>Usuario: <b class="font-weight-regular"> {{ dataSuppD.username }} </b>
                         </v-col> 
                         <v-col
-                            xs="12"
-                            sm="12"
+                            cols="6"
+                            sm="6"
                             md="1"
                             lg="1"
                             xl="1" 
@@ -135,7 +135,7 @@
                     <v-row class="pa-0 ma-0" >
                         <v-col 
                             class="pa-0 pt-4 ma-0" 
-                            xs="12"
+                            cols="12"
                             sm="12"
                             md="4"
                             lg="4"
@@ -146,7 +146,7 @@
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0" 
-                            xs="12"
+                            cols="12"
                             sm="12"
                             md="4"
                             lg="4"
@@ -157,7 +157,7 @@
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0" 
-                            xs="12"
+                            cols="12"
                             sm="12"
                             md="4"
                             lg="4"
@@ -170,7 +170,7 @@
                     <v-row class="pa-0 ma-0 mb-1">
                         <v-col
                             class="pa-0 pt-4 ma-0" 
-                            xs="12"
+                            cols="12"
                             sm="12"
                             md="6"
                             lg="6"
@@ -182,7 +182,7 @@
                         </v-col>
                         <v-col 
                             class="pa-0 pt-4 ma-0" 
-                            xs="12"
+                            cols="12"
                             sm="12"
                             md="6"
                             lg="6"
@@ -195,7 +195,7 @@
                     <v-row class="pa-0 ma-0 mb-1">
                         <v-col
                             class="pa-0 pt-4 ma-0" 
-                            xs="12"
+                            cols="12"
                             sm="12"
                             md="6"
                             lg="6"
@@ -270,7 +270,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -279,11 +279,10 @@
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
-                                            class="ma-2"
                                             :color="dataCat.colorT"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 65%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconT }}
@@ -292,6 +291,7 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
+                                        cols="12"
                                         md="5"
                                         lg="5"
                                         xl="5"
@@ -365,19 +365,6 @@
                                                     Escanear
                                                 </v-tooltip>
                                             </v-col>
-                                            <!-- <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
-                                            </v-col> -->
                                         </v-row>
                                     </template>
                                 </v-data-table>
@@ -397,8 +384,8 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
-                                        sm="12"
+                                        cols="6"
+                                        sm="6"
                                         md="3"
                                         lg="3"
                                         xl="3"
@@ -411,7 +398,7 @@
                                             text-color="blue-grey darken-4"
                                             label
                                             right
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconT }}
@@ -421,8 +408,8 @@
                                     </v-col>
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
-                                        sm="12"
+                                        cols="6"
+                                        sm="6"
                                         md="2"
                                         lg="2"
                                         xl="2"
@@ -441,9 +428,11 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="5"
-                                        lg="5"
-                                        xl="5"
+                                        cols="6"
+                                        sm="6"
+                                        md="4"
+                                        lg="4"
+                                        xl="4"
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
@@ -514,19 +503,6 @@
                                                     Escanear
                                                 </v-tooltip>
                                             </v-col>
-                                            <!-- <v-col 
-                                                md="2"
-                                                lg="2"
-                                                xl="2"
-                                                class="pa-0 ma-0"
-                                            >
-                                                <v-btn
-                                                    icon
-                                                    color="#007DD6"
-                                                >
-                                                    <v-icon>mdi-clipboard-text-search-outline</v-icon>
-                                                </v-btn>
-                                            </v-col> -->
                                         </v-row>
                                     </template>
                                 </v-data-table>
@@ -546,7 +522,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -555,11 +531,10 @@
                                     > 
                                         <v-icon left>mdi-animation-outline</v-icon>Grupo: &nbsp;
                                         <v-chip
-                                            class="ma-2"
                                             :color="dataCat.colorC"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 65%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconC }}
@@ -676,7 +651,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -689,7 +664,7 @@
                                             :color="dataCat.colorP"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconP }}
@@ -804,7 +779,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -817,7 +792,7 @@
                                             :color="dataCat.colorM"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconM }}
@@ -932,7 +907,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -945,7 +920,7 @@
                                             :color="dataCat.colorTol"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconTol }}
@@ -1071,7 +1046,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -1084,7 +1059,7 @@
                                             :color="dataCat.colorT"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconT }}
@@ -1093,9 +1068,10 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="5"
-                                        lg="5"
-                                        xl="5"
+                                        cols="6"
+                                        md="6"
+                                        lg="6"
+                                        xl="6"
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
@@ -1112,9 +1088,6 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="1"
-                                        lg="1"
-                                        xl="1"
                                         class="pa-0 pt-4 ma-2"
                                     >
                                         <v-tooltip bottom>
@@ -1132,7 +1105,8 @@
                                             Validar
                                         </v-tooltip>
                                     </v-col>
-                                    <v-col 
+                                    <v-col
+                                        cols="3"
                                         md="2"
                                         lg="2"
                                         xl="2"
@@ -1146,7 +1120,7 @@
                                                     icon
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdT,0)" 
-                                                    style="width: 60%;"
+                                                    style="width: 50%;"
                                                     :disabled = !statusValT
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
@@ -1158,7 +1132,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppT"
                                     :page.sync="pagePT"
                                     :items-per-page="itemsPerPagePT"
@@ -1204,8 +1178,8 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
-                                        sm="12"
+                                        cols="6"
+                                        sm="6"
                                         md="3"
                                         lg="3"
                                         xl="3"
@@ -1218,7 +1192,7 @@
                                             text-color="blue-grey darken-4"
                                             label
                                             right
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconT }}
@@ -1228,8 +1202,8 @@
                                     </v-col>
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
-                                        sm="12"
+                                        cols="6"
+                                        sm="6"
                                         md="2"
                                         lg="2"
                                         xl="2"
@@ -1248,9 +1222,11 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="3"
-                                        lg="3"
-                                        xl="3"
+                                        cols="6"
+                                        sm="6"
+                                        md="4"
+                                        lg="4"
+                                        xl="4"
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
@@ -1267,9 +1243,6 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="1"
-                                        lg="1"
-                                        xl="1"
                                         class="pa-0 pt-4 ma-2"
                                     >
                                         <v-tooltip bottom>
@@ -1288,6 +1261,7 @@
                                         </v-tooltip>
                                     </v-col>
                                     <v-col 
+                                        cols="3"
                                         md="2"
                                         lg="2"
                                         xl="2"
@@ -1301,7 +1275,7 @@
                                                     icon
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdT,1)" 
-                                                    style="width: 60%;"
+                                                    style="width: 50%;"
                                                     :disabled = !statusValT2
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
@@ -1313,7 +1287,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppT2"
                                     :page.sync="pagePT2"
                                     :items-per-page="itemsPerPagePT2"
@@ -1359,7 +1333,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -1372,7 +1346,7 @@
                                             :color="dataCat.colorC"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconC }}
@@ -1381,9 +1355,10 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="5"
-                                        lg="5"
-                                        xl="5"
+                                        cols="6"
+                                        md="6"
+                                        lg="6"
+                                        xl="6"
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
@@ -1400,9 +1375,6 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="1"
-                                        lg="1"
-                                        xl="1"
                                         class="pa-0 pt-4 ma-2"
                                     >
                                         <v-tooltip bottom>
@@ -1421,6 +1393,7 @@
                                         </v-tooltip>
                                     </v-col>
                                     <v-col 
+                                        cols="3"
                                         md="2"
                                         lg="2"
                                         xl="2"
@@ -1434,7 +1407,7 @@
                                                     icon
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdC,0)" 
-                                                    style="width: 60%;"
+                                                    style="width: 50%;"
                                                     :disabled = !statusValC 
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
@@ -1446,7 +1419,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppC"
                                     :page.sync="pagePC"
                                     :items-per-page="itemsPerPagePC"
@@ -1462,9 +1435,6 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
-                                    <template #[`item.metraje`]="{ item }">
-                                        
-                                    </template>
                                     <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -1495,7 +1465,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -1508,7 +1478,7 @@
                                             :color="dataCat.colorP"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconP }}
@@ -1517,9 +1487,10 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="5"
-                                        lg="5"
-                                        xl="5"
+                                        cols="6"
+                                        md="6"
+                                        lg="6"
+                                        xl="6"
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
@@ -1536,9 +1507,6 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="1"
-                                        lg="1"
-                                        xl="1"
                                         class="pa-0 pt-4 ma-2"
                                     >
                                         <v-tooltip bottom>
@@ -1557,6 +1525,7 @@
                                         </v-tooltip>
                                     </v-col>
                                     <v-col 
+                                        cols="3"
                                         md="2"
                                         lg="2"
                                         xl="2"
@@ -1570,7 +1539,7 @@
                                                     icon
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdP,0)" 
-                                                    style="width: 60%;"
+                                                    style="width: 50%;"
                                                     :disabled = !statusValP
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
@@ -1582,7 +1551,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppP"
                                     :page.sync="pagePP"
                                     :items-per-page="itemsPerPagePP"
@@ -1629,7 +1598,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -1642,7 +1611,7 @@
                                             :color="dataCat.colorP"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconP }}
@@ -1651,9 +1620,10 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="5"
-                                        lg="5"
-                                        xl="5"
+                                        cols="6"
+                                        md="6"
+                                        lg="6"
+                                        xl="6"
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
@@ -1670,9 +1640,6 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="1"
-                                        lg="1"
-                                        xl="1"
                                         class="pa-0 pt-4 ma-2"
                                     >
                                         <v-tooltip bottom>
@@ -1691,6 +1658,7 @@
                                         </v-tooltip>
                                     </v-col>
                                     <v-col 
+                                        cols="3"
                                         md="2"
                                         lg="2"
                                         xl="2"
@@ -1704,7 +1672,7 @@
                                                     icon
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdP,0)" 
-                                                    style="width: 60%;"
+                                                    style="width: 50%;"
                                                     :disabled = !statusValM
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
@@ -1716,7 +1684,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppM"
                                     :page.sync="pagePM"
                                     :items-per-page="itemsPerPagePM"
@@ -1763,7 +1731,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -1776,7 +1744,7 @@
                                             :color="dataCat.colorM"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconM }}
@@ -1785,9 +1753,10 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="5"
-                                        lg="5"
-                                        xl="5"
+                                        cols="6"
+                                        md="6"
+                                        lg="6"
+                                        xl="6"
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
@@ -1804,9 +1773,6 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="1"
-                                        lg="1"
-                                        xl="1"
                                         class="pa-0 pt-4 ma-2"
                                     >
                                         <v-tooltip bottom>
@@ -1825,6 +1791,7 @@
                                         </v-tooltip>
                                     </v-col>
                                     <v-col 
+                                        cols="3"
                                         md="2"
                                         lg="2"
                                         xl="2"
@@ -1838,7 +1805,7 @@
                                                     icon
                                                     color="#9DBD32"
                                                     @click="txtGenerate(dataCat.catIdM,0)" 
-                                                    style="width: 60%;"
+                                                    style="width: 50%;"
                                                     :disabled = !statusValTol
                                                 >
                                                 <v-icon left>mdi-file-download-outline</v-icon>Remisión
@@ -1850,7 +1817,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppTol"
                                     :page.sync="pagePTol"
                                     :items-per-page="itemsPerPagePTol"
@@ -1908,7 +1875,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -1921,7 +1888,7 @@
                                             :color="dataCat.colorT"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconT }}
@@ -1982,6 +1949,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.surt`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -2012,8 +1982,8 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
-                                        sm="12"
+                                        cols="6"
+                                        sm="6"
                                         md="3"
                                         lg="3"
                                         xl="3"
@@ -2026,7 +1996,7 @@
                                             text-color="blue-grey darken-4"
                                             label
                                             right
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconT }}
@@ -2036,8 +2006,8 @@
                                     </v-col>
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
-                                        sm="12"
+                                        cols="6"
+                                        sm="6"
                                         md="2"
                                         lg="2"
                                         xl="2"
@@ -2056,9 +2026,11 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="3"
-                                        lg="3"
-                                        xl="3"
+                                        cols="6"
+                                        sm="6"
+                                        md="4"
+                                        lg="4"
+                                        xl="4"
                                         class="pa-0 pt-4 ma-2" 
                                     >
                                         <v-icon left>
@@ -2075,11 +2047,7 @@
                                         </v-chip>
                                     </v-col>
                                     <v-col 
-                                        md="3"
-                                        lg="3"
-                                        xl="3"
                                         class="pa-0 pt-4 ma-0" 
-                                        align="right"
                                     >
                                         <v-btn
                                             icon
@@ -2108,6 +2076,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.surt`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -2138,7 +2109,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -2151,7 +2122,7 @@
                                             :color="dataCat.colorC"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconC }}
@@ -2212,8 +2183,8 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
-                                    <template #[`item.metraje`]="{ item }">
-                                        
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
                                     </template>
                                     <template #[`item.surt`]="{ item }">
                                         <v-row>
@@ -2245,7 +2216,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -2258,7 +2229,7 @@
                                             :color="dataCat.colorP"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconP }}
@@ -2320,6 +2291,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.surt`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -2350,7 +2324,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -2363,7 +2337,7 @@
                                             :color="dataCat.colorM"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconM }}
@@ -2425,6 +2399,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.surt`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -2455,7 +2432,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -2468,7 +2445,7 @@
                                             :color="dataCat.colorTol"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconTol }}
@@ -2529,6 +2506,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.surt`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -2571,7 +2551,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -2584,7 +2564,7 @@
                                             :color="dataCat.colorT"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconT }}
@@ -2629,7 +2609,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppT"
                                     :page.sync="pagePT"
                                     :items-per-page="itemsPerPagePT"
@@ -2645,6 +2625,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -2652,7 +2635,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check >= 3"
+                                                v-if="item.check > 3"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -2675,8 +2658,8 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
-                                        sm="12"
+                                        cols="6"
+                                        sm="6"
                                         md="3"
                                         lg="3"
                                         xl="3"
@@ -2689,7 +2672,7 @@
                                             text-color="blue-grey darken-4"
                                             label
                                             right
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconT }}
@@ -2699,8 +2682,8 @@
                                     </v-col>
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
-                                        sm="12"
+                                        cols="6"
+                                        sm="6"
                                         md="2"
                                         lg="2"
                                         xl="2"
@@ -2755,7 +2738,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppT2"
                                     :page.sync="pagePT2"
                                     :items-per-page="itemsPerPagePT2"
@@ -2771,6 +2754,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -2778,7 +2764,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check >= 3"
+                                                v-if="item.check > 3"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -2801,7 +2787,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -2814,7 +2800,7 @@
                                             :color="dataCat.colorC"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconC }}
@@ -2859,7 +2845,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppC"
                                     :page.sync="pagePC"
                                     :items-per-page="itemsPerPagePC"
@@ -2875,6 +2861,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -2882,7 +2871,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check >= 3"
+                                                v-if="item.check > 3"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -2905,7 +2894,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -2918,7 +2907,7 @@
                                             :color="dataCat.colorP"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconP }}
@@ -2963,7 +2952,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppP"
                                     :page.sync="pagePP"
                                     :items-per-page="itemsPerPagePP"
@@ -2980,6 +2969,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -2987,7 +2979,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check >= 3"
+                                                v-if="item.check > 3"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -3010,7 +3002,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -3023,7 +3015,7 @@
                                             :color="dataCat.colorM"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconM }}
@@ -3068,7 +3060,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppM"
                                     :page.sync="pagePM"
                                     :items-per-page="itemsPerPagePM"
@@ -3085,6 +3077,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -3092,7 +3087,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check >= 3"
+                                                v-if="item.check > 3"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -3115,7 +3110,7 @@
                                 <v-row class="pa-0 ma-0">
                                     <v-col 
                                         class="pa-0 pt-4 ma-0" 
-                                        xs="12"
+                                        cols="12"
                                         sm="12"
                                         md="3"
                                         lg="3"
@@ -3128,7 +3123,7 @@
                                             :color="dataCat.colorTol"
                                             text-color="blue-grey darken-4"
                                             label
-                                            style="width: 60%;"
+                                            style="width: 50%;"
                                         >
                                             <v-icon left>
                                                 {{ dataCat.iconTol }}
@@ -3173,7 +3168,7 @@
                                 </v-row>
                                 <v-data-table
                                     v-model="selected"
-                                    :headers="headersP"
+                                    :headers="headersV"
                                     :items="dataSuppTol"
                                     :page.sync="pagePTol"
                                     :items-per-page="itemsPerPagePTol"
@@ -3189,6 +3184,9 @@
                                         color="red darken-4" 
                                         indeterminate>
                                     </v-progress-linear>
+                                    <template #[`item.num`]="{ item }">
+                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                    </template>
                                     <template #[`item.check`]="{ item }">
                                         <v-row>
                                             <v-col 
@@ -3196,7 +3194,7 @@
                                                 lg="2"
                                                 xl="2"
                                                 class="pa-0 ma-0"
-                                                v-if="item.check >= 3"
+                                                v-if="item.check > 3"
                                             >
                                                 <v-icon color="#008000">mdi-checkbox-marked-circle-outline</v-icon>
                                             </v-col>
@@ -3322,12 +3320,22 @@
                     { text: 'Surtido', width:'15%', value: 'surt' },
                     { text: 'Acciones', width:'15%',value: 'dord_id' },
                 ],
+                headersV: [
+                    { text: '#', width:'5%', value: 'num' },
+                    { text: 'Lote', width:'5%', value: 'lot' },
+                    { text: 'Articulo', width:'15%', value: 'article' },
+                    { text: 'Cantidad', width:'5%', value: 'standar' },
+                    { text: 'Unidad', width:'5%', value: 'unit' },
+                    { text: 'Contenido(pzas)', width:'5%', value: 'quantity' },
+                    { text: 'Validado', width:'5%', value: 'check' },
+                ],
                 headersP: [
                     { text: '#', width:'5%', value: 'num' },
-                    { text: 'Lote', width:'15%', value: 'lot' },
+                    { text: 'Lote', width:'5%', value: 'lot' },
                     { text: 'Articulo', width:'15%', value: 'article' },
-                    { text: 'Cantidad', width:'5%', value: 'quantity' },
-                    { text: 'Validado', width:'5%', value: 'check' },
+                    { text: 'Cantidad', width:'5%', value: 'standar' },
+                    { text: 'Unidad', width:'5%', value: 'unit' },
+                    { text: 'Contenido(pzas)', width:'5%', value: 'quantity' },
                 ],
             }
         },
@@ -3379,10 +3387,16 @@
                 }
             },
             formatDate(date){
-                let dateComp = date.substring(0,10) + ' ' + date.substring(11,19);
-                return dateComp
+                let cDate = ''
+                if(date != null){
+                    let yy = date.substring(2,4)
+                    let mm = date.substring(5,7)
+                    let dd = date.substring(8,10)
+                    let time = date.substring(11,16)
+                    cDate = dd + '/' + mm + '/' + yy + ' ' + time
+                }
+                return cDate
             },
-
             async scanModal(dordId,part){
                 let payload = {
                     token: this.getUserApi.token,
@@ -3392,7 +3406,6 @@
                     name_modal:  'supplyFree', // modal 
                     state_modal: true,
                 }
-                // await socketClientEmit.supplyScanEmit(payload)
                 await this.$store.dispatch('defree/getSupplyModal',payload)
                 let payload2 = {
                     token: this.getUserApi.token,
@@ -3401,9 +3414,6 @@
                 }
                 await this.$store.dispatch('defree/gridsSupplyModal',payload2)
                 await this.$store.dispatch('modals/IdentifyModal',payload);
-                // if(res.success){
-
-                // }
             },
             
             async packModal(freeId,catId,rec){

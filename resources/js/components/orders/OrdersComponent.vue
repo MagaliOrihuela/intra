@@ -6,7 +6,9 @@
          elevation="0"
          transition="scale-transition"
       >
-         <v-card-title class="h4 invoice-header-text">
+         <v-card-title 
+            class="h4 invoice-header-text mb-0 pb-1 pt-2"
+         >
             <v-icon color="red" left>
                mdi-clipboard-edit-outline
             </v-icon>
@@ -15,7 +17,7 @@
          <v-tabs
             color="shades_five"
             centered
-            height="40px"
+            height="30px"
          >
             <v-tab
                @click="tabOrder = 'tab1'"

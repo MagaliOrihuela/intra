@@ -9,8 +9,8 @@
                 <v-card-text class="cot-text-info">
                     <v-row class="mt-5">
                         <v-col 
-                            xs="12"
-                            sm="12"
+                            cols="8"
+                            sm="8"
                             md="3"
                             lg="3"
                             xl="3"
@@ -31,8 +31,8 @@
                             </v-tabs>
                         </v-col>
                         <v-col 
-                            xs="12"
-                            sm="12"
+                            cols="3"
+                            sm="3"
                             md="9"
                             lg="9"
                             xl="9"
@@ -44,6 +44,7 @@
                                 @click="closeModal()"
                                 class="float-right"
                             >
+                            <!-- class="float-right" -->
                                 <v-icon left>mdi-close</v-icon> Cerrar
                             </v-btn>
                         </v-col>
@@ -54,7 +55,7 @@
                         <v-card-text>
                             <v-row class="pl-5">
                                 <v-col 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
                                     md="3"
                                     lg="3"
@@ -81,7 +82,7 @@
                                 ></v-col> 
                                 <v-col 
                                     class="pa-0 pt-4 ma-0" 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
                                     md="3"
                                     lg="3"
@@ -100,7 +101,7 @@
                             </v-row>
                             <v-row class="pl-5">
                                 <v-col 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
                                     md="3"
                                     lg="3"
@@ -123,7 +124,7 @@
                             </v-row>
                             <v-row>
                                 <v-col 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
                                     md="12"
                                     lg="12"
@@ -134,7 +135,7 @@
                                             <v-container class="pa-0 ma-0" fluid style="max-width: 100%;" >
                                                 <v-row class="pa-0 ma-0">
                                                     <v-col 
-                                                        xs="12"
+                                                        cols="12"
                                                         sm="12"
                                                         md="3"
                                                         lg="3"
@@ -157,7 +158,7 @@
                                                     </v-col>
                                                     <v-col 
                                                         class="pa-0 pt-4 ma-0" 
-                                                        xs="12"
+                                                        cols="12"
                                                         sm="12"
                                                         md="3"
                                                         lg="3"
@@ -170,7 +171,7 @@
                                                 </v-row>
                                                 <v-data-table
                                                     v-model="selected"
-                                                    :headers="headers"
+                                                    :headers="headersV"
                                                     :items="gridScan"
                                                     :page.sync="page"
                                                     :items-per-page="itemsPerPage"
@@ -186,6 +187,9 @@
                                                         color="red darken-4" 
                                                         indeterminate>
                                                     </v-progress-linear>
+                                                    <template #[`item.num`]="{ item }" v-if="validate == 2">
+                                                        {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                                    </template>
                                                     <template #[`item.status_val1`]="{ item }">
                                                         <v-row>
                                                             <v-col 
@@ -197,7 +201,7 @@
                                                                 <v-btn
                                                                     icon
                                                                     color="#008000"
-                                                                    v-if="(item.status_val1 > 0 && validate == 1) || (item.status_val1 > 2 && validate == 2)"
+                                                                    v-if="(item.status_val1 > 0 && validate == 1) || (item.status_val1 > 3 && validate == 2)"
                                                                 >
                                                                     <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
                                                                 </v-btn>
@@ -242,16 +246,14 @@
                 page2: 1,
                 pageCount2: 0,
                 itemsPerPage2: 5,
-                headers: [
-                    {
-                        text: '#',
-                        align: 'start',
-                        value: 'num',
-                    },
-                    { text: 'Lote', value: 'lot' },
-                    { text: 'Artículo', value: 'article' },
-                    { text: 'Cantidad', value: 'quantity' },
-                    { text: 'Validado', value: 'status_val1' },
+                headersV: [
+                    { text: '#', align: 'start', width:'5%', value: 'num' },
+                    { text: 'Lote', width:'5%', value: 'lot' },
+                    { text: 'Articulo', width:'15%', value: 'article' },
+                    { text: 'Cantidad', width:'5%', value: 'standar' },
+                    { text: 'Unidad', width:'5%', value: 'unit' },
+                    { text: 'Contenido(pzas)', width:'5%', value: 'quantity' },
+                    { text: 'Validado', width:'5%', value: 'status_val1' },
                 ],
                 lot: '',
                 disLot: false,

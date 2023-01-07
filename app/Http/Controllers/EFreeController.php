@@ -15,12 +15,12 @@ class EFreeController extends Controller
      */
     public function freeOrders(Request $request)
     {
-        $eFree = DB::select("call ps_orders(1,0,$request->user_id)");
+        $eFree = DB::select("call ps_orders(3,0,$request->user_id)");
         $gridEF = collect($eFree);
         $arrTmp = [];
         foreach($gridEF as $row){
-            if($row->sumT > 0 || $row->sumR > 0 || $row->sumC > 0 
-                || $row->sumP > 0 || $row->sumM > 0 || $row->sumTd > 0){
+            if($row->tela > 0 || $row->telaR > 0 || $row->comp > 0 
+                || $row->perf > 0 || $row->mot > 0 || $row->told > 0){
                 array_push($arrTmp,$row);
             }
         }

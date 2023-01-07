@@ -173,7 +173,7 @@ const defree = {
         },
         DATA_VAL_SCAN(state,data){
             let dataScan = store.getters['defree/getGridScanModal']
-            let stat = data.phase == 4 ? 3 : 1
+            let stat = data.phase == 4 ? 4 : 1
             let flag = false
             state.dataModal.wait = data.wait
             if(data.phase == 4){
@@ -319,7 +319,7 @@ const defree = {
             let stat;
             let flag = false
             if(data.phase == 4){
-                stat = 3;
+                stat = 4;
                 switch(Number.parseInt(data.catId)){
                     case 1: 
                         if(data.rec == 1){

@@ -7,20 +7,20 @@
          transition="scale-transition"
       >
          <v-card-title
-            class="headline mb-1"
+            class="h4 invoice-header-text mb-0 pb-1 pt-2"
          >
             <v-icon
                color="red darken-1"
                class="pr-2"
             > 
                mdi-dolly
-            </v-icon>Surtir
-
+            </v-icon>
+            Surtir
          </v-card-title>
          <v-tabs
             color="shades_five"
             centered
-            height="40px"
+            height="30px"
          >
             <v-tab
                @click="tabOrder = 'tab1'"

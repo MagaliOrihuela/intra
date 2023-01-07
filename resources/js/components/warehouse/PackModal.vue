@@ -9,8 +9,8 @@
             <v-card-text class="cot-text-info">
                 <v-row class="mt-5">
                     <v-col 
-                        xs="12"
-                        sm="12"
+                        cols="6"
+                        sm="6"
                         md="3"
                         lg="3"
                         xl="3"
@@ -28,8 +28,8 @@
                         </v-tabs>
                     </v-col>
                     <v-col 
-                        xs="12"
-                        sm="12"
+                        cols="6"
+                        sm="6"
                         md="9"
                         lg="9"
                         xl="9"
@@ -51,7 +51,7 @@
                     <v-card-text>
                         <v-row class="pl-5">
                             <v-col 
-                                xs="12"
+                                cols="12"
                                 sm="12"
                                 md="3"
                                 lg="3"
@@ -74,7 +74,7 @@
                         </v-row>
                         <v-row class="pl-5">
                             <v-col 
-                                xs="12"
+                                cols="12"
                                 sm="12"
                                 md="3"
                                 lg="3"
@@ -97,7 +97,7 @@
                         </v-row>
                         <v-row>
                             <v-col 
-                                xs="12"
+                                cols="12"
                                 sm="12"
                                 md="6"
                                 lg="6"
@@ -109,7 +109,7 @@
                                             <v-row class="pa-0 ma-0">
                                                 <v-col 
                                                     class="pa-0 pt-4 ma-0" 
-                                                    xs="12"
+                                                    cols="12"
                                                     sm="12"
                                                     md="3"
                                                     lg="3"
@@ -119,7 +119,7 @@
                                                 </v-col>
                                                 <v-col
                                                     class="pa-0 ma-0" 
-                                                    xs="12"
+                                                    cols="12"
                                                     sm="12"
                                                     md="9"
                                                     lg="9"
@@ -180,7 +180,7 @@
                                 </v-card>
                             </v-col>
                             <v-col 
-                                xs="12"
+                                cols="12"
                                 sm="12"
                                 md="6"
                                 lg="6"
@@ -192,7 +192,7 @@
                                             <v-row class="pa-0 ma-0">
                                                 <v-col 
                                                     class="pa-0 pt-4 ma-0" 
-                                                    xs="12"
+                                                    cols="12"
                                                     sm="12"
                                                     md="3"
                                                     lg="3"
@@ -202,7 +202,7 @@
                                                 </v-col>
                                                 <v-col
                                                     class="pa-0 ma-0" 
-                                                    xs="12"
+                                                    cols="12"
                                                     sm="12"
                                                     md="9"
                                                     lg="9"
@@ -260,7 +260,7 @@
                         </v-row>
                         <v-row>
                             <v-col 
-                                xs="12"
+                                cols="12"
                                 sm="12"
                                 md="12"
                                 lg="12"
@@ -272,7 +272,7 @@
                                             <v-row class="pa-0 ma-0">
                                                 <v-col 
                                                     class="pa-0 pt-4 ma-0" 
-                                                    xs="12"
+                                                    cols="12"
                                                     sm="12"
                                                     md="3"
                                                     lg="3"
@@ -282,7 +282,7 @@
                                                 </v-col>
                                                 <v-col
                                                     class="pa-0 ma-0" 
-                                                    xs="12"
+                                                    cols="12"
                                                     sm="12"
                                                     md="9"
                                                     lg="9"
@@ -309,6 +309,9 @@
                                                 @page-count="pageCountPD = $event"
                                                 :sort-desc="false"
                                             >
+                                                <template #[`item.num`]="{ item }" >
+                                                    {{ item.num }} <v-icon color="#008000">mdi-package-variant-closed</v-icon>
+                                                </template>
                                                 <template #[`item.package`]="{ item }">
                                                     {{ item.package }}
                                                     <v-icon size="150%" color="#008000">mdi-package-variant-closed</v-icon>
@@ -401,7 +404,9 @@
                         value: 'num',
                     },
                     { text: 'Lote', value: 'lot' },
-                    { text: 'Contenido', value: 'quantity' },
+                    { text: 'Cantidad', width:'5%', value: 'standar' },
+                    { text: 'Unidad', width:'5%', value: 'unit' },
+                    { text: 'Contenido(pzas)', width:'5%', value: 'quantity' },
                     { text: 'Ubicación', value: 'location' },
                     { text: '', value: 'id' },
                 ],
@@ -490,7 +495,8 @@
                     catId: this.dataModal.id,
                     rec: this.dataModal.rec,
                     freeId: this.dataSuppD.id,
-                    arrPack: this.arrPack
+                    arrPack: this.arrPack,
+                    allF: 0
                 }
                 if(this.arrPack.length === 0){
                     Swal.fire({
@@ -513,33 +519,34 @@
                 }
             },
             async packAll(){
-                // var payload = {
-                //     token: this.getUserApi.token,
-                //     user_id: this.getUserApi.uid,
-                //     catId: this.dataModal.id,
-                //     rec: this.dataModal.rec,
-                //     freeId: this.dataSuppD.id,
-                //     arrPack: this.arrPack
-                // }
-                // if(this.arrPack.length === 0){
-                //     Swal.fire({
-                //         icon: 'error',
-                //         title: 'Ups...',
-                //         text: 'No se han seleccionado productos para empacar.',
-                //     })
-                // } else{
-                //     // const res = await this.$store.dispatch('defree/getFreeD',payload);
-                //     const data = await socketClientEmit.supplyPackEmit(payload);
-                //     if(data.success){
-                //         Swal.fire({
-                //             icon: 'success',
-                //             title: '¡Agregado!',
-                //             text: 'El empaque fue generado.',
-                //             showConfirmButton: false,
-                //             timer: 1500
-                //         })
-                //     }
-                // }
+                var payload = {
+                    token: this.getUserApi.token,
+                    user_id: this.getUserApi.uid,
+                    catId: this.dataModal.id,
+                    rec: this.dataModal.rec,
+                    freeId: this.dataSuppD.id,
+                    arrPack: this.gridScan,
+                    allF: 1
+                }
+                if(this.gridScan.length === 0){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ups...',
+                        text: 'No se han seleccionado productos para empacar.',
+                    })
+                } else{
+                    // const res = await this.$store.dispatch('defree/getFreeD',payload);
+                    const data = await socketClientEmit.supplyPackEmit(payload);
+                    if(data.success){
+                        Swal.fire({
+                            icon: 'success',
+                            title: '¡Agregado!',
+                            text: 'El empaque fue generado.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    }
+                }
             },
             async delPack(doLId){
                 var payload = {

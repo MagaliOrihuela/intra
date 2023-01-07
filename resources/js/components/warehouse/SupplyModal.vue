@@ -9,8 +9,8 @@
                 <v-card-text class="cot-text-info">
                     <v-row class="mt-5">
                         <v-col 
-                            xs="12"
-                            sm="12"
+                            cols="6"
+                            sm="6"
                             md="3"
                             lg="3"
                             xl="3"
@@ -25,15 +25,11 @@
                                 <v-tab>
                                     <v-icon left>mdi-barcode-scan</v-icon> Escaneo
                                 </v-tab>
-                                <!-- <v-tab v-on:click="freeDetail"> -->
-                                <!-- <v-tab>
-                                    <v-icon left>mdi-package-variant-closed</v-icon> Detalle libera
-                                </v-tab> -->
                             </v-tabs>
                         </v-col>
                         <v-col 
-                            xs="12"
-                            sm="12"
+                            cols="6"
+                            sm="6"
                             md="9"
                             lg="9"
                             xl="9"
@@ -53,9 +49,9 @@
                 <v-tabs-items v-model="tab">
                     <v-tab-item>
                         <v-card-text>
-                            <v-row class="pl-5">
+                            <v-row class="pl-5" centered>
                                 <v-col 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
                                     md="3"
                                     lg="3"
@@ -76,29 +72,7 @@
                                     </v-chip>
                                 </v-col>
                                 <v-col 
-                                    xs="12"
-                                    sm="12"
-                                    md="3"
-                                    lg="3"
-                                    xl="3"
-                                    class="pa-1 ma-0"
-                                >
-                                    Clave sai:<b class="info-free"> {{ supplyModal.sai_id }} </b>
-                                </v-col>
-                                <v-col 
-                                    xs="12"
-                                    sm="12"
-                                    md="4"
-                                    lg="4"
-                                    xl="4"
-                                    class="pa-1 ma-0"
-                                >
-                                    Artículo:<b class="info-free"> {{ supplyModal.article }} </b>
-                                </v-col>
-                            </v-row>
-                            <v-row class="pl-5">
-                                <v-col 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
                                     md="3"
                                     lg="3"
@@ -118,9 +92,32 @@
                                         Recortes
                                     </v-chip>
                                 </v-col>
+                            </v-row>
+                            <v-row class="pl-5">
                                 <v-col 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
+                                    md="3"
+                                    lg="3"
+                                    xl="3"
+                                    class="pa-1 ma-0"
+                                >
+                                    Clave sai:<b class="info-free"> {{ supplyModal.sai_id }} </b>
+                                </v-col>
+                                <v-col 
+                                    cols="12"
+                                    sm="12"
+                                    md="4"
+                                    lg="4"
+                                    xl="4"
+                                    class="pa-1 ma-0"
+                                >
+                                    Artículo:<b class="info-free"> {{ supplyModal.article }} </b>
+                                </v-col>
+                                
+                                <v-col 
+                                    cols="3"
+                                    sm="3"
                                     md="3"
                                     lg="3"
                                     xl="3"
@@ -129,8 +126,8 @@
                                     Cantidad:<b class="info-free"> {{ supplyModal.quantity }} </b>
                                 </v-col>
                                 <v-col 
-                                    xs="12"
-                                    sm="12"
+                                    cols="3"
+                                    sm="3"
                                     md="3"
                                     lg="3"
                                     xl="3"
@@ -139,8 +136,8 @@
                                     Unidad:<b class="info-free"> {{ supplyModal.unit }} </b>
                                 </v-col>
                                 <v-col 
-                                    xs="12"
-                                    sm="12"
+                                    cols="3"
+                                    sm="3"
                                     md="3"
                                     lg="3"
                                     xl="3"
@@ -151,7 +148,7 @@
                             </v-row>
                             <v-row class="pl-5">
                                 <v-col 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
                                     md="3"
                                     lg="3"
@@ -160,7 +157,7 @@
                                 >
                                 </v-col>
                                 <v-col 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
                                     md="3"
                                     lg="3"
@@ -173,7 +170,7 @@
                             </v-row>
                             <v-row>
                                 <v-col 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
                                     md="8"
                                     lg="8"
@@ -185,7 +182,7 @@
                                                 <v-row class="pa-0 ma-0">
                                                     <v-col 
                                                         class="pa-0 pt-4 ma-0" 
-                                                        xs="12"
+                                                        cols="12"
                                                         sm="12"
                                                         md="3"
                                                         lg="3"
@@ -194,7 +191,7 @@
                                                         Escaneados
                                                     </v-col>
                                                     <v-col 
-                                                        xs="12"
+                                                        cols="12"
                                                         sm="12"
                                                         md="2"
                                                         lg="2"
@@ -215,7 +212,7 @@
                                                         ></v-text-field>
                                                     </v-col>
                                                     <v-col 
-                                                        xs="12"
+                                                        cols="12"
                                                         sm="12"
                                                         md="3"
                                                         lg="3"
@@ -238,7 +235,7 @@
                                                     </v-col>
                                                     <v-col 
                                                         class="pa-0 pt-4 ma-0" 
-                                                        xs="12"
+                                                        cols="12"
                                                         sm="12"
                                                         md="4"
                                                         lg="4"
@@ -250,7 +247,7 @@
                                                     </v-col>
                                                     <v-col 
                                                         class="pa-0 pt-4 ma-0" 
-                                                        xs="12"
+                                                        cols="12"
                                                         sm="12"
                                                         md="4"
                                                         lg="4"
@@ -312,7 +309,7 @@
                                     </v-card>
                                 </v-col>
                                 <v-col 
-                                    xs="12"
+                                    cols="12"
                                     sm="12"
                                     md="4"
                                     lg="4"
@@ -324,7 +321,7 @@
                                                 <v-row class="pa-0 ma-0">
                                                     <v-col 
                                                         class="pa-0 pt-4 ma-0" 
-                                                        xs="12"
+                                                        cols="12"
                                                         sm="12"
                                                         md="4"
                                                         lg="4"

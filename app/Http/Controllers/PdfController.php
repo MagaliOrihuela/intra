@@ -35,7 +35,7 @@ class PdfController extends Controller
         } else{
             $sqlPart = $request->catId;
         }
-        $sqlPack = DB::select("SELECT dol.lot,dol.quantity,dol.standard,(dol.quantity/dol.standard) as tot,dol.package,a.article,u.id,u.unit,cu.short_name,p.packfol
+        $sqlPack = DB::select("SELECT dol.lot,dol.quantity,dol.standar,(dol.quantity/dol.standar) as tot,dol.package,a.article,u.id,u.unit,cu.short_name,p.packfol
                                     from d_ord_lots dol
                                     inner join d_orders dor on dor.id = dol.dord_id
                                     inner join c_articles a on a.id = dor.article_id
