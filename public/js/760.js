@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk=self.webpackChunk||[]).push([[760],{7760:(n,e,s)=>{s.r(e),s.d(e,{default:()=>c});const t={name:"Inventario",components:{}};const c=(0,s(1900).Z)(t,(function(){return(0,this._self._c)("div")}),[],!1,null,"42c30e61",null).exports}}]);
