@@ -43,7 +43,4 @@
             await this.$store.dispatch({ type:'notifications/updateNotification',payload});
 ```
 
-## Equipo de desarrollo:
-
-Oscar Cortes <br>
 Magali Orihuela
